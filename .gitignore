@@ -1,0 +1,29 @@
+# GENERIC files
+*~
+*.swp
+
+# MPLAB-X files
+*.d
+*.pre
+*.p1
+*.lst
+*.sym
+*.obj
+*.o
+*.sdb
+*.obj.dmp
+*.map
+
+# MPLAB-X folders
+EUR_2014_asserv.X/html/
+EUR_2014_asserv.X/nbproject/private/
+EUR_2014_asserv.X/nbproject/Package-*.bash
+EUR_2014_asserv.X/build/
+EUR_2014_asserv.X/nbbuild/
+EUR_2014_asserv.X/dist/
+EUR_2014_asserv.X/nbdist/
+EUR_2014_asserv.X/nbactions.xml
+EUR_2014_asserv.X/nb-configuration.xml
+EUR_2014_asserv.X/funclist
+EUR_2014_asserv.X/nbproject/Makefile-*
+EUR_2014_asserv.X/disassembly/
