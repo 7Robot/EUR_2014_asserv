@@ -5,7 +5,7 @@
 /* TODO Define system operating frequency */
 
 /* Microcontroller MIPs (FCY) */
-#define SYS_FREQ        7370000L
+#define SYS_FREQ        80000000UL
 #define FCY             SYS_FREQ/2
 
 /******************************************************************************/
@@ -17,4 +17,3 @@ functions, and other non-peripheral microcontroller initialization functions
 go here. */
 
 void ConfigureOscillator(void); /* Handles clock switching/osc initialization */
-

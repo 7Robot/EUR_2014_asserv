@@ -39,19 +39,15 @@ __builtin functions.*/
 /* TODO Add clock switching code if appropriate.  An example stub is below.   */
 void ConfigureOscillator(void)
 {
-
-#if 0
-        /* Disable Watch Dog Timer */
-        RCONbits.SWDTEN = 0;
-
-        /* When clock switch occurs switch to Primary Osc (HS, XT, EC) */
-        __builtin_write_OSCCONH(0x02);  /* Set OSCCONH for clock switch */
-        __builtin_write_OSCCONL(0x01);  /* Start clock switching */
-        while(OSCCONbits.COSC != 0b011);
-
-        /* Wait for Clock switch to occur */
-        /* Wait for PLL to lock, only if PLL is needed */
-        /* while(OSCCONbits.LOCK != 1); */
-#endif
+    // Configure PLL prescaler, PLL postscaler, PLL divisor
+    PLLFBDbits.PLLDIV = 150;        // M=152
+    CLKDIVbits.PLLPRE  = 5;         // N1=7
+    CLKDIVbits.PLLPOST = 0;         // N2=2
+    /* Fosc = M/(N1.N2)*Fin
+     * Fin : 7.37MHz (quartz interne)
+     * Fosc à 80 MHZ (ne doit pas dépasser 80 MHZ)
+     * la solution la plus proche est 152*7.37/(7*2) = 80.017
+     * attention, cela entraine donc une FCY et une FPériphériques à 40 MHZ
+     */
+    while (!OSCCONbits.LOCK);       // attente que la PLL soit lockée sur se nouvelle configuration.
 }
-

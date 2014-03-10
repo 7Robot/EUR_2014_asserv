@@ -1,6 +1,16 @@
-/******************************************************************************/
-/* Files to Include                                                           */
-/******************************************************************************/
+/*
+ * Template dsPIC33F
+ * Compiler : Microchip xC16
+ * µC : 33FJ128MC804
+ * Mars 2014
+ *    ______ _____      _           _
+ *   |___  /| ___ \    | |         | |
+ *      / / | |_/ /___ | |__   ___ | |_
+ *     / /  |    // _ \| '_ \ / _ \| __|
+ *    / /   | |\ \ (_) | |_) | (_) | |_
+ *   /_/    |_| \_\___/|____/ \___/'\__|
+ *			      7robot.fr
+ */
 
 /* Device header file */
 #if defined(__XC16__)
@@ -19,6 +29,10 @@
 
 #include "system.h"        /* System funct/params, like osc/peripheral config */
 #include "user.h"          /* User funct/params, such as InitApp              */
+#include "asserv.h"
+#include "qei.h"           /* QEI definitions for easier use                  */
+#include <libpic30.h>
+#include "tests.h"
 
 /******************************************************************************/
 /* Global Variable Declaration                                                */
@@ -27,22 +41,33 @@
 /* i.e. uint16_t <variable_name>; */
 
 /******************************************************************************/
+/* Configuration                                                              */
+/******************************************************************************/
+// Select Oscillator and switching.
+_FOSCSEL(FNOSC_FRCPLL & IESO_OFF);
+// Select clock.
+_FOSC(POSCMD_NONE & OSCIOFNC_OFF & FCKSM_CSDCMD);
+// Watchdog Timer.
+_FWDT(FWDTEN_OFF);
+// Select debug channel.
+_FICD(ICS_PGD1 & JTAGEN_OFF);
+
+/******************************************************************************/
 /* Main Program                                                               */
 /******************************************************************************/
 
 int16_t main(void)
 {
-
     /* Configure the oscillator for the device */
     ConfigureOscillator();
 
     /* Initialize IO ports and peripherals */
     InitApp();
+    Init_PWM();
 
     /* TODO <INSERT USER APPLICATION CODE HERE> */
 
-    while(1)
-    {
-
+    while (1){
+        test_frequence_fixe_moteurs(10000);
     }
 }

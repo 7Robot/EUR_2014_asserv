@@ -31,3 +31,23 @@ void InitApp(void)
 
     /* Initialize peripherals */
 }
+
+long int limit_int(long int valeur, long int inf, long int sup)
+{
+    if (valeur < inf)
+        return inf;
+    else if (valeur > sup)
+        return sup;
+    else
+        return valeur;
+}
+
+float limit_float(float valeur, float inf, float sup)
+{
+    if (valeur < inf)
+        return inf;
+    else if (valeur > sup)
+        return sup;
+    else
+        return valeur;
+}
