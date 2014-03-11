@@ -25,7 +25,7 @@ void test_frequence_fixe_moteurs(float frequence)
 {
     while (1)
     {
-        PWM_Moteurs_Detail(frequence, 25, 25);
+        PWM_Moteurs_Detail(frequence, 50, 50);
         __delay_ms(10);
     }
 }
@@ -41,5 +41,31 @@ void test_frequence_variable_moteurs(float f_min,float f_max, float temps)
     {
         PWM_Moteurs_Detail(f, 25, 25);
         __delay_ms(10);
+    }
+}
+
+// teste si le Duty-Cycle est bien respecté à la fréquence f
+void test_DC_variable_moteurs(float DC_min,float DC_max, float temps, float frequence)
+{
+    float DC;
+    float pas = (DC_max-DC_min)/(100*temps);
+
+    // dans le cas ou DC_min et DC_max sont inversés
+    if (DC_min>DC_max)
+    {
+        for (DC=DC_min; DC>DC_max; DC+=pas)
+        {
+            PWM_Moteurs_Detail(frequence, DC, DC);
+            __delay_ms(10);
+        }
+    }
+    // dans le cas normal
+    else
+    {
+        for (DC=DC_min; DC<DC_max; DC+=pas)
+        {
+            PWM_Moteurs_Detail(frequence, DC, DC);
+            __delay_ms(10);
+        }
     }
 }

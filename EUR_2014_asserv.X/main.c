@@ -68,6 +68,6 @@ int16_t main(void)
     /* TODO <INSERT USER APPLICATION CODE HERE> */
 
     while (1){
-        test_frequence_fixe_moteurs(10000);
+        test_frequence_fixe_moteurs(1200);
     }
 }

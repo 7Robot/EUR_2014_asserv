@@ -123,8 +123,11 @@ void PWM_Moteurs_Detail(float frequence, float DC_gauche, float DC_droit)
     DC_gauche = limit_float(DC_gauche,-100,100);
     DC_droit = limit_float(DC_droit,-100,100);
 
+    DC_gauche = 2*P1TPER*fabs(DC_gauche)/100.0;
+    DC_droit = 2*P1TPER*fabs(DC_droit)/100.0;
+
     // calcul des temps High des moteurs (cf datasheet)
     // RMQ : ici la précision est 2 fois plus grande que pour P1TPER
-    P1DC2 = (int) limit_int(2*P1TPER*(int)fabs(DC_gauche),0,2*P1TPER_MAX);
-    P1DC3 = (int) limit_int(2*P1TPER*(int)fabs(DC_droit),0,2*P1TPER_MAX);
+    P1DC2 = (int) limit_int((long int)(DC_gauche), 0, (long int)(2*P1TPER_MAX));
+    P1DC3 = (int) limit_int((long int)(DC_droit), 0,  (long int)(2*P1TPER_MAX));
 }

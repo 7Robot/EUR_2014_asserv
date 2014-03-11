@@ -22,8 +22,8 @@
 // min et max de P1TPER (periode du PWM en nb de cycles)
 // ici min et max permettent de rester dans des fréquences comprises entre
 // 26kHz et 1.2kHz pour respecter la datasheet du pont en H
-#define P1TPER_MIN 1500
-#define P1TPER_MAX 32000
+#define P1TPER_MIN 1500UL
+#define P1TPER_MAX 32000UL
 
 // initialise les PWM
 void Init_PWM(void);
