@@ -24,6 +24,8 @@
 // 26kHz et 1.2kHz pour respecter la datasheet du pont en H
 #define P1TPER_MIN 1500UL
 #define P1TPER_MAX 32000UL
+// Duty-Cycle max (au cas ou on veut limiter la puissance moteur)
+#define DC_MAX 100
 
 // initialise les PWM
 void Init_PWM(void);

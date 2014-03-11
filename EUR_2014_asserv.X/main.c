@@ -68,6 +68,7 @@ int16_t main(void)
     /* TODO <INSERT USER APPLICATION CODE HERE> */
 
     while (1){
-        test_frequence_fixe_moteurs(1200);
+        PWM_Moteurs(120, -150);
+        __delay_ms(10);
     }
 }

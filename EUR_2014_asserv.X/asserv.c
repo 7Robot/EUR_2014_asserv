@@ -97,7 +97,29 @@ void Init_QEI(void)
 // la fréquence du PWM est automatiquement réglée à 26.667 kHz (P1TPER=1500)
 void PWM_Moteurs(float DC_gauche, float DC_droit)
 {
-    PWM_Moteurs_Detail(26667,DC_gauche,DC_droit);
+    // variable temporaire servant a connaitre le signe des Duty-Cycle
+    int DC_positif;
+
+    // pins de sens du moteur gauche
+    DC_positif = (DC_gauche >= 0);
+    MOTOR_1A_O = !DC_positif;
+    MOTOR_1B_O = DC_positif;
+
+    // pins de sens du moteur droit
+    DC_positif = (DC_droit >= 0);
+    MOTOR_2A_O = !DC_positif;
+    MOTOR_2B_O = DC_positif;
+
+    P1TPER = 1500;
+
+    // limitation des Duty-Cycle
+    DC_gauche = limit_float(DC_gauche,-DC_MAX,DC_MAX);
+    DC_droit = limit_float(DC_droit,-DC_MAX,DC_MAX);
+
+    // calcul des temps High des moteurs (cf datasheet)
+    // RMQ : ici la précision est 2 fois plus grande que pour P1TPER
+    P1DC2 =  (int) (30*fabs(DC_gauche));
+    P1DC3 =  (int) (30*fabs(DC_droit));
 }
 
 // Applique un PWM en réglant la fréquence (1kHz-26.66kHz) et les Duty-Cycle (-100->+100)
