@@ -77,8 +77,8 @@ void Init_QEI(void)
     // configuration des pins A et B du module
     // ce sont des pins dites remapable,
     // ce qui veut dire que l'on peut choisir presque toutes les IO du PIC
-    RPINR14bits.QEA1R = 0;
-    RPINR14bits.QEB1R = 0;
+    RPINR14bits.QEA1R = 25; // 25 = pin RP25
+    RPINR14bits.QEB1R = 22;
 
 
     // module QEI2 identique = Moteur Gauche
@@ -88,8 +88,8 @@ void Init_QEI(void)
     QEI2CONbits.TQCS = 0;       // use PIC clock
 
     // configuration des pins A et B du module
-    RPINR16bits.QEA2R = 0;
-    RPINR16bits.QEB2R = 0;
+    RPINR16bits.QEA2R = 23; // 23 = pin RP23
+    RPINR16bits.QEB2R = 24;
 }
 
 
@@ -152,4 +152,33 @@ void PWM_Moteurs_Detail(float frequence, float DC_gauche, float DC_droit)
     // RMQ : ici la précision est 2 fois plus grande que pour P1TPER
     P1DC2 = (int) limit_int((long int)(DC_gauche), 0, (long int)(2*P1TPER_MAX));
     P1DC3 = (int) limit_int((long int)(DC_droit), 0,  (long int)(2*P1TPER_MAX));
+}
+
+void Asserv(float consigne, float valeur, float *erreur_old, float *integral)
+{
+    float K_p = 0.22; // (0.22) choisit pour arriver un peu en dessous sans oscillation
+    float K_i = 0.08; // (0.08) choisit pour être à la limite de redémarrage possible depuis l'arrêt
+    float K_d = 22.0; // (22.0) choisit pour arriver la première fois sans oscillation proche de la consigne
+    static float erreur = 0;
+    static float derivee = 0;
+    float commande = 0;
+
+    erreur = 0.2*erreur + 0.8*(consigne-valeur); // erreur moyennée
+    derivee = 0.2*derivee + 0.8*(erreur-(*erreur_old)); // derivee moyennée
+    *erreur_old = erreur;
+
+    // Si on considère être arrivé, on annule l'integrale (a activer après avoir choisit K_p,K_i et K_d)
+    if (is_arrived(erreur,derivee))
+        *integral = 0.0;
+    else
+        *integral = limit_float((*integral)+erreur*(1+0.1*derivee), -130.0, 130.0);
+
+    commande = K_p*erreur + K_i*(*integral) + K_d*derivee;
+
+    PWM_Moteurs(commande, -commande);
+}
+
+int is_arrived(float erreur, float derivee)
+{
+    return (fabs(erreur)<1 && fabs(derivee)<0.1);
 }

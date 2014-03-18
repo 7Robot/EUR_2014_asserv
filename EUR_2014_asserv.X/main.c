@@ -58,17 +58,24 @@ _FICD(ICS_PGD1 & JTAGEN_OFF);
 
 int16_t main(void)
 {
+    /* variables */
+    long int qei_total = 0;
+    float erreur_old = 0;
+    float integral = 0;
+    int qei = 0;
+    
     /* Configure the oscillator for the device */
     ConfigureOscillator();
 
     /* Initialize IO ports and peripherals */
     InitApp();
     Init_PWM();
+    Init_QEI();
 
     /* TODO <INSERT USER APPLICATION CODE HERE> */
 
     while (1){
-        PWM_Moteurs(120, -150);
+        test_Asserv_1(&qei_total, &qei, &erreur_old, &integral);
         __delay_ms(10);
     }
 }

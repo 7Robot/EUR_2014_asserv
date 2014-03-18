@@ -18,5 +18,8 @@ void test_frequence_variable_moteurs(float f_min,float f_max, float temps);
 // teste si le Duty-Cycle est bien respecté à la fréquence f
 void test_DC_variable_moteurs(float DC_min,float DC_max, float temps, float frequence);
 
+// test asserv
+void test_Asserv_1(long int *qei_total, int *qei_old, float *erreur_old, float *integral);
+
 #endif	/* TESTS_H */
 

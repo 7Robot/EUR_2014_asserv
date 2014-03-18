@@ -69,3 +69,19 @@ void test_DC_variable_moteurs(float DC_min,float DC_max, float temps, float freq
         }
     }
 }
+
+// test d'asserv
+void test_Asserv_1(long int *qei_total, int *qei_old, float *erreur_old, float *integral)
+{
+    float valeur;
+    float consigne = 5;
+    int qei_new = (int)POS1CNT;
+
+    *qei_total += (qei_new-(*qei_old));
+    *qei_old = qei_new;
+
+    // conversion de QEI à mètre
+    valeur = 0.01*(float)(*qei_total);
+
+    Asserv(consigne, valeur, erreur_old, integral);
+}
