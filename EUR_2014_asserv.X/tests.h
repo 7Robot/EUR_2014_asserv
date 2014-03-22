@@ -19,7 +19,11 @@ void test_frequence_variable_moteurs(float f_min,float f_max, float temps);
 void test_DC_variable_moteurs(float DC_min,float DC_max, float temps, float frequence);
 
 // test asserv
-void test_Asserv_1(long int *qei_total, int *qei_old, float *erreur_old, float *integral);
+void test_Asserv_gauche(long int *qei_total, int *qei_old, float *erreur_old, float *integral);
+void test_Asserv_droit(long int *qei_total, int *qei_old, float *erreur_old, float *integral);
+
+// etalonage
+void etalonner_qei(void);
 
 #endif	/* TESTS_H */
 

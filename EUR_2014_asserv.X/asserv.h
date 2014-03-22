@@ -37,8 +37,12 @@ void PWM_Moteurs(float DC_gauche, float DC_droit);
 // Applique un PWM en réglant la fréquence (1kHz-26.66kHz) et les Duty-Cycle (-100->+100)
 void PWM_Moteurs_Detail(float frequence, float DC_gauche, float DC_droit);
 
+void PWM_Moteurs_gauche(float DC);
+void PWM_Moteurs_droit(float DC);
+
 // asservissement proportionnel
-void Asserv(float consigne, float valeur, float *erreur_old, float *integral);
+void Asserv_gauche(float consigne, float valeur, float *erreur_old, float *integral);
+void Asserv_droit(float consigne, float valeur, float *erreur_old, float *integral);
 
 // teste si le robot est arrivé à destination
 int is_arrived(float erreur, float derivee);

@@ -75,7 +75,7 @@ int16_t main(void)
     /* TODO <INSERT USER APPLICATION CODE HERE> */
 
     while (1){
-        test_Asserv_1(&qei_total, &qei, &erreur_old, &integral);
+        test_Asserv_droit(&qei_total, &qei, &erreur_old, &integral);
         __delay_ms(10);
     }
 }

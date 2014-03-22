@@ -154,7 +154,47 @@ void PWM_Moteurs_Detail(float frequence, float DC_gauche, float DC_droit)
     P1DC3 = (int) limit_int((long int)(DC_droit), 0,  (long int)(2*P1TPER_MAX));
 }
 
-void Asserv(float consigne, float valeur, float *erreur_old, float *integral)
+void PWM_Moteurs_gauche(float DC)
+{
+    // variable temporaire servant a connaitre le signe des Duty-Cycle
+    int DC_positif;
+
+    // pins de sens du moteur gauche
+    DC_positif = (DC >= 0);
+    MOTOR_2A_O = !DC_positif;
+    MOTOR_2B_O = DC_positif;
+
+    P1TPER = 1500;
+
+    // limitation des Duty-Cycle
+    DC = limit_float(DC,-DC_MAX,DC_MAX);
+
+    // calcul des temps High des moteurs (cf datasheet)
+    // RMQ : ici la précision est 2 fois plus grande que pour P1TPER
+    P1DC2 =  (int) (30*fabs(DC));
+}
+
+void PWM_Moteurs_droit(float DC)
+{
+    // variable temporaire servant a connaitre le signe des Duty-Cycle
+    int DC_positif;
+
+    // pins de sens du moteur droit
+    DC_positif = (DC >= 0);
+    MOTOR_1A_O = !DC_positif;
+    MOTOR_1B_O = DC_positif;
+
+    P1TPER = 1500;
+
+    // limitation des Duty-Cycle
+    DC = limit_float(DC,-DC_MAX,DC_MAX);
+
+    // calcul des temps High des moteurs (cf datasheet)
+    // RMQ : ici la précision est 2 fois plus grande que pour P1TPER
+    P1DC3 =  (int) (30*fabs(DC));
+}
+
+void Asserv_gauche(float consigne, float valeur, float *erreur_old, float *integral)
 {
     float K_p = 0.22; // (0.22) choisit pour arriver un peu en dessous sans oscillation
     float K_i = 0.08; // (0.08) choisit pour être à la limite de redémarrage possible depuis l'arrêt
@@ -175,7 +215,31 @@ void Asserv(float consigne, float valeur, float *erreur_old, float *integral)
 
     commande = K_p*erreur + K_i*(*integral) + K_d*derivee;
 
-    PWM_Moteurs(commande, -commande);
+    PWM_Moteurs_gauche(commande);
+}
+
+void Asserv_droit(float consigne, float valeur, float *erreur_old, float *integral)
+{
+    float K_p = 0.22; // (0.22) choisit pour arriver un peu en dessous sans oscillation
+    float K_i = 0.08; // (0.08) choisit pour être à la limite de redémarrage possible depuis l'arrêt
+    float K_d = 22.0; // (22.0) choisit pour arriver la première fois sans oscillation proche de la consigne
+    static float erreur = 0;
+    static float derivee = 0;
+    float commande = 0;
+
+    erreur = 0.2*erreur + 0.8*(consigne-valeur); // erreur moyennée
+    derivee = 0.2*derivee + 0.8*(erreur-(*erreur_old)); // derivee moyennée
+    *erreur_old = erreur;
+
+    // Si on considère être arrivé, on annule l'integrale (a activer après avoir choisit K_p,K_i et K_d)
+    if (is_arrived(erreur,derivee))
+        *integral = 0.0;
+    else
+        *integral = limit_float((*integral)+erreur*(1+0.1*derivee), -130.0, 130.0);
+
+    commande = K_p*erreur + K_i*(*integral) + K_d*derivee;
+
+    PWM_Moteurs_droit(commande);
 }
 
 int is_arrived(float erreur, float derivee)

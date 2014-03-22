@@ -71,17 +71,41 @@ void test_DC_variable_moteurs(float DC_min,float DC_max, float temps, float freq
 }
 
 // test d'asserv
-void test_Asserv_1(long int *qei_total, int *qei_old, float *erreur_old, float *integral)
+void test_Asserv_gauche(long int *qei_total, int *qei_old, float *erreur_old, float *integral)
 {
     float valeur;
-    float consigne = 5;
+    float consigne = 100;
     int qei_new = (int)POS1CNT;
 
-    *qei_total += (qei_new-(*qei_old));
+    *qei_total -= (qei_new-(*qei_old)); // - pour le gauche, + pour le droit
     *qei_old = qei_new;
 
     // conversion de QEI à mètre
     valeur = 0.01*(float)(*qei_total);
 
-    Asserv(consigne, valeur, erreur_old, integral);
+    Asserv_gauche(consigne, valeur, erreur_old, integral);
+}
+
+// test d'asserv
+void test_Asserv_droit(long int *qei_total, int *qei_old, float *erreur_old, float *integral)
+{
+    float valeur;
+    float consigne = 100;
+    int qei_new = (int)POS2CNT;
+
+    *qei_total += (qei_new-(*qei_old)); // - pour le gauche, + pour le droit
+    *qei_old = qei_new;
+
+    // conversion de QEI à mètre
+    valeur = 0.01*(float)(*qei_total);
+
+    Asserv_droit(consigne, valeur, erreur_old, integral);
+}
+
+
+
+// étalonner les QEI
+void etalonner_qei(void)
+{
+    PWM_Moteurs(0, 0);
 }
