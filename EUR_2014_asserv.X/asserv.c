@@ -68,7 +68,7 @@ void Init_PWM(void)
 
 void Init_QEI(void)
 {
-    // module QEI1 = Moteur Droit
+    // module QEI1 = Moteur Gauche
     QEI1CONbits.QEISIDL = 1;    // module toujours actif, meme en etat de pause du pic
     QEI1CONbits.QEIM = 6;       // module en mode x4 : regarde tous les fronts, reset sur index, désactivé en dessous
     QEI1CONbits.POSRES = 0;     // desactive l'index => pas de reset du compteur;
@@ -77,11 +77,11 @@ void Init_QEI(void)
     // configuration des pins A et B du module
     // ce sont des pins dites remapable,
     // ce qui veut dire que l'on peut choisir presque toutes les IO du PIC
-    RPINR14bits.QEA1R = 25; // 25 = pin RP25
-    RPINR14bits.QEB1R = 22;
+    RPINR14bits.QEA1R = 22; // 25 = pin RP25
+    RPINR14bits.QEB1R = 25;
 
 
-    // module QEI2 identique = Moteur Gauche
+    // module QEI2 identique = Moteur Droit
     QEI2CONbits.QEISIDL = 1;    // module toujours actif, meme en etat de pause du pic
     QEI2CONbits.QEIM = 6;       // module en mode x4 : regarde tous les fronts, reset sur index, désactivé en dessous
     QEI2CONbits.POSRES = 0;     // desactive l'index => pas de reset du compteur;

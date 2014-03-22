@@ -8,6 +8,7 @@
       <itemPath>user.h</itemPath>
       <itemPath>asserv.h</itemPath>
       <itemPath>tests.h</itemPath>
+      <itemPath>robot.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

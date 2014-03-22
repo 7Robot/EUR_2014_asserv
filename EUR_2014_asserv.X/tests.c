@@ -102,10 +102,24 @@ void test_Asserv_droit(long int *qei_total, int *qei_old, float *erreur_old, flo
     Asserv_droit(consigne, valeur, erreur_old, integral);
 }
 
+void test_Asserv_Position(
+        float consigne_pos, float *pos, float *angle,
+        long int *qei_g, int *qei_old_g, float *erreur_old_g, float *integral_g,
+        long int *qei_d, int *qei_old_d, float *erreur_old_d, float *integral_d)
+{
+
+}
+
 
 
 // étalonner les QEI
-void etalonner_qei(void)
+void etalonner_qei(long int *qei_g,long int *qei_d,int *qei_g_old,int *qei_d_old)
 {
-    PWM_Moteurs(0, 0);
+    int qei_g_new = (int)POS1CNT;
+    int qei_d_new = (int)POS2CNT;
+    *qei_g += (qei_g_new-(*qei_g_old));
+    *qei_d += (qei_d_new-(*qei_d_old));
+    *qei_g_old = qei_g_new;
+    *qei_d_old = qei_d_new;
+    __delay_ms(10);
 }
