@@ -27,7 +27,6 @@
 #include <stdint.h>        /* Includes uint16_t definition                    */
 #include <stdbool.h>       /* Includes true/false definition                  */
 
-#include "system.h"        /* System funct/params, like osc/peripheral config */
 #include "user.h"          /* User funct/params, such as InitApp              */
 #include "asserv.h"
 #include "qei.h"           /* QEI definitions for easier use                  */
@@ -52,6 +51,23 @@ _FWDT(FWDTEN_OFF);
 // Select debug channel.
 _FICD(ICS_PGD1 & JTAGEN_OFF);
 
+/* TODO Add clock switching code if appropriate.  An example stub is below.   */
+void ConfigureOscillator(void)
+{
+    // Configure PLL prescaler, PLL postscaler, PLL divisor
+    PLLFBDbits.PLLDIV = 41;        // M=152
+    CLKDIVbits.PLLPRE  = 0;         // N1=7
+    CLKDIVbits.PLLPOST = 0;         // N2=2
+    /* Fosc = M/(N1.N2)*Fin
+     * Fin : 7.37MHz (quartz interne)
+     * Fosc à 80 MHZ (ne doit pas dépasser 80 MHZ)
+     * la solution la plus proche est 152*7.37/(7*2) = 80.017
+     * attention, cela entraine donc une FCY et une FPériphériques à 40 MHZ
+     */
+    while (!OSCCONbits.LOCK);       // attente que la PLL soit lockée sur se nouvelle configuration.
+}
+
+
 /******************************************************************************/
 /* Main Program                                                               */
 /******************************************************************************/
@@ -63,6 +79,7 @@ int16_t main(void)
     float erreur_old = 0;
     float integral = 0;
     int qei = 0;
+
     
     /* Configure the oscillator for the device */
     ConfigureOscillator();
@@ -75,7 +92,10 @@ int16_t main(void)
     /* TODO <INSERT USER APPLICATION CODE HERE> */
 
     while (1){
-        test_Asserv_droit(&qei_total, &qei, &erreur_old, &integral);
-        __delay_ms(10);
+        //test_Asserv_droit(&qei_total, &qei, &erreur_old, &integral);
+        __delay_ms(1000);
+        led = !led;
+        //test_frequence_fixe_moteurs(10000);
+        test_frequence_fixe_moteurs(20000);
     }
 }

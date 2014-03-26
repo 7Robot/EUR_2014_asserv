@@ -13,7 +13,6 @@
 #include <stdbool.h>       /* Includes true/false definition                  */
 #include <math.h>
 
-#include "system.h"
 #include "user.h"
 #include "asserv.h"
 

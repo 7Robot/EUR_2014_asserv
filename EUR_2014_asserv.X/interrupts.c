@@ -15,6 +15,52 @@
 
 #include <stdint.h>        /* Includes uint16_t definition   */
 #include <stdbool.h>       /* Includes true/false definition */
+#include "user.h"
+#include <timer.h>
+
+/******************************************************************************/
+/* User Functions                                                             */
+/******************************************************************************/
+
+/* <Initialize variables in user.h and insert code for user algorithms.> */
+
+void InitApp(void)
+{
+     _TRISA2 = 0;
+    /* TODO Initialize User Ports/Peripherals/Project here */
+
+     _NSTDIS = 0;
+
+    OpenTimer2(T2_ON &
+                T2_IDLE_CON &
+                T2_GATE_OFF &
+                T2_PS_1_256 &
+                T2_SOURCE_INT, 10000 );
+
+    ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
+}
+ // activation de la priorité des interruptions
+
+
+long int limit_int(long int valeur, long int inf, long int sup)
+{
+    if (valeur < inf)
+        return inf;
+    else if (valeur > sup)
+        return sup;
+    else
+        return valeur;
+}
+
+float limit_float(float valeur, float inf, float sup)
+{
+    if (valeur < inf)
+        return inf;
+    else if (valeur > sup)
+        return sup;
+    else
+        return valeur;
+}
 
 /******************************************************************************/
 /* Interrupt Vector Options                                                   */
@@ -124,3 +170,9 @@
 /******************************************************************************/
 
 /* TODO Add interrupt routine code here. */
+void __attribute__((interrupt, auto_psv)) _T2Interrupt(void)
+{
+    _T2IF = 0;
+    led = !led;    // On bascule l'état de la LED
+          // On baisse le FLAG
+}
