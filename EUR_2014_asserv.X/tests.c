@@ -101,8 +101,6 @@ void test_Asserv_droit(long int *qei_total, int *qei_old, float *erreur_old, flo
     Asserv_droit(consigne, valeur, erreur_old, integral);
 }
 
-
-
 // étalonner les QEI
 void etalonner_qei(void)
 {

@@ -32,6 +32,8 @@
 #include "qei.h"           /* QEI definitions for easier use                  */
 #include <libpic30.h>
 #include "tests.h"
+#include <uart.h>
+#include "ax12.h"
 
 /******************************************************************************/
 /* Global Variable Declaration                                                */
@@ -45,7 +47,7 @@
 // Select Oscillator and switching.
 _FOSCSEL(FNOSC_FRCPLL & IESO_OFF);
 // Select clock.
-_FOSC(POSCMD_NONE & OSCIOFNC_OFF & FCKSM_CSDCMD);
+_FOSC(POSCMD_NONE & OSCIOFNC_OFF & IOL1WAY_OFF & FCKSM_CSDCMD);
 // Watchdog Timer.
 _FWDT(FWDTEN_OFF);
 // Select debug channel.
@@ -89,13 +91,27 @@ int16_t main(void)
     Init_PWM();
     Init_QEI();
 
+    //pour les AX12
+    responseReadyAX = 0;
+    ODCBbits.ODCB5 = 1; //open drain
+
     /* TODO <INSERT USER APPLICATION CODE HERE> */
+    __delay_ms(10);
+    PutAX(AX_BROADCAST, AX_MOVING_SPEED, 250);
+    __delay_ms(10);
+    PutAX(AX_BROADCAST, AX_MAX_TORQUE, 1100);
+    __delay_ms(10);
+   // PutAX(AX_BROADCAST, AX_BAUD_RATE, 34); //57600
 
     while (1){
         //test_Asserv_droit(&qei_total, &qei, &erreur_old, &integral);
+       // __delay_ms(1000);
         __delay_ms(1000);
-        led = !led;
+        PutAX(18, AX_GOAL_POSITION, 100);
+        __delay_ms(1000);
+        PutAX(18, AX_GOAL_POSITION, 0);
+        //led = !led;
         //test_frequence_fixe_moteurs(10000);
-        test_frequence_fixe_moteurs(20000);
+        //test_frequence_fixe_moteurs(20000);
     }
 }

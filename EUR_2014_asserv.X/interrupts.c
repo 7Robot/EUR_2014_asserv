@@ -17,6 +17,8 @@
 #include <stdbool.h>       /* Includes true/false definition */
 #include "user.h"
 #include <timer.h>
+#include <uart.h>
+#include "ax12.h"
 
 /******************************************************************************/
 /* User Functions                                                             */
@@ -28,7 +30,8 @@ void InitApp(void)
 {
      _TRISA2 = 0;
     /* TODO Initialize User Ports/Peripherals/Project here */
-
+     
+    // activation de la priorité des interruptions
      _NSTDIS = 0;
 
     OpenTimer2(T2_ON &
@@ -37,9 +40,21 @@ void InitApp(void)
                 T2_PS_1_256 &
                 T2_SOURCE_INT, 10000 );
 
-    ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
+    //ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
+
+    OpenUART1(UART_EN & UART_IDLE_CON & UART_IrDA_DISABLE & UART_MODE_FLOW
+            & UART_UEN_00 & UART_DIS_WAKE & UART_DIS_LOOPBACK
+            & UART_DIS_ABAUD & UART_UXRX_IDLE_ONE & UART_BRGH_SIXTEEN
+            & UART_NO_PAR_8BIT & UART_1STOPBIT,
+              UART_INT_TX_BUF_EMPTY & UART_IrDA_POL_INV_ZERO
+            & UART_SYNC_BREAK_DISABLED & UART_TX_ENABLE & UART_TX_BUF_NOT_FUL & UART_INT_RX_CHAR
+            & UART_ADR_DETECT_DIS & UART_RX_OVERRUN_CLEAR,
+              BRGVAL);
+
+    ConfigIntUART1(UART_RX_INT_PR4 & UART_RX_INT_EN
+                 & UART_TX_INT_PR4 & UART_TX_INT_DIS);
 }
- // activation de la priorité des interruptions
+
 
 
 long int limit_int(long int valeur, long int inf, long int sup)
@@ -175,4 +190,31 @@ void __attribute__((interrupt, auto_psv)) _T2Interrupt(void)
     _T2IF = 0;
     led = !led;    // On bascule l'état de la LED
           // On baisse le FLAG
+}
+
+/*************************************************
+ *          RX Interrupt
+ *
+ *************************************************/
+
+
+void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void){
+
+    led = led ^ 1;
+    InterruptAX();
+
+    _U1RXIF = 0;      // On baisse le FLAG
+}
+
+/*************************************************
+ *          TX Interrupt
+ *
+ *************************************************/
+
+
+void __attribute__((__interrupt__, no_auto_psv)) _U1TXInterrupt(void)
+{
+
+   IFS0bits.U1TXIF = 0; // clear TX interrupt flag
+
 }
