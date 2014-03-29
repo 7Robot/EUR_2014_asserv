@@ -95,7 +95,6 @@ int16_t main(void)
     responseReadyAX = 0;
     ODCBbits.ODCB5 = 1; //open drain
 
-    /* TODO <INSERT USER APPLICATION CODE HERE> */
     __delay_ms(10);
     PutAX(AX_BROADCAST, AX_MOVING_SPEED, 250);
     __delay_ms(10);
