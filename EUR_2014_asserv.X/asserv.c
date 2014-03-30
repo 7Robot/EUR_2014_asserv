@@ -16,6 +16,7 @@
 #include "system.h"
 #include "user.h"
 #include "asserv.h"
+#include "robot.h"
 
 void Init_PWM(void)
 {
@@ -240,6 +241,41 @@ void Asserv_droit(float consigne, float valeur, float *erreur_old, float *integr
     commande = K_p*erreur + K_i*(*integral) + K_d*derivee;
 
     PWM_Moteurs_droit(commande);
+}
+
+// asservissement en position
+void Asserv_position(float x,float y,float v,float theta,float vtheta,float cons_x,float cons_y)
+{
+    // variables
+    float DC_g = 0; // Duty-cycle du moteur gauche
+    float DC_d = 0; // Duty-cycle du moteur droit
+    // coefficients
+    float Kp = 0;
+    float Ki = 0;
+    float Kd = 0;
+
+    // a coder
+    
+}
+
+// maj des variables d'état du robot
+void Maj_reperage(float *x,float *y,float *v,float *theta,float *vtheta,
+        int qei_g_old, int qei_d_old,int qei_g_new,int qei_d_new)
+{
+    // calculs intermédiaires roues gauches et droites
+    float dg = (float)(qei_g_new-qei_g_old)/TICPARMETRE;
+    float dd = (float)(qei_d_new-qei_d_old)/TICPARMETRE;
+    float d = (dd+dg)/2;
+    float dtheta = (dd-dg)/(2*ENTRAXE);
+
+    // maj des vitesses
+    *v = d/TEMPSASSERV;
+    *vtheta = dtheta/TEMPSASSERV;
+
+    // maj des positions
+    *x += d*cos(*theta+dtheta/2); // ou *theta+dtheta/2 est l'angle moyen pendant le déplacement
+    *y += d*sin(*theta+dtheta/2);
+    *theta += dtheta;
 }
 
 int is_arrived(float erreur, float derivee)

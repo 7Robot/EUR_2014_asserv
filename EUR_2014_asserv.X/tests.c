@@ -77,7 +77,7 @@ void test_Asserv_gauche(long int *qei_total, int *qei_old, float *erreur_old, fl
     float consigne = 100;
     int qei_new = (int)POS1CNT;
 
-    *qei_total -= (qei_new-(*qei_old)); // - pour le gauche, + pour le droit
+    *qei_total += (qei_new-(*qei_old));
     *qei_old = qei_new;
 
     // conversion de QEI à mètre
@@ -93,7 +93,7 @@ void test_Asserv_droit(long int *qei_total, int *qei_old, float *erreur_old, flo
     float consigne = 100;
     int qei_new = (int)POS2CNT;
 
-    *qei_total += (qei_new-(*qei_old)); // - pour le gauche, + pour le droit
+    *qei_total += (qei_new-(*qei_old));
     *qei_old = qei_new;
 
     // conversion de QEI à mètre
@@ -102,24 +102,73 @@ void test_Asserv_droit(long int *qei_total, int *qei_old, float *erreur_old, flo
     Asserv_droit(consigne, valeur, erreur_old, integral);
 }
 
-void test_Asserv_Position(
-        float consigne_pos, float *pos, float *angle,
-        long int *qei_g, int *qei_old_g, float *erreur_old_g, float *integral_g,
-        long int *qei_d, int *qei_old_d, float *erreur_old_d, float *integral_d)
+void test_Reperage()
 {
+    // variables QEI
+    int qei_g_old = 0;
+    int qei_d_old = 0;
+    int qei_g_new = 0;
+    int qei_d_new = 0;
+
+    // variables repérage
+    float x = 0;
+    float y = 0;
+    float v = 0;
+    float theta = 0;
+    float vtheta = 0;
+
+    /* Configure the oscillator for the device */
+    ConfigureOscillator();
+
+    /* Initialize IO ports and peripherals */
+    InitApp();
+    Init_PWM();
+    Init_QEI();
+
+    while (1)
+    {
+        // récupération des données des compteurs qei gauche et droit
+        qei_g_new = (int)POS1CNT;
+        qei_d_new = (int)POS2CNT;
+        // mise a jour des variables d'état du robot (position, vitesse)
+        Maj_reperage(&x,&y,&v,&theta,&vtheta,qei_g_old,qei_d_old,qei_g_new,qei_d_new);
+        // sauvegarde des valeurs des compteurs
+        qei_g_old = qei_g_new;
+        qei_d_old = qei_d_new;
+        __delay_ms(10);
+    }
 
 }
 
 
 
 // étalonner les QEI
-void etalonner_qei(long int *qei_g,long int *qei_d,int *qei_g_old,int *qei_d_old)
+void etalonner_qei()
 {
-    int qei_g_new = (int)POS1CNT;
-    int qei_d_new = (int)POS2CNT;
-    *qei_g += (qei_g_new-(*qei_g_old));
-    *qei_d += (qei_d_new-(*qei_d_old));
-    *qei_g_old = qei_g_new;
-    *qei_d_old = qei_d_new;
-    __delay_ms(10);
+    /* variables */
+    long long int qei_g = 0;
+    long long int qei_d = 0;
+    int qei_g_old = 0;
+    int qei_d_old = 0;
+    int qei_g_new = 0;
+    int qei_d_new = 0;
+
+    /* Configure the oscillator for the device */
+    ConfigureOscillator();
+
+    /* Initialize IO ports and peripherals */
+    InitApp();
+    Init_PWM();
+    Init_QEI();
+
+    while (1)
+    {
+        qei_g_new = (int)POS1CNT;
+        qei_d_new = (int)POS2CNT;
+        qei_g += (qei_g_new-(qei_g_old));
+        qei_d += (qei_d_new-(qei_d_old));
+        qei_g_old = qei_g_new;
+        qei_d_old = qei_d_new;
+        __delay_ms(10);
+    }
 }

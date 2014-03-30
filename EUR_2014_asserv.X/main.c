@@ -58,24 +58,7 @@ _FICD(ICS_PGD1 & JTAGEN_OFF);
 
 int16_t main(void)
 {
-    /* variables */
-    long int qei_g = 0;
-    long int qei_d = 0;
-    int qei_g_old = 0;
-    int qei_d_old = 0;
-    
-    /* Configure the oscillator for the device */
-    ConfigureOscillator();
-
-    /* Initialize IO ports and peripherals */
-    InitApp();
-    Init_PWM();
-    Init_QEI();
-
     /* TODO <INSERT USER APPLICATION CODE HERE> */
-
-    while (1){
-        etalonner_qei(&qei_g,&qei_d,&qei_g_old,&qei_d_old);
-        __delay_ms(10);
-    }
+    test_Reperage();
+    return 1;
 }
