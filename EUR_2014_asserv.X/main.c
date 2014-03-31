@@ -59,6 +59,6 @@ _FICD(ICS_PGD1 & JTAGEN_OFF);
 int16_t main(void)
 {
     /* TODO <INSERT USER APPLICATION CODE HERE> */
-    test_Reperage();
+    test_Asserv_vitesse_1();
     return 1;
 }

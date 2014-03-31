@@ -9,7 +9,7 @@
 #define	ROBOT_H
 
 // Entraxe entre les 2 roues du robot
-#define ENTRAXE 0.27 // en mètre
+#define ENTRAXE 0.275 // en mètre
 
 
 #endif	/* ROBOT_H */

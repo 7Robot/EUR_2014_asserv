@@ -22,6 +22,9 @@ void test_DC_variable_moteurs(float DC_min,float DC_max, float temps, float freq
 void test_Asserv_gauche(long int *qei_total, int *qei_old, float *erreur_old, float *integral);
 void test_Asserv_droit(long int *qei_total, int *qei_old, float *erreur_old, float *integral);
 
+// trouver une approximation de la relation v = f(Duty-Cycle) pour chaque moteur
+void test_Asserv_vitesse_1();
+
 // etalonage
 void etalonner_qei();
 void test_Reperage();

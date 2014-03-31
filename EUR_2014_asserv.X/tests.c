@@ -102,6 +102,58 @@ void test_Asserv_droit(long int *qei_total, int *qei_old, float *erreur_old, flo
     Asserv_droit(consigne, valeur, erreur_old, integral);
 }
 
+// trouver une approximation de la relation v = f(Duty-Cycle) pour chaque moteur
+void test_Asserv_vitesse_1()
+{
+    // variables QEI
+    int qei_g_old = 0;
+    int qei_d_old = 0;
+    int qei_g_new = 0;
+    int qei_d_new = 0;
+
+    // vitesses gauche et droite
+    float vg = 0;
+    float vd = 0;
+    // vitesses moyennées
+    float vg_m = 0;
+    float vd_m = 0;
+
+    // variable de temps
+    int t = 0;
+
+    /* Configure the oscillator for the device */
+    ConfigureOscillator();
+
+    /* Initialize IO ports and peripherals */
+    InitApp();
+    Init_PWM();
+    Init_QEI();
+
+    // test d'une durée de 5 secondes
+    for (t=0; t<1000; t++)
+    {
+        // récupération des données des compteurs qei gauche et droit
+        qei_g_new = (int)POS1CNT;
+        qei_d_new = (int)POS2CNT;
+        // mise a jour des vitesses droite et gauche du robot
+        Maj_vitesse(&vg,&vd,qei_g_old,qei_d_old,qei_g_new,qei_d_new);
+        // vitesses moyennes
+        vg_m = 0.95*vg_m + 0.05*vg;
+        vd_m = 0.95*vd_m + 0.05*vd;
+        // application d'un DC
+        PWM_Moteurs(100, 100);
+        // sauvegarde des valeurs des compteurs
+        qei_g_old = qei_g_new;
+        qei_d_old = qei_d_new;
+        __delay_ms(10);
+    }
+
+    // un delay pour mettre un point d'arrêt (en mode debug)
+    __delay_ms(1000);
+}
+
+
+/********************************* Test d'étalonage ***************************/
 void test_Reperage()
 {
     // variables QEI

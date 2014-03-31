@@ -243,9 +243,51 @@ void Asserv_droit(float consigne, float valeur, float *erreur_old, float *integr
     PWM_Moteurs_droit(commande);
 }
 
+//asservissement en vitesse
+/* Principe original : 4 termes au lieu de 3 :
+ * terme 1 : cf courbe d'étalonage en vitesse
+ * terme 2 : proportionnel à l'erreur
+ * terme 3 : proportionnel à la dérivée de l'erreur
+ * terme 4 : proportionnel à l'intégrale
+ */
+void Asserv_vitesse(float v,float cons_v, float *commande_old){
+    // coefficients
+    float Kp = 0;
+    float Ki = 0;
+    float Kd = 0;
+    // autres variables
+    static float erreur = 0;
+    static float erreur_old = 0;
+    static float derivee = 0;
+    static float integral = 0;
+    static float commande = 0;
+    // commandes aux moteurs
+    static float DC_g = 0;
+    static float DC_d = 0;
+    float alpha = 0.7; // coef de moyennage
+
+    erreur = (1-alpha)*erreur_old + alpha*(cons_v-v); // erreur moyennée
+    derivee = (1-alpha)*derivee + alpha*(erreur-erreur_old); // derivee moyennée
+    erreur_old = erreur;
+
+    // Si on considère être arrivé, on annule l'integrale (a activer après avoir choisit K_p,K_i et K_d)
+    if (vitesse_ok(erreur,derivee))
+        integral = 0.0;
+    else
+        integral = limit_float((integral)+erreur*(1+0.1*derivee), -130.0, 130.0);
+
+    // application de la commande
+    commande = limit_float(*commande_old + Kp*erreur + Ki*integral + Kd*derivee, -100.0, 100.0);
+    *commande_old = commande;
+    DC_g = commande;
+    DC_d = commande;
+    PWM_Moteurs(DC_g, DC_d);
+}
+
+
 // asservissement en position
 void Asserv_position(float x,float y,float v,float theta,float vtheta,float cons_x,float cons_y)
-{
+{/*
     // variables
     float DC_g = 0; // Duty-cycle du moteur gauche
     float DC_d = 0; // Duty-cycle du moteur droit
@@ -255,7 +297,7 @@ void Asserv_position(float x,float y,float v,float theta,float vtheta,float cons
     float Kd = 0;
 
     // a coder
-    
+    */
 }
 
 // maj des variables d'état du robot
@@ -266,7 +308,7 @@ void Maj_reperage(float *x,float *y,float *v,float *theta,float *vtheta,
     float dg = (float)(qei_g_new-qei_g_old)/TICPARMETRE;
     float dd = (float)(qei_d_new-qei_d_old)/TICPARMETRE;
     float d = (dd+dg)/2;
-    float dtheta = (dd-dg)/(2*ENTRAXE);
+    float dtheta = (dd-dg)/(ENTRAXE);
 
     // maj des vitesses
     *v = d/TEMPSASSERV;
@@ -278,7 +320,26 @@ void Maj_reperage(float *x,float *y,float *v,float *theta,float *vtheta,
     *theta += dtheta;
 }
 
+// mise a jour des vitesses droite et gauche du robot
+void Maj_vitesse(float *vg,float *vd,
+        int qei_g_old, int qei_d_old,int qei_g_new,int qei_d_new)
+{
+    // calculs intermédiaires roues gauches et droites
+    float dg = (float)(qei_g_new-qei_g_old)/TICPARMETRE;
+    float dd = (float)(qei_d_new-qei_d_old)/TICPARMETRE;
+
+    // maj des vitesses
+    *vg = dg/TEMPSASSERV;
+    *vd = dd/TEMPSASSERV;
+}
+
+
 int is_arrived(float erreur, float derivee)
 {
     return (fabs(erreur)<1 && fabs(derivee)<0.1);
+}
+
+int vitesse_ok(float erreur, float derivee)
+{
+    return (fabs(erreur)<0.1 && fabs(derivee)<0.01);
 }

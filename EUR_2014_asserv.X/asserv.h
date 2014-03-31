@@ -28,7 +28,7 @@
 #define DC_MAX 100
 
 // nombre de tics de l'encodeur pour faire 1 mètre
-#define TICPARMETRE 54340
+#define TICPARMETRE 54640
 // durée entre 2 asserv
 #define TEMPSASSERV 0.01
 
@@ -50,13 +50,19 @@ void Asserv_gauche(float consigne, float valeur, float *erreur_old, float *integ
 void Asserv_droit(float consigne, float valeur, float *erreur_old, float *integral);
 
 // asservissement en position
+void Asserv_vitesse(float v,float cons_v, float *commande_old);
 void Asserv_position(float x,float y,float v,float theta,float vtheta,float cons_x,float cons_y);
 
 // maj des variables d'état du robot
 void Maj_reperage(float *x,float *y,float *v,float *theta,float *vtheta,
         int qei_g_old, int qei_d_old,int qei_g_new,int qei_d_new);
+// mise a jour des vitesses droite et gauche du robot
+void Maj_vitesse(float *vg,float *vd,
+        int qei_g_old, int qei_d_old,int qei_g_new,int qei_d_new);
 
 // teste si le robot est arrivé à destination
 int is_arrived(float erreur, float derivee);
+// teste si le robot va a la bonne vitesse
+int vitesse_ok(float erreur, float derivee);
 
 #endif	/* ASSERV_H */
