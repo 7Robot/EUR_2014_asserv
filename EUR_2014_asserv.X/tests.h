@@ -23,7 +23,20 @@ void test_Asserv_gauche(long int *qei_total, int *qei_old, float *erreur_old, fl
 void test_Asserv_droit(long int *qei_total, int *qei_old, float *erreur_old, float *integral);
 
 // etalonage
-void etalonner_qei(void);
+void test_Asserv_vitesse_1();
+// Asserve en vitesse indépendante pour chaque moteur
+void test_Asserv_vitesse_2();
+// Asserve en vitesse + vitesse angulaire
+void test_Asserv_vitesse_3();
+// applique un asservissement en vitesse pour une duree donnée
+void segment_vitesse(int duration, float cons_v, float cons_vtheta,
+        int *qei_g_new, int *qei_d_new, int *qei_g_old, int *qei_d_old,
+        float *x, float *y, float *v, float *theta, float *vtheta,
+        float *v_m, float *vtheta_m);
+
+// etalonage
+void etalonner_qei();
+void test_Reperage();
 
 #endif	/* TESTS_H */
 

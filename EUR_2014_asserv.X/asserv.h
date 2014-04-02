@@ -26,6 +26,13 @@
 #define P1TPER_MAX 32000UL
 // Duty-Cycle max (au cas ou on veut limiter la puissance moteur)
 #define DC_MAX 100
+// Entraxe entre les 2 roues du robot
+#define ENTRAXE 0.219 // en mètre
+
+// nombre de tics de l'encodeur pour faire 1 mètre
+#define TICPARMETRE 13969
+// durée entre 2 asserv
+#define TEMPSASSERV 0.01
 
 // initialise les PWM
 void Init_PWM(void);
@@ -44,7 +51,26 @@ void PWM_Moteurs_droit(float DC);
 void Asserv_gauche(float consigne, float valeur, float *erreur_old, float *integral);
 void Asserv_droit(float consigne, float valeur, float *erreur_old, float *integral);
 
+// asservissement en position
+void Asserv_position(float x,float y,float v,float theta,float vtheta,float cons_x,float cons_y);
+// asservissement en vitesse
+float Asserv_vitesse_commande(float v, float cons_v,
+float *erreur_old, float *derivee_old, float *integral);// calcul de la commande de l'asservissement en vitesse
+void Asserv_vitesse_gauche(float v,float cons_v);
+void Asserv_vitesse_droite(float v,float cons_v);
+
+void Asserv_vitesse(float v,float vtheta,float cons_v,float cons_vtheta);
+
+// maj des variables d'état du robot
+void Maj_reperage(float *x,float *y,float *v,float *theta,float *vtheta,
+        int qei_g_old, int qei_d_old,int qei_g_new,int qei_d_new);
+// mise a jour des vitesses droite et gauche du robot
+void Maj_vitesse(float *vg,float *vd,
+        int qei_g_old, int qei_d_old,int qei_g_new,int qei_d_new);
+
 // teste si le robot est arrivé à destination
 int is_arrived(float erreur, float derivee);
+// teste si le robot va a la bonne vitesse
+int vitesse_ok(float erreur, float derivee);
 
 #endif	/* ASSERV_H */

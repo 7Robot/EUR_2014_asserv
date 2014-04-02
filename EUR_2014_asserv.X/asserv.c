@@ -241,7 +241,107 @@ void Asserv_droit(float consigne, float valeur, float *erreur_old, float *integr
     PWM_Moteurs_droit(commande);
 }
 
+// calcul de la commande de l'asservissement en vitesse
+float Asserv_vitesse_commande(float v, float cons_v, float *erreur_old, float *derivee_old, float *integral){
+    // coefficients
+    float Kp = 100;
+    float Ki = 1;
+    float Kd = 500;
+    // autres variables
+    float alpha = 0.3; // coef de moyennage
+
+    float erreur = (1-alpha)*(*erreur_old) + alpha*(cons_v-v); // erreur moyennée
+    float derivee = (1-alpha)*(*derivee_old) + alpha*(erreur-(*erreur_old)); // derivee moyennée
+    *integral = limit_float(*integral+erreur, -100, 100); // integrale bornée
+    *erreur_old = erreur;
+    *derivee_old = derivee;
+
+    // application de la commande
+    return Kp*erreur + Ki*(*integral) + Kd*derivee;
+}
+
+// asservissement en vitesse
+void Asserv_vitesse_gauche(float v,float cons_v){
+    static float erreur_g = 0;
+    static float derivee_g = 0;
+    static float integral_g = 0;
+    PWM_Moteurs_gauche(Asserv_vitesse_commande(v,cons_v,&erreur_g,&derivee_g,&integral_g));
+}
+
+// asservissement en vitesse
+void Asserv_vitesse_droite(float v,float cons_v){
+    static float erreur_d = 0;
+    static float derivee_d = 0;
+    static float integral_d = 0;
+    PWM_Moteurs_droit(Asserv_vitesse_commande(v,cons_v,&erreur_d,&derivee_d,&integral_d));
+}
+
+// asservissement en vitesse et vitesse angulaire
+void Asserv_vitesse(float v,float vtheta,float cons_v,float cons_vtheta){
+    // variables permettant de se ramener à des consignes de vitesse gauche et droite
+    float delta_v = ENTRAXE*vtheta/2;
+    float cons_delta_v = ENTRAXE*cons_vtheta/2;
+    // vitesses gauche et droite
+    float v_g = v - delta_v;
+    float v_d = v + delta_v;
+    // consignes des vitesses gauche et droite
+    float cons_v_g = cons_v - cons_delta_v;
+    float cons_v_d = cons_v + cons_delta_v;
+
+    // variables d'asservissement roue gauche
+    static float erreur_g = 0;
+    static float derivee_g = 0;
+    static float integral_g = 0;
+
+    // variables d'asservissement roue droite
+    static float erreur_d = 0;
+    static float derivee_d = 0;
+    static float integral_d = 0;
+
+    // PWM moteur gauche
+    PWM_Moteurs_gauche(Asserv_vitesse_commande(v_g,cons_v_g,&erreur_g,&derivee_g,&integral_g));
+    // PWM moteur droit
+    PWM_Moteurs_droit(Asserv_vitesse_commande(v_d,cons_v_d,&erreur_d,&derivee_d,&integral_d));
+}
+
+void Maj_reperage(float *x,float *y,float *v,float *theta,float *vtheta,
+        int qei_g_old, int qei_d_old,int qei_g_new,int qei_d_new)
+{
+    // calculs intermédiaires roues gauches et droites
+    float dg = (float)(qei_g_new-qei_g_old)/TICPARMETRE;
+    float dd = (float)(qei_d_new-qei_d_old)/TICPARMETRE;
+    float d = (dd+dg)/2;
+    float dtheta = (dd-dg)/(ENTRAXE);
+
+    // maj des vitesses
+    *v = d/TEMPSASSERV;
+    *vtheta = dtheta/TEMPSASSERV;
+
+    // maj des positions
+    *x += d*cos(*theta+dtheta/2); // ou *theta+dtheta/2 est l'angle moyen pendant le déplacement
+    *y += d*sin(*theta+dtheta/2);
+    *theta += dtheta;
+}
+
+// mise a jour des vitesses droite et gauche du robot
+void Maj_vitesse(float *vg,float *vd,
+        int qei_g_old, int qei_d_old,int qei_g_new,int qei_d_new)
+{
+    // calculs intermédiaires roues gauches et droites
+    float dg = (float)(qei_g_new-qei_g_old)/TICPARMETRE;
+    float dd = (float)(qei_d_new-qei_d_old)/TICPARMETRE;
+
+    // maj des vitesses
+    *vg = dg/TEMPSASSERV;
+    *vd = dd/TEMPSASSERV;
+}
+
 int is_arrived(float erreur, float derivee)
 {
     return (fabs(erreur)<1 && fabs(derivee)<0.1);
+}
+
+int vitesse_ok(float erreur, float derivee)
+{
+    return (fabs(erreur)<0.1 && fabs(derivee)<0.01);
 }

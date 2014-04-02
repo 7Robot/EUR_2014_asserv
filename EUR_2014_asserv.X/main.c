@@ -95,20 +95,22 @@ int16_t main(void)
     responseReadyAX = 0;
     ODCBbits.ODCB5 = 1; //open drain
 
-    __delay_ms(10);
-    PutAX(AX_BROADCAST, AX_MOVING_SPEED, 250);
-    __delay_ms(10);
-    PutAX(AX_BROADCAST, AX_MAX_TORQUE, 1100);
-    __delay_ms(10);
+   // __delay_ms(10);
+   // PutAX(AX_BROADCAST, AX_MOVING_SPEED, 250);
+   // __delay_ms(10);
+   // PutAX(AX_BROADCAST, AX_MAX_TORQUE, 1100);
+    //__delay_ms(10);
    // PutAX(AX_BROADCAST, AX_BAUD_RATE, 34); //57600
 
     while (1){
+        test_Reperage();
+        //test_Asserv_vitesse_3();
         //test_Asserv_droit(&qei_total, &qei, &erreur_old, &integral);
        // __delay_ms(1000);
-        __delay_ms(1000);
-        PutAX(18, AX_GOAL_POSITION, 100);
-        __delay_ms(1000);
-        PutAX(18, AX_GOAL_POSITION, 0);
+       // __delay_ms(1000);
+       // PutAX(18, AX_GOAL_POSITION, 100);
+        //__delay_ms(1000);
+        //PutAX(18, AX_GOAL_POSITION, 0);
         //led = !led;
         //test_frequence_fixe_moteurs(10000);
         //test_frequence_fixe_moteurs(20000);
