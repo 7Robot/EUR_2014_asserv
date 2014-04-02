@@ -278,6 +278,34 @@ void Asserv_vitesse_droite(float v,float cons_v){
     PWM_Moteurs_droit(Asserv_vitesse_commande(v,cons_v,&erreur_d,&derivee_d,&integral_d));
 }
 
+// asservissement en vitesse et vitesse angulaire
+void Asserv_vitesse(float v,float vtheta,float cons_v,float cons_vtheta){
+    // variables permettant de se ramener à des consignes de vitesse gauche et droite
+    float delta_v = ENTRAXE*vtheta/2;
+    float cons_delta_v = ENTRAXE*cons_vtheta/2;
+    // vitesses gauche et droite
+    float v_g = v - delta_v;
+    float v_d = v + delta_v;
+    // consignes des vitesses gauche et droite
+    float cons_v_g = cons_v - cons_delta_v;
+    float cons_v_d = cons_v + cons_delta_v;
+
+    // variables d'asservissement roue gauche
+    static float erreur_g = 0;
+    static float derivee_g = 0;
+    static float integral_g = 0;
+
+    // variables d'asservissement roue droite
+    static float erreur_d = 0;
+    static float derivee_d = 0;
+    static float integral_d = 0;
+
+    // PWM moteur gauche
+    PWM_Moteurs_gauche(Asserv_vitesse_commande(v_g,cons_v_g,&erreur_g,&derivee_g,&integral_g));
+    // PWM moteur droit
+    PWM_Moteurs_droit(Asserv_vitesse_commande(v_d,cons_v_d,&erreur_d,&derivee_d,&integral_d));
+}
+
 
 // asservissement en position
 void Asserv_position(float x,float y,float v,float theta,float vtheta,float cons_x,float cons_y)

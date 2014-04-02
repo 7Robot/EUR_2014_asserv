@@ -57,6 +57,7 @@ float Asserv_vitesse_commande(float v, float cons_v,
         float *erreur_old, float *derivee_old, float *integral);// calcul de la commande de l'asservissement en vitesse
 void Asserv_vitesse_gauche(float v,float cons_v);
 void Asserv_vitesse_droite(float v,float cons_v);
+void Asserv_vitesse(float v,float vtheta,float cons_v,float cons_vtheta);
 
 // maj des variables d'état du robot
 void Maj_reperage(float *x,float *y,float *v,float *theta,float *vtheta,

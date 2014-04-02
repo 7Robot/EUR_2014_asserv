@@ -207,6 +207,90 @@ void test_Asserv_vitesse_2()
 }
 
 
+// Asserve en vitesse + vitesse angulaire
+void test_Asserv_vitesse_3()
+{
+    // variables QEI
+    int qei_g_old = 0;
+    int qei_d_old = 0;
+    int qei_g_new = 0;
+    int qei_d_new = 0;
+
+    // variables repérage
+    float x = 0;
+    float y = 0;
+    float v = 0;
+    float theta = 0;
+    float vtheta = 0;
+
+    // consignes de vitesse et vitesse angulaire
+    float cons_v = 0;
+    float cons_vtheta = 1;
+
+    // vitesses moyennées (pour debuggage)
+    float v_m = 0;
+    float vtheta_m = 0;
+
+    // variable de temps
+    int t = 0;
+
+    /* Configure the oscillator for the device */
+    ConfigureOscillator();
+
+    /* Initialize IO ports and peripherals */
+    InitApp();
+    Init_PWM();
+    Init_QEI();
+
+    // test d'une durée de 5 secondes
+    for (t=0; t<700; t++)
+    {
+        // récupération des données des compteurs qei gauche et droit
+        qei_g_new = (int)POS1CNT;
+        qei_d_new = (int)POS2CNT;
+        // mise a jour des variables d'état du robot (position, vitesse)
+        Maj_reperage(&x,&y,&v,&theta,&vtheta,qei_g_old,qei_d_old,qei_g_new,qei_d_new);
+        // vitesses moyennes
+        v_m = 0.95*v_m + 0.05*v;
+        vtheta_m = 0.95*vtheta_m + 0.05*vtheta;
+        // asservissement en vitesse et vitesse angulaire
+        Asserv_vitesse(v,vtheta,cons_v,cons_vtheta);
+        // sauvegarde des valeurs des compteurs
+        qei_g_old = qei_g_new;
+        qei_d_old = qei_d_new;
+        __delay_ms(10);
+    }
+
+    // un delay pour mettre un point d'arrêt (en mode debug)
+    __delay_ms(1000);
+}
+
+// applique un asservissement en vitesse pour une duree donnée
+void segment_vitesse(int duration, float cons_v, float cons_vtheta,
+        int *qei_g_new, int *qei_d_new, int *qei_g_old, int *qei_d_old,
+        float *x, float *y, float *v, float *theta, float *vtheta,
+        float *v_m, float *vtheta_m){
+    int t = 0;
+    for (t=0; t<duration; t++)
+    {
+        // récupération des données des compteurs qei gauche et droit
+        *qei_g_new = (int)POS1CNT;
+        *qei_d_new = (int)POS2CNT;
+        // mise a jour des variables d'état du robot (position, vitesse)
+        Maj_reperage(x,y,v,theta,vtheta,*qei_g_old,*qei_d_old,*qei_g_new,*qei_d_new);
+        // vitesses moyennes
+        *v_m = 0.95*(*v_m) + 0.05*(*v);
+        *vtheta_m = 0.95*(*vtheta_m) + 0.05*(*vtheta);
+        // asservissement en vitesse et vitesse angulaire
+        Asserv_vitesse(*v,*vtheta,cons_v,cons_vtheta);
+        // sauvegarde des valeurs des compteurs
+        *qei_g_old = *qei_g_new;
+        *qei_d_old = *qei_d_new;
+        __delay_ms(10);
+    }
+}
+
+
 /********************************* Test d'étalonage ***************************/
 void test_Reperage()
 {
