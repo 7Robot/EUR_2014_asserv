@@ -50,8 +50,13 @@ void Asserv_gauche(float consigne, float valeur, float *erreur_old, float *integ
 void Asserv_droit(float consigne, float valeur, float *erreur_old, float *integral);
 
 // asservissement en position
-void Asserv_vitesse(float v,float cons_v, float *commande_old);
 void Asserv_position(float x,float y,float v,float theta,float vtheta,float cons_x,float cons_y);
+
+// asservissement en vitesse
+float Asserv_vitesse_commande(float v, float cons_v,
+        float *erreur_old, float *derivee_old, float *integral);// calcul de la commande de l'asservissement en vitesse
+void Asserv_vitesse_gauche(float v,float cons_v);
+void Asserv_vitesse_droite(float v,float cons_v);
 
 // maj des variables d'état du robot
 void Maj_reperage(float *x,float *y,float *v,float *theta,float *vtheta,

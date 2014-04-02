@@ -243,45 +243,39 @@ void Asserv_droit(float consigne, float valeur, float *erreur_old, float *integr
     PWM_Moteurs_droit(commande);
 }
 
-//asservissement en vitesse
-/* Principe original : 4 termes au lieu de 3 :
- * terme 1 : cf courbe d'étalonage en vitesse
- * terme 2 : proportionnel à l'erreur
- * terme 3 : proportionnel à la dérivée de l'erreur
- * terme 4 : proportionnel à l'intégrale
- */
-void Asserv_vitesse(float v,float cons_v, float *commande_old){
+// calcul de la commande de l'asservissement en vitesse
+float Asserv_vitesse_commande(float v, float cons_v, float *erreur_old, float *derivee_old, float *integral){
     // coefficients
-    float Kp = 0;
-    float Ki = 0;
-    float Kd = 0;
+    float Kp = 100;
+    float Ki = 1;
+    float Kd = 500;
     // autres variables
-    static float erreur = 0;
-    static float erreur_old = 0;
-    static float derivee = 0;
-    static float integral = 0;
-    static float commande = 0;
-    // commandes aux moteurs
-    static float DC_g = 0;
-    static float DC_d = 0;
-    float alpha = 0.7; // coef de moyennage
+    float alpha = 0.3; // coef de moyennage
 
-    erreur = (1-alpha)*erreur_old + alpha*(cons_v-v); // erreur moyennée
-    derivee = (1-alpha)*derivee + alpha*(erreur-erreur_old); // derivee moyennée
-    erreur_old = erreur;
-
-    // Si on considère être arrivé, on annule l'integrale (a activer après avoir choisit K_p,K_i et K_d)
-    if (vitesse_ok(erreur,derivee))
-        integral = 0.0;
-    else
-        integral = limit_float((integral)+erreur*(1+0.1*derivee), -130.0, 130.0);
+    float erreur = (1-alpha)*(*erreur_old) + alpha*(cons_v-v); // erreur moyennée
+    float derivee = (1-alpha)*(*derivee_old) + alpha*(erreur-(*erreur_old)); // derivee moyennée
+    *integral = limit_float(*integral+erreur, -100, 100); // integrale bornée
+    *erreur_old = erreur;
+    *derivee_old = derivee;
 
     // application de la commande
-    commande = limit_float(*commande_old + Kp*erreur + Ki*integral + Kd*derivee, -100.0, 100.0);
-    *commande_old = commande;
-    DC_g = commande;
-    DC_d = commande;
-    PWM_Moteurs(DC_g, DC_d);
+    return Kp*erreur + Ki*(*integral) + Kd*derivee;
+}
+
+// asservissement en vitesse
+void Asserv_vitesse_gauche(float v,float cons_v){
+    static float erreur_g = 0;
+    static float derivee_g = 0;
+    static float integral_g = 0;
+    PWM_Moteurs_gauche(Asserv_vitesse_commande(v,cons_v,&erreur_g,&derivee_g,&integral_g));
+}
+
+// asservissement en vitesse
+void Asserv_vitesse_droite(float v,float cons_v){
+    static float erreur_d = 0;
+    static float derivee_d = 0;
+    static float integral_d = 0;
+    PWM_Moteurs_droit(Asserv_vitesse_commande(v,cons_v,&erreur_d,&derivee_d,&integral_d));
 }
 
 

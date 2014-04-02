@@ -24,6 +24,8 @@ void test_Asserv_droit(long int *qei_total, int *qei_old, float *erreur_old, flo
 
 // trouver une approximation de la relation v = f(Duty-Cycle) pour chaque moteur
 void test_Asserv_vitesse_1();
+// Asserve en vitesse indépendante pour chaque moteur
+void test_Asserv_vitesse_2();
 
 // etalonage
 void etalonner_qei();
