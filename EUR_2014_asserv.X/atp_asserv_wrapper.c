@@ -21,7 +21,7 @@ void OnRotFree(float rot) { motion_rot_free(rot); }
 
 void OnDistRot(float dist, float rot, float vDistMax, float aDistMax, float vRotMax, float aRotMax) {
     motion_dist_rot(dist, rot, vDistMax, aDistMax, vRotMax, aRotMax);
--}
+}
 
 void OnReachX(float x, float vMax, float aMax) { motion_reach_x(x, vMax, aMax); }
 
