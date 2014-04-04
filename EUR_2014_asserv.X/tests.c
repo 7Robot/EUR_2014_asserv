@@ -20,6 +20,11 @@
 #include <libpic30.h>
 #include "tests.h"
 
+
+/*############################################################################*/
+/*                Tests pour faire fonctionner les moteurs                    */
+/*############################################################################*/
+
 // teste si la fréquence du PWM est bien la bonne
 void test_frequence_fixe_moteurs(float frequence)
 {
@@ -69,6 +74,11 @@ void test_DC_variable_moteurs(float DC_min,float DC_max, float temps, float freq
         }
     }
 }
+
+
+/*############################################################################*/
+/*                   Tests d'asservissement du robot                          */
+/*############################################################################*/
 
 // test d'asserv
 void test_Asserv_gauche(long int *qei_total, int *qei_old, float *erreur_old, float *integral)
@@ -293,6 +303,31 @@ void test_Asserv_vitesse_3()
         __delay_ms(10);
     }
 }
+
+
+
+
+/******************************************************************************/
+/*                      Tests avec les interruptions                          */
+/******************************************************************************/
+
+// allumer la led à une fréquence de 1Hz
+void test_interrupt_led(int periode){
+    static int compteur = 0;
+    compteur++;
+    if (compteur==periode) {
+        led = !led;
+        compteur = 0;
+    }
+}
+
+
+
+
+
+/******************************************************************************/
+/*                      Fonctions bien pratiques                              */
+/******************************************************************************/
 
 
 /********************************* Test d'étalonage ***************************/

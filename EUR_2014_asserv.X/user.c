@@ -16,21 +16,28 @@
 #include <stdint.h>          /* For uint16_t definition                       */
 #include <stdbool.h>         /* For true/false definition                     */
 #include "user.h"            /* variables/params used by user.c               */
+#include <timer.h>
 
 /******************************************************************************/
 /* User Functions                                                             */
 /******************************************************************************/
 
 /* <Initialize variables in user.h and insert code for user algorithms.> */
-
 void InitApp(void)
 {
-    /* TODO Initialize User Ports/Peripherals/Project here */
+    // activation du timer 2
+    OpenTimer2(T2_ON &
+                T2_IDLE_CON &
+                T2_GATE_OFF &
+                T2_PS_1_64 &
+                T2_SOURCE_INT, 6250 );
 
-    /* Setup analog functionality and port direction */
-
-    /* Initialize peripherals */
+    // activation de la priorité des interruptions
+     _NSTDIS = 0;
+    // configuration des interruptions
+    ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
 }
+
 
 long int limit_int(long int valeur, long int inf, long int sup)
 {

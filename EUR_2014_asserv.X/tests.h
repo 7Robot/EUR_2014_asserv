@@ -8,6 +8,9 @@
 #ifndef TESTS_H
 #define	TESTS_H
 
+/******************************************************************************/
+/*                Tests pour faire fonctionner les moteurs                    */
+/******************************************************************************/
 // teste si la fréquence du PWM est bien la bonne
 void test_frequence_fixe_moteurs(float frequence);
 
@@ -18,6 +21,14 @@ void test_frequence_variable_moteurs(float f_min,float f_max, float temps);
 // teste si le Duty-Cycle est bien respecté à la fréquence f
 void test_DC_variable_moteurs(float DC_min,float DC_max, float temps, float frequence);
 
+
+
+
+
+
+/******************************************************************************/
+/*                   Tests d'asservissement du robot                          */
+/******************************************************************************/
 // test asserv
 void test_Asserv_gauche(long int *qei_total, int *qei_old, float *erreur_old, float *integral);
 void test_Asserv_droit(long int *qei_total, int *qei_old, float *erreur_old, float *integral);
@@ -33,6 +44,25 @@ void segment_vitesse(int duration, float cons_v, float cons_vtheta,
         int *qei_g_new, int *qei_d_new, int *qei_g_old, int *qei_d_old,
         float *x, float *y, float *v, float *theta, float *vtheta,
         float *v_m, float *vtheta_m);
+
+
+
+
+
+/******************************************************************************/
+/*                      Tests avec les interruptions                          */
+/******************************************************************************/
+
+// allumer la led à une fréquence de 1Hz
+void test_interrupt_led(int periode);
+
+
+
+
+
+/******************************************************************************/
+/*                      Fonctions bien pratiques                              */
+/******************************************************************************/
 
 // etalonage
 void etalonner_qei();

@@ -8,6 +8,9 @@
 #define SYS_FREQ        80000000UL
 #define FCY             SYS_FREQ/2
 
+#define BAUDRATEAX12 57600
+#define BRGVAL ((FCY / BAUDRATEAX12 / 16) - 1)
+
 /******************************************************************************/
 /* System Function Prototypes                                                 */
 /******************************************************************************/

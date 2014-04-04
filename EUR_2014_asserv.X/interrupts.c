@@ -15,6 +15,8 @@
 
 #include <stdint.h>        /* Includes uint16_t definition   */
 #include <stdbool.h>       /* Includes true/false definition */
+#include <timer.h>
+#include "tests.h"
 
 /******************************************************************************/
 /* Interrupt Vector Options                                                   */
@@ -124,3 +126,10 @@
 /******************************************************************************/
 
 /* TODO Add interrupt routine code here. */
+
+void __attribute__((interrupt,auto_psv)) _T2Interrupt(void) {
+    // periode (multiplieur des 10ms)
+    int periode = 100;
+    test_interrupt_led(int periode);
+    _T2IF = 0;
+}
