@@ -91,6 +91,12 @@ int16_t main(void)
     Init_PWM();
     Init_QEI();
 
+    AtpInit();
+    motion_init(SendDone)
+    SendBoardId();
+    __delay_ms(3000);
+    SendBoardId();
+
     //pour les AX12
     responseReadyAX = 0;
 
