@@ -22,7 +22,7 @@
 //include projet
 #include "user.h"
 #include "ax12.h"
-#include "asserv.h"
+#include "libasserv_robot.h"
 
 /******************************************************************************/
 /* User Functions                                                             */

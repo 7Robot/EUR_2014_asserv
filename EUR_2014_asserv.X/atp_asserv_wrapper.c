@@ -9,7 +9,7 @@
 */
 
 #include "atp-asserv.h"
-#include "../asserv/libasserv.h"
+#include "asserv/libasserv.h"
 
 void OnDist(float dist, float vMax, float aMax) { motion_dist(dist, vMax, aMax); }
 
