@@ -27,13 +27,21 @@
 #include <stdint.h>        /* Includes uint16_t definition                    */
 #include <stdbool.h>       /* Includes true/false definition                  */
 
-#include "user.h"          /* User funct/params, such as InitApp              */
-#include "asserv.h"
-#include "qei.h"           /* QEI definitions for easier use                  */
+//includes pic libs
 #include <libpic30.h>
-#include "tests.h"
 #include <uart.h>
+#include <math.h>
+#include <adc.h>
+
+//includes atp
+#include "atp.h"
+#include "atp-asserv.h"
+
+//includes projet
+#include "asserv.h"
+#include "user.h"          /* User funct/params, such as InitApp              */
 #include "ax12.h"
+
 
 /******************************************************************************/
 /* Global Variable Declaration                                                */
@@ -53,7 +61,6 @@ _FWDT(FWDTEN_OFF);
 // Select debug channel.
 _FICD(ICS_PGD1 & JTAGEN_OFF);
 
-/* TODO Add clock switching code if appropriate.  An example stub is below.   */
 void ConfigureOscillator(void)
 {
     // Configure PLL prescaler, PLL postscaler, PLL divisor
@@ -66,7 +73,7 @@ void ConfigureOscillator(void)
      * la solution la plus proche est 152*7.37/(7*2) = 80.017
      * attention, cela entraine donc une FCY et une FPériphériques à 40 MHZ
      */
-    while (!OSCCONbits.LOCK);       // attente que la PLL soit lockée sur se nouvelle configuration.
+    while (!OSCCONbits.LOCK); // attente que la PLL soit lockée sur se nouvelle configuration.
 }
 
 
@@ -76,13 +83,6 @@ void ConfigureOscillator(void)
 
 int16_t main(void)
 {
-    /* variables */
-    long int qei_total = 0;
-    float erreur_old = 0;
-    float integral = 0;
-    int qei = 0;
-
-    
     /* Configure the oscillator for the device */
     ConfigureOscillator();
 
@@ -93,26 +93,11 @@ int16_t main(void)
 
     //pour les AX12
     responseReadyAX = 0;
-    ODCBbits.ODCB5 = 1; //open drain
-
-   // __delay_ms(10);
-   // PutAX(AX_BROADCAST, AX_MOVING_SPEED, 250);
-   // __delay_ms(10);
-   // PutAX(AX_BROADCAST, AX_MAX_TORQUE, 1100);
-    //__delay_ms(10);
-   // PutAX(AX_BROADCAST, AX_BAUD_RATE, 34); //57600
 
     while (1){
-        test_Reperage();
-        //test_Asserv_vitesse_3();
-        //test_Asserv_droit(&qei_total, &qei, &erreur_old, &integral);
-       // __delay_ms(1000);
-       // __delay_ms(1000);
-       // PutAX(18, AX_GOAL_POSITION, 100);
+        // PutAX(18, AX_GOAL_POSITION, 100);
         //__delay_ms(1000);
         //PutAX(18, AX_GOAL_POSITION, 0);
         //led = !led;
-        //test_frequence_fixe_moteurs(10000);
-        //test_frequence_fixe_moteurs(20000);
     }
 }

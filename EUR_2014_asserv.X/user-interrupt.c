@@ -13,12 +13,16 @@
     #endif
 #endif
 
+//include libpic
 #include <stdint.h>        /* Includes uint16_t definition   */
 #include <stdbool.h>       /* Includes true/false definition */
-#include "user.h"
 #include <timer.h>
 #include <uart.h>
+
+//include projet
+#include "user.h"
 #include "ax12.h"
+#include "asserv.h"
 
 /******************************************************************************/
 /* User Functions                                                             */
@@ -38,43 +42,138 @@ void InitApp(void)
                 T2_IDLE_CON &
                 T2_GATE_OFF &
                 T2_PS_1_256 &
-                T2_SOURCE_INT, 10000 );
+                T2_SOURCE_INT, 1560 ); //100Hz
 
     //ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
 
-    OpenUART1(UART_EN & UART_IDLE_CON & UART_IrDA_DISABLE & UART_MODE_FLOW
+	//UART AX12
+    OpenUART2(UART_EN & UART_IDLE_CON & UART_IrDA_DISABLE & UART_MODE_FLOW
             & UART_UEN_00 & UART_DIS_WAKE & UART_DIS_LOOPBACK
             & UART_DIS_ABAUD & UART_UXRX_IDLE_ONE & UART_BRGH_SIXTEEN
             & UART_NO_PAR_8BIT & UART_1STOPBIT,
               UART_INT_TX_BUF_EMPTY & UART_IrDA_POL_INV_ZERO
             & UART_SYNC_BREAK_DISABLED & UART_TX_ENABLE & UART_TX_BUF_NOT_FUL & UART_INT_RX_CHAR
             & UART_ADR_DETECT_DIS & UART_RX_OVERRUN_CLEAR,
-              BRGVAL);
+              BRGVALAX12);
 
-    ConfigIntUART1(UART_RX_INT_PR4 & UART_RX_INT_EN
+    ConfigIntUART2(UART_RX_INT_PR4 & UART_RX_INT_EN
                  & UART_TX_INT_PR4 & UART_TX_INT_DIS);
+				 
+	_OBCB5 = 1; //OPEN DRAIN pour AX12
+	
+	Init_PWM();
+	Init_QEI();
 }
 
-
-
-long int limit_int(long int valeur, long int inf, long int sup)
+void Init_PWM(void)
 {
-    if (valeur < inf)
-        return inf;
-    else if (valeur > sup)
-        return sup;
-    else
-        return valeur;
+    // P1TCON
+    P1TCONbits.PTEN = 1; // enable module PWM
+    P1TCONbits.PTCKPS = 0; // Clk input of the PWM module is TCY (no prescale)
+    P1TCONbits.PTMOD = 0; // free-runnig mode
+
+    /*
+* la période des PWM (temps entre 2 fronts montants)
+* est fixée à 1500 cycles de 40MHz
+* ça donne une periode de sortie de 37.5 µs soit 26.66 kHz
+* RMQ : les registres de rapport cycliques ayant une précision double
+* leur valeur max sera 3000
+*/
+    P1TPER = 1500;
+
+    //PWM1CON1
+    PWM1CON1bits.PMOD2 = 1; // sorties indépendantes
+    PWM1CON1bits.PMOD3 = 1;
+    // desactivation de toutes les sorties
+    // à réactiver une fois le pinout trouvé ;)
+
+    // sorties High du pwm
+    PWM1CON1bits.PEN1H = 0;
+    PWM1CON1bits.PEN2H = 1;
+    PWM1CON1bits.PEN3H = 1;
+
+    // sorties Low (opposé du High, on ne l'utilise pas)
+    PWM1CON1bits.PEN1L = 0;
+    PWM1CON1bits.PEN2L = 0;
+    PWM1CON1bits.PEN3L = 0;
+
+    // réglage des rapports cycliques, pour l'instant on mets 0 lors de l'initialisation
+    P1DC2 = 0;
+    P1DC3 = 0;
+
+    // Activation en sortie des pin de sens du PONT en H
+    MOTOR_1A_TRIS = 0;
+    MOTOR_1B_TRIS = 0;
+    MOTOR_2A_TRIS = 0;
+    MOTOR_2B_TRIS = 0;
+
+    // pins de sens des moteurs
+    MOTOR_1A_O = 0;
+    MOTOR_1B_O = 0;
+    MOTOR_2A_O = 0;
+    MOTOR_2B_O = 0;
 }
 
-float limit_float(float valeur, float inf, float sup)
+void Init_QEI(void)
 {
-    if (valeur < inf)
-        return inf;
-    else if (valeur > sup)
-        return sup;
-    else
-        return valeur;
+    // module QEI1 = Moteur Droit
+    QEI1CONbits.QEISIDL = 1; // module toujours actif, meme en etat de pause du pic
+    QEI1CONbits.QEIM = 6; // module en mode x4 : regarde tous les fronts, reset sur index, désactivé en dessous
+    QEI1CONbits.POSRES = 0; // desactive l'index => pas de reset du compteur;
+    QEI1CONbits.TQCS = 0; // use PIC clock
+
+    // configuration des pins A et B du module
+    // ce sont des pins dites remapable,
+    // ce qui veut dire que l'on peut choisir presque toutes les IO du PIC
+    RPINR14bits.QEA1R = 25; // 25 = pin RP25
+    RPINR14bits.QEB1R = 22;
+
+
+    // module QEI2 identique = Moteur Gauche
+    QEI2CONbits.QEISIDL = 1; // module toujours actif, meme en etat de pause du pic
+    QEI2CONbits.QEIM = 6; // module en mode x4 : regarde tous les fronts, reset sur index, désactivé en dessous
+    QEI2CONbits.POSRES = 0; // desactive l'index => pas de reset du compteur;
+    QEI2CONbits.TQCS = 0; // use PIC clock
+
+    // configuration des pins A et B du module
+    RPINR16bits.QEA2R = 23; // 23 = pin RP23
+    RPINR16bits.QEB2R = 24;
+}
+
+void Set_Vitesse_MoteurD(float consigne)
+{
+	if (consigne < 0.0)
+	{
+		consigne = -consigne;
+		MOTOR_1A_O = 0;
+		MOTOR_1B_O = 1;
+	}
+	else
+	{
+		MOTOR_1A_O = 1;
+		MOTOR_1B_O = 0;		
+	}
+	if (consigne < CONSIGNE_NULLE) consigne = 0;
+	else if (consigne > CONSIGNE_MAX) consigne = CONSIGNE_MAX;
+	P1DC2 = (int)(consigne);
+}
+
+void Set_Vitesse_MoteurG(float consigne)
+{
+	if (consigne < 0.0)
+	{
+		consigne = -consigne;
+		MOTOR_2A_O = 0;
+		MOTOR_2B_O = 1;
+	}
+	else
+	{
+		MOTOR_2A_O = 1;
+		MOTOR_2B_O = 0;		
+	}
+	if (consigne < CONSIGNE_NULLE) consigne = 0;
+	else if (consigne > CONSIGNE_MAX) consigne = CONSIGNE_MAX;
+	P1DC3 = (int)(consigne);
 }
 
 /******************************************************************************/
@@ -187,9 +286,29 @@ float limit_float(float valeur, float inf, float sup)
 /* TODO Add interrupt routine code here. */
 void __attribute__((interrupt, auto_psv)) _T2Interrupt(void)
 {
-    _T2IF = 0;
+    _T2IF = 0; // On baisse le FLAG
+	
+	static int count = 0;
+    count++;
+    ticd = (int) POS1CNT;// ReadQEI2();
+    diffd = ticd-old_ticd;
+    old_ticd = ticd;
+    compteur_ticd += diffd;
+	  
+    // On lit l'encodeur gauche (qui est en fait le droit)
+    ticg = (int) POS2CNT; // ReadQEI1();
+    diffg = ticg-old_ticg;
+    old_ticg = ticg;
+    compteur_ticg += diffg;
+	
+    int consigneG, consigneD;
+	  
+    motion_step(0.01, diffg, diffd, &consigneG, &consigneD);
+	
+    Set_Vitesse_MoteurD((float)consigneD);
+    Set_Vitesse_MoteurG((float)consigneG);
+	
     led = !led;    // On bascule l'état de la LED
-          // On baisse le FLAG
 }
 
 /*************************************************
@@ -198,12 +317,10 @@ void __attribute__((interrupt, auto_psv)) _T2Interrupt(void)
  *************************************************/
 
 
-void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void){
-
-    led = led ^ 1;
+void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
+{
+	_U2RXIF = 0;      // On baisse le FLAG
     InterruptAX();
-
-    _U1RXIF = 0;      // On baisse le FLAG
 }
 
 /*************************************************
@@ -212,9 +329,7 @@ void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void){
  *************************************************/
 
 
-void __attribute__((__interrupt__, no_auto_psv)) _U1TXInterrupt(void)
+void __attribute__((__interrupt__, no_auto_psv)) _U2TXInterrupt(void)
 {
-
-   IFS0bits.U1TXIF = 0; // clear TX interrupt flag
-
+   _U2TXIF = 0; // clear TX interrupt flag
 }

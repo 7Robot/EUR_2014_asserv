@@ -7,7 +7,7 @@
 #define FCY             SYS_FREQ/2
 
 #define BAUDRATEAX12 57600
-#define BRGVAL ((FCY / BAUDRATEAX12 / 16) - 1)
+#define BRGVALAX12 ((FCY / BAUDRATEAX12 / 16) - 1)
 
 /******************************************************************************/
 /* System Function Prototypes                                                 */
@@ -26,7 +26,5 @@ void ConfigureOscillator(void); /* Handles clock switching/osc initialization */
 
 
 void InitApp(void);         /* I/O and Peripheral Initialization */
-long int limit_int(long int valeur, long int inf, long int sup);
-float limit_float(float valeur, float inf, float sup);
 
 extern void InterruptAX(void);
