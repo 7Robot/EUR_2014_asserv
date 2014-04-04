@@ -1,0 +1,3 @@
+[submodule "asserv"]
+	path = asserv
+	url = git@github.com:7Robot/asserv

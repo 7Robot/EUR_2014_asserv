@@ -1,1 +1,11 @@
 Depot pour l'asservissement du robot
+
+Pour initialiser le submodule (libasserv) :
+
+git submodule init
+git submodule update
+git submodule foreach git checkout master
+
+Pour mettre à jour le submodule :
+
+git submodule foreach git pull
