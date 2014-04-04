@@ -1,5 +1,8 @@
 #include <string.h>
-#include "header.h"
+#include "atp.h"
+#include "atp-user.h"
+#include "atp-asserv.h"
+#include "user.h"
 #include <uart.h>
 
 #if SEND_PRIO <= RECV_PRIO
@@ -25,7 +28,7 @@ typedef struct {
 static volatile buffer buffers[SEND_PRIO];
 static volatile int runLevel;
 
-// Variables de réceptions
+// Variables de rï¿½ceptions
 
 static int packetState;
 static int packetId;
@@ -62,7 +65,7 @@ void AtpInit() {
     }
     runLevel = -1;
 
-    // Init des variables de réception
+    // Init des variables de rï¿½ception
     packetState = 1;
     packetId = 0;
     packetDataType = 0;
@@ -76,7 +79,7 @@ void AtpInit() {
     intc = 0;
     floatc = 0;
 
-    // Init du port série
+    // Init du port sï¿½rie
 
     OpenUART1(UART_EN & UART_IDLE_CON & UART_IrDA_DISABLE & UART_MODE_FLOW
         & UART_UEN_00 & UART_DIS_WAKE & UART_DIS_LOOPBACK

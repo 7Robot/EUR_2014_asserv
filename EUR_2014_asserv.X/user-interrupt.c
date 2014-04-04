@@ -23,6 +23,7 @@
 #include "user.h"
 #include "ax12.h"
 #include "libasserv_robot.h"
+#include "asserv/libasserv.h"
 
 /******************************************************************************/
 /* User Functions                                                             */
@@ -59,7 +60,7 @@ void InitApp(void)
     ConfigIntUART2(UART_RX_INT_PR4 & UART_RX_INT_EN
                  & UART_TX_INT_PR4 & UART_TX_INT_DIS);
 				 
-	_OBCB5 = 1; //OPEN DRAIN pour AX12
+	_ODCB5 = 1; //OPEN DRAIN pour AX12
 	
 	Init_PWM();
 	Init_QEI();
@@ -284,11 +285,21 @@ void Set_Vitesse_MoteurG(float consigne)
 /******************************************************************************/
 
 /* TODO Add interrupt routine code here. */
+static int ticd;
+static int diffd;
+static int old_ticd;
+static int compteur_ticd;
+static int ticg;
+static int diffg;
+static int old_ticg;
+static int compteur_ticg;
+
+
 void __attribute__((interrupt, auto_psv)) _T2Interrupt(void)
 {
     _T2IF = 0; // On baisse le FLAG
 	
-	static int count = 0;
+    static int count = 0;
     count++;
     ticd = (int) POS1CNT;// ReadQEI2();
     diffd = ticd-old_ticd;

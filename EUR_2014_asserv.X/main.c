@@ -40,6 +40,7 @@
 //includes projet
 #include "libasserv_robot.h"
 #include "user.h"          /* User funct/params, such as InitApp              */
+#include "asserv/libasserv.h"
 #include "ax12.h"
 
 
@@ -92,7 +93,7 @@ int16_t main(void)
     Init_QEI();
 
     AtpInit();
-    motion_init(SendDone)
+    motion_init(SendDone);
     SendBoardId();
     __delay_ms(3000);
     SendBoardId();

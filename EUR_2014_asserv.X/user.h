@@ -9,6 +9,8 @@
 #define BAUDRATEAX12 57600
 #define BRGVALAX12 ((FCY / BAUDRATEAX12 / 16) - 1)
 
+#define BRGVAL ((FCY / BAUDRATE / 16) - 1)
+
 /******************************************************************************/
 /* System Function Prototypes                                                 */
 /******************************************************************************/
@@ -26,5 +28,9 @@ void ConfigureOscillator(void); /* Handles clock switching/osc initialization */
 
 
 void InitApp(void);         /* I/O and Peripheral Initialization */
+void Init_PWM(void);
+void Init_QEI(void);
+void Set_Vitesse_MoteurD(float consigne);
+void Set_Vitesse_MoteurG(float consigne);
 
 extern void InterruptAX(void);

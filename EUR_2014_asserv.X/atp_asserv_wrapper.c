@@ -37,7 +37,7 @@ void OnSpeedFree(float speed) { motion_speed_free(speed); }
 void OnOmega(float omega, float aMax, float dMax) { motion_omega(omega, aMax, dMax); }
 
 void OnSpeedOmega(float speed, float omega, float aDistMax, float dDistMax, float aRotMax, float dRotMax) {
-    motion_speed_omega(speed, omega, aDistMax, dDistMax, aRotMax, dRotMax);
+//    motion_omega_free(speed, omega, aDistMax, dDistMax, aRotMax, dRotMax);
 }
 
 void OnStop() { motion_stop(); }
@@ -50,13 +50,13 @@ void OnSetTicByMeter(unsigned long int tic_by_meter) { odo_set_tic_by_meter((int
 
 void OnSetSpacing(float spacing) { odo_set_spacing(spacing); }
 
-void OnGetX() { SendX(odo_get_x();); }
+void OnGetX() { SendX(odo_get_x()); }
 
-void OnGetY() { SendX(odo_get_y();); }
+void OnGetY() { SendX(odo_get_y()); }
 
-void OnGetTheta() { SendTheta(odo_get_theta();); }
+void OnGetTheta() { SendTheta(odo_get_theta()); }
 
-void OnGetPos() { SendPos(odo_get_x();, odo_get_y();, odo_get_theta();); }
+void OnGetPos() { SendPos(odo_get_x(), odo_get_y(), odo_get_theta()); }
 
 void OnSetX(float x) { odo_set_x(x); }
 
