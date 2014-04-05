@@ -23,7 +23,7 @@
 #include "user.h"
 #include "ax12.h"
 #include "libasserv_robot.h"
-#include "asserv/libasserv.h"
+#include "../asserv/asserv/libasserv.h"
 
 /******************************************************************************/
 /* User Functions                                                             */
@@ -43,9 +43,9 @@ void InitApp(void)
                 T2_IDLE_CON &
                 T2_GATE_OFF &
                 T2_PS_1_256 &
-                T2_SOURCE_INT, 1560 ); //100Hz
+                T2_SOURCE_INT, 156 ); //1000Hz
 
-    //ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
+    ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
 
 	//UART AX12
     OpenUART2(UART_EN & UART_IDLE_CON & UART_IrDA_DISABLE & UART_MODE_FLOW

@@ -375,4 +375,3 @@ int AtpDecode(int id,
     }
     return 0;
 }
-

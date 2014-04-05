@@ -23,12 +23,11 @@
     #endif
 #endif
 
-
 #include <stdint.h>        /* Includes uint16_t definition                    */
 #include <stdbool.h>       /* Includes true/false definition                  */
 
 //includes pic libs
-#include <libpic30.h>
+
 #include <uart.h>
 #include <math.h>
 #include <adc.h>
@@ -38,12 +37,11 @@
 #include "atp-asserv.h"
 
 //includes projet
-#include "libasserv_robot.h"
 #include "user.h"          /* User funct/params, such as InitApp              */
-#include "asserv/libasserv.h"
+#include "../asserv/asserv/libasserv.h"
 #include "ax12.h"
 
-
+#include <libpic30.h>
 /******************************************************************************/
 /* Global Variable Declaration                                                */
 /******************************************************************************/
@@ -95,15 +93,16 @@ int16_t main(void)
     AtpInit();
     motion_init(SendDone);
     SendBoardId();
-    __delay_ms(3000);
+    __delay_ms(1000);
     SendBoardId();
 
     //pour les AX12
     responseReadyAX = 0;
 
     while (1){
+        OnRot(0.5, 1, 1);
         // PutAX(18, AX_GOAL_POSITION, 100);
-        //__delay_ms(1000);
+        __delay_ms(10000);
         //PutAX(18, AX_GOAL_POSITION, 0);
         //led = !led;
     }
