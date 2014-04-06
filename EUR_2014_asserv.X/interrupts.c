@@ -17,6 +17,7 @@
 #include <stdbool.h>       /* Includes true/false definition */
 #include <timer.h>
 #include "tests.h"
+#include "lib_asserv/lib_asserv.h"
 
 /******************************************************************************/
 /* Interrupt Vector Options                                                   */
@@ -128,8 +129,21 @@
 /* TODO Add interrupt routine code here. */
 
 void __attribute__((interrupt,auto_psv)) _T2Interrupt(void) {
+    // compteurs QEI gauche et droit
+    volatile static int tics_g, tics_d;
+    // commandes gauches et droite
+    volatile static float commande_g, commande_d;
+
     // periode (multiplieur des 10ms)
     int periode = 100;
     test_interrupt_led(int periode);
+
+    // récupération des données des compteurs qei gauche et droit
+    tics_g = (int)POS1CNT;
+    tics_d = (int)POS2CNT;
+    // effectuer un pas de déplacement
+    motion_step(tics_g,tics_d, &commande_g, &commande_d);
+    // mettre ici les pwm gauche et droit
+    // on baisse le flag
     _T2IF = 0;
 }

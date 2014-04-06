@@ -14,4 +14,4 @@
 
 void InitApp(void);         /* I/O and Peripheral Initialization */
 long int limit_int(long int valeur, long int inf, long int sup);
-float limit_float(float valeur, float inf, float sup);
+
