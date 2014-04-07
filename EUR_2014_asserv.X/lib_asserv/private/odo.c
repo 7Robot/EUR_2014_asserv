@@ -1,12 +1,21 @@
 #include "odo.h"
+#include "../lib_asserv_default.h"
 #include <math.h>
 
 /******************************    Variables    *******************************/
 volatile Odo odo;
 
-
-
 /******************************    Fonctions    *******************************/
+
+// initialiser l'odométrie
+void odo_init(){
+    OdoCoefs coefs = DEFAULT_ODO_COEFS;
+    OdoTics tics = {0,0};
+    odo_set_coefs(&odo,coefs);
+    odo.tics = tics;
+    odo_set_state(&odo,&motionState);
+    odo_set_period(&odo,DEFAULT_PERIOD);
+}
 
 // assigner des valeurs aux coefs (relations tic/mètre et entraxe)
 void odo_set_coefs (Odo *odo, OdoCoefs coefs){odo->coefs = coefs;}

@@ -21,6 +21,9 @@ typedef struct {
 
 /******************************    Fonctions    *******************************/
 
+// initialiser le mode et les différents asservissement
+void asserv_init();
+
 // assigner un PID et des contraintes à un asservissement
 void set_asserv_pid(Asserv *asserv, Pid pid);
 void set_asserv_constraint(Asserv *asserv, MotionConstraint *constraint);

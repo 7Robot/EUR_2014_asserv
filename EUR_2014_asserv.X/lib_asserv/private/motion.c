@@ -1,12 +1,21 @@
 #include "motion.h"
 #include "asserv.h"
+#include "odo.h"
 
 /******************************    Variables    *******************************/
 volatile MotionState motionState;
 volatile MotionConstraint motionConstraint;
+static void(*done)(void); // callback
 
 
 /******************************    Fonctions    *******************************/
+
+// initialiser la lib d'asservissement
+void motion_init(void(*_done)(void)) {
+    done = _done;
+    odo_init();
+    asserv_init();
+}
 
 // assigner des valeurs à la position (x, y et theta)
 void set_position(MotionState *state, Position pos){state->pos = pos;}

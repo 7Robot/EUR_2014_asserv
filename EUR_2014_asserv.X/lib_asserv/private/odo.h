@@ -31,6 +31,9 @@ typedef struct {
 
 /******************************    Fonctions    *******************************/
 
+// initialiser l'odométrie
+void odo_init();
+
 // assigner des valeurs aux coefs (relations tic/mètre et entraxe)
 void odo_set_coefs (Odo *odo, OdoCoefs coefs);
 void odo_set_tic_by_meter(Odo *odo, int tic_by_meter);

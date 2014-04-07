@@ -1,6 +1,10 @@
 #ifndef _LIB_ASSERV_DEFAULT_H_
 #define _LIB_ASSERV_DEFAULT_H_
 
+#ifndef NULL
+#define NULL 0
+#endif
+
 
 /*############################################################################*/
 /*                                  Motion                                    */
@@ -52,6 +56,14 @@
 #endif
 #ifndef DEFAULT_PID_COEFS_VD
 #define DEFAULT_PID_COEFS_VD {100,1,500,0,0}
+#endif
+
+// valeurs max de l'intégrale en position et en vitesse
+#ifndef DEFAULT_PID_MAX_INT_POS
+#define DEFAULT_PID_MAX_INT_POS 14
+#endif
+#ifndef DEFAULT_PID_MAX_INT_SPEED
+#define DEFAULT_PID_MAX_INT_SPEED 14
 #endif
 
 // ainsi que les conditions d'arrêt des PID en position et vitesse
