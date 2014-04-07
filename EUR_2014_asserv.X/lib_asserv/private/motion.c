@@ -1,6 +1,13 @@
 #include "motion.h"
 #include "asserv.h"
 
+/******************************    Variables    *******************************/
+volatile MotionState motionState;
+volatile MotionConstraint motionConstraint;
+
+
+/******************************    Fonctions    *******************************/
+
 // assigner des valeurs à la position (x, y et theta)
 void set_position(MotionState *state, Position pos){state->pos = pos;}
 void set_position_x(MotionState *state, float x){state->pos.x = x;}
