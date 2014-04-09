@@ -1,5 +1,6 @@
-# include "pid.h"
-# include "tools.h"
+#include "pid.h"
+#include "tools.h"
+#include <math.h>
 
 /******************************    Variables    *******************************/
 
@@ -61,4 +62,9 @@ float pid_process(Pid *pid){
     return    pid->coefs.kp * pid->state.err
             + pid->coefs.ki * pid->state.err_int
             + pid->coefs.kd * pid->state.err_der;
+}
+
+// indique si le pid a terminé
+int pid_done(Pid pid){
+    return fabs(pid.state.err) <= pid.eps.err_eps && fabs(pid.state.err_der) <= pid.eps.der_eps;
 }

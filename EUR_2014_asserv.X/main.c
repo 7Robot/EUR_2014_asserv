@@ -2,7 +2,7 @@
  * Template dsPIC33F
  * Compiler : Microchip xC16
  * µC : 33FJ128MC804
- * Mars 2014
+ * Avril 2014
  *    ______ _____      _           _
  *   |___  /| ___ \    | |         | |
  *      / / | |_/ /___ | |__   ___ | |_
@@ -13,32 +13,21 @@
  */
 
 /* Device header file */
-#if defined(__XC16__)
-    #include <xc.h>
-#elif defined(__C30__)
-    #if defined(__dsPIC33E__)
-    	#include <p33Exxxx.h>
-    #elif defined(__dsPIC33F__)
-    	#include <p33Fxxxx.h>
-    #endif
-#endif
-
+#include <xc.h>
 
 #include <stdint.h>        /* Includes uint16_t definition                    */
 #include <stdbool.h>       /* Includes true/false definition                  */
 
-#include "system.h"        /* System funct/params, like osc/peripheral config */
 #include "user.h"          /* User funct/params, such as InitApp              */
-#include "asserv.h"
 #include "qei.h"           /* QEI definitions for easier use                  */
 #include <libpic30.h>
 #include "tests.h"
+#include "lib_asserv/lib_asserv_default.h"
+#include "lib_asserv/lib_asserv.h"
 
 /******************************************************************************/
 /* Global Variable Declaration                                                */
 /******************************************************************************/
-
-/* i.e. uint16_t <variable_name>; */
 
 /******************************************************************************/
 /* Configuration                                                              */
@@ -58,7 +47,6 @@ _FICD(ICS_PGD1 & JTAGEN_OFF);
 
 int16_t main(void)
 {
-    /* TODO <INSERT USER APPLICATION CODE HERE> */
-    test_Asserv_vitesse_3();
+    test_Asserv_vitesse(0.3,0);
     return 1;
 }

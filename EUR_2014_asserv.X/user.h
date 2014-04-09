@@ -1,17 +1,26 @@
 /******************************************************************************/
 /* User Level #define Macros                                                  */
 /******************************************************************************/
-
 #define led _LATA2
 
-/* TODO Application specific user parameters used in user.c may go here */
-
 /******************************************************************************/
-/* User Function Prototypes                                                   */
+/* System Level #define Macros                                                */
 /******************************************************************************/
 
-/* TODO User level functions prototypes (i.e. InitApp) go here */
+/* Microcontroller MIPs (FCY) */
+#define SYS_FREQ        80000000UL
+#define FCY             SYS_FREQ/2
 
-void InitApp(void);         /* I/O and Peripheral Initialization */
-long int limit_int(long int valeur, long int inf, long int sup);
+#define BAUDRATEAX12 57600
+#define BRGVAL ((FCY / BAUDRATEAX12 / 16) - 1)
 
+/******************************************************************************/
+/* System Function Prototypes                                                 */
+/******************************************************************************/
+
+/* Custom oscillator configuration funtions, reset source evaluation
+functions, and other non-peripheral microcontroller initialization functions
+go here. */
+
+void ConfigureOscillator(void); /* Handles clock switching/osc initialization */
+void InitTimers();

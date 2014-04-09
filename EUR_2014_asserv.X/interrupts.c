@@ -1,23 +1,26 @@
-/******************************************************************************/
-/* Files to Include                                                           */
-/******************************************************************************/
-
-/* Device header file */
-#if defined(__XC16__)
-    #include <xc.h>
-#elif defined(__C30__)
-    #if defined(__dsPIC33E__)
-    	#include <p33Exxxx.h>
-    #elif defined(__dsPIC33F__)
-    	#include <p33Fxxxx.h>
-    #endif
-#endif
+#include <xc.h>
 
 #include <stdint.h>        /* Includes uint16_t definition   */
 #include <stdbool.h>       /* Includes true/false definition */
 #include <timer.h>
 #include "tests.h"
 #include "lib_asserv/lib_asserv.h"
+#include "motor.h"
+
+void InitTimers()
+{
+    // activation du timer 2
+    OpenTimer2(T2_ON &
+                T2_IDLE_CON &
+                T2_GATE_OFF &
+                T2_PS_1_64 &
+                T2_SOURCE_INT, 6250 );
+
+    // activation de la priorité des interruptions
+    _NSTDIS = 0;
+    // configuration des interruptions
+    ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
+}
 
 /******************************************************************************/
 /* Interrupt Vector Options                                                   */
@@ -144,6 +147,8 @@ void __attribute__((interrupt,auto_psv)) _T2Interrupt(void) {
     // effectuer un pas de déplacement
     motion_step(tics_g,tics_d, &commande_g, &commande_d);
     // mettre ici les pwm gauche et droit
+    PWM_Moteurs_gauche(commande_g);
+    PWM_Moteurs_droit(commande_d);
     // on baisse le flag
     _T2IF = 0;
 }

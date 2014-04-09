@@ -6,3 +6,9 @@ float limit_float(float valeur, float inf, float sup){
     else if (valeur > sup) return sup;
     else return valeur;
 }
+
+long int limit_int(long int valeur, long int inf, long int sup){
+    if (valeur < inf) return inf;
+    else if (valeur > sup) return sup;
+    else return valeur;
+}

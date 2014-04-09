@@ -37,11 +37,13 @@ void set_acceleration_v_vt(MotionState *state, float v_vt){state->acc.v_vt = v_v
 // consignes de déplacements du robot
 void motion_free(){set_asserv_off();}
 void motion_pos(Position pos){
-    pos_order = pos;
+    pos_asserv.done = 0;
+    pos_asserv.pos_order = pos;
     set_asserv_pos_mode();
 }
 void motion_speed(Speed speed){
-    speed_order = speed;
+    speed_asserv.done = 0;
+    speed_asserv.speed_order = speed;
     set_asserv_speed_mode();
 }
 
@@ -52,4 +54,6 @@ void motion_step(int tics_g, int tics_d, float *commande_g, float *commande_d){
     odo_step(&odo, tics_g, tics_d);
     // on appelle la bonne fonction d'asservissement
     asserv_step(&odo, commande_g, commande_d);
+    // indique si on est arrivé
+    if (asserv_done()) done();
 }

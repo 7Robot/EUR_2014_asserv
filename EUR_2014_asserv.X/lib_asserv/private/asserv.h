@@ -18,6 +18,24 @@ typedef struct {
     MotionConstraint *constraint;
 } Asserv;
 
+// Un asservissement en position connait les asserv en vitesse des roues gauche et droite
+typedef struct {
+    Position pos_order;
+    Asserv *asserv_speed_g;
+    Asserv *asserv_speed_d;
+    MotionState *state;
+    int done;
+} PositionAsserv;
+
+// Un asservissement en vitesse connait les asserv en vitesse des roues gauche et droite
+typedef struct {
+    Speed speed_order;
+    Asserv *asserv_speed_g;
+    Asserv *asserv_speed_d;
+    MotionState *state;
+    int done;
+} SpeedAsserv;
+
 
 /******************************    Fonctions    *******************************/
 
@@ -35,6 +53,10 @@ void set_asserv_speed_mode();
 
 // effectue un pas d'asservissement
 void asserv_step(Odo *odo, float *commande_g, float *commande_d);
+void speed_asserv_step(Odo *odo, float *commande_g, float *commande_d);
+
+// indique si l'asservissement en cours a terminé
+int asserv_done();
 
 
 #endif // _ASSERV_H_
