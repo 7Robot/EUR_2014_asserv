@@ -80,7 +80,7 @@
       <C30>
         <property key="code-model" value="default"/>
         <property key="const-model" value="default"/>
-        <property key="data-model" value="default"/>
+        <property key="data-model" value="large-data"/>
         <property key="enable-all-warnings" value="true"/>
         <property key="enable-ansi-std" value="false"/>
         <property key="enable-ansi-warnings" value="false"/>
@@ -206,7 +206,6 @@
         <property key="ToolFirmwareOption.UseLatestFirmware" value="true"/>
         <property key="UART 1" value="true"/>
         <property key="UART 2" value="true"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>

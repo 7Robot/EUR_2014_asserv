@@ -51,6 +51,10 @@ void set_asserv_off();
 void set_asserv_pos_mode();
 void set_asserv_speed_mode();
 
+// obtenir les consignes vitesse roue gauche et droite
+float get_cons_vg();
+float get_cons_vd();
+
 // effectue un pas d'asservissement
 void asserv_step(Odo *odo, float *commande_g, float *commande_d);
 void speed_asserv_step(Odo *odo, float *commande_g, float *commande_d);

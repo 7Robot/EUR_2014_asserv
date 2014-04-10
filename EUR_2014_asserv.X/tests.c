@@ -19,6 +19,7 @@
 void test_Asserv_vitesse(float cons_v,float cons_vt)
 {
     Speed speed = {cons_v, cons_vt};
+    Speed speed_2 = {cons_v+0.1, cons_vt};
 
     /* Configure the oscillator for the device */
     ConfigureOscillator();
@@ -28,8 +29,14 @@ void test_Asserv_vitesse(float cons_v,float cons_vt)
     Init_QEI();
     motion_init(basculer_led);
 
+    // stabilisation
     motion_speed(speed);
-    __delay_ms(5000);
+    __delay_ms(4000);
+    // test de réponse à une commande
+    set_debug_mode(1);
+    __delay_ms(500);
+    motion_speed(speed_2);
+    __delay_ms(4000);
     motion_free();
 }
 

@@ -72,4 +72,12 @@
 #define DEFAULT_PID_EPS_SPEED {0.01,0.02}
 #endif
 
+/*############################################################################*/
+/*                                  DEBUG                                     */
+/*############################################################################*/
+
+#ifndef DEFAULT_DEBUG_MODE
+#define DEFAULT_DEBUG_MODE 0
+#endif
+
 #endif // _LIB_ASSERV_DEFAULT_H_

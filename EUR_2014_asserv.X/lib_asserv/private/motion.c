@@ -2,6 +2,7 @@
 #include "motion.h"
 #include "asserv.h"
 #include "odo.h"
+#include "debug.h"
 
 /******************************    Variables    *******************************/
 volatile MotionState motionState;
@@ -16,6 +17,7 @@ void motion_init(void(*_done)(void)) {
     done = _done;
     odo_init();
     asserv_init();
+    debug_init();
 }
 
 // assigner des valeurs à la position (x, y et theta)
@@ -34,6 +36,16 @@ void set_acceleration(MotionState *state, Acceleration acc){state->acc = acc;}
 void set_acceleration_a(MotionState *state, float a){state->acc.a = a;}
 void set_acceleration_at(MotionState *state, float at){state->acc.at = at;}
 void set_acceleration_v_vt(MotionState *state, float v_vt){state->acc.v_vt = v_vt;}
+
+// obtenir les vitesses des roues gauche et droite
+float get_vg(){
+    float delta_v = odo.coefs.spacing * 0.5 * motionState.speed.vt;
+    return motionState.speed.v - delta_v;
+}
+float get_vd(){
+    float delta_v = odo.coefs.spacing * 0.5 * motionState.speed.vt;
+    return motionState.speed.v + delta_v;
+}
 
 // consignes de déplacements du robot
 void motion_free(){set_asserv_off();}
@@ -57,4 +69,6 @@ void motion_step(int tics_g, int tics_d, float *commande_g, float *commande_d){
     asserv_step(&odo, commande_g, commande_d);
     // indique si on est arrivé
     if (asserv_done()) done();
+    // MODE DEBUG : enregistrer les consignes et etats des vitesses
+    if (debug_mode){debug_speed_asserv();}
 }

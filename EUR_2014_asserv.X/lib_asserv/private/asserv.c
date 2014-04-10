@@ -97,6 +97,10 @@ void set_asserv_off(){asserv_mode = ASSERV_MODE_OFF;}
 void set_asserv_pos_mode(){asserv_mode = ASSERV_MODE_POS;}
 void set_asserv_speed_mode(){asserv_mode = ASSERV_MODE_SPEED;}
 
+// obtenir les consignes vitesse roue gauche et droite
+float get_cons_vg(){return asserv_speed_g.pid.order;}
+float get_cons_vd(){return asserv_speed_d.pid.order;}
+
 
 // effectue un pas d'asservissement
 void asserv_step(Odo *odo, float *commande_g, float *commande_d){

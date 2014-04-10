@@ -38,6 +38,7 @@ typedef struct {
 } MotionConstraint;
 
 
+
 /******************************    Fonctions    *******************************/
 
 // initialiser la lib d'asservissement
@@ -59,6 +60,10 @@ void set_acceleration(MotionState *state, Acceleration acc);
 void set_acceleration_a(MotionState *state, float a); // accélération
 void set_acceleration_at(MotionState *state, float at); // accélération angulaire
 void set_acceleration_v_vt(MotionState *state, float v_vt); // vitesse * vitesse angulaire
+
+// obtenir les vitesses des roues gauche et droite
+float get_vg();
+float get_vd();
 
 // consignes de déplacements du robot
 void motion_free(); // passer en roue libre
