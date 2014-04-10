@@ -3,6 +3,7 @@
 #include "asserv.h"
 #include "odo.h"
 #include "debug.h"
+#include "../lib_asserv_default.h"
 
 /******************************    Variables    *******************************/
 volatile MotionState motionState;
@@ -14,6 +15,10 @@ static void(*done)(void); // callback
 
 // initialiser la lib d'asservissement
 void motion_init(void(*_done)(void)) {
+    Speed v_max = DEFAULT_CONSTRAINT_V_MAX;
+    Acceleration a_max = DEFAULT_CONSTRAINT_A_MAX;
+    motionConstraint.v_max = v_max;
+    motionConstraint.a_max = a_max;
     done = _done;
     odo_init();
     asserv_init();

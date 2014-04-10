@@ -3,6 +3,8 @@
 #include "odo.h"
 #include "pid.h"
 #include "../lib_asserv_default.h"
+#include "tools.h"
+#include <math.h>
 
 
 /******************************    Variables    *******************************/
@@ -82,6 +84,7 @@ void asserv_init(){
     pos_asserv.done = 0;
     // initialisation de l'asservissement en vitesse
     speed_asserv.speed_order = (Speed){0,0};
+    speed_asserv.speed_order_constrained = (Speed){0,0};
     speed_asserv.state = &motionState;
     speed_asserv.asserv_speed_g = &asserv_speed_g;
     speed_asserv.asserv_speed_d = &asserv_speed_d;
@@ -101,6 +104,35 @@ void set_asserv_speed_mode(){asserv_mode = ASSERV_MODE_SPEED;}
 float get_cons_vg(){return asserv_speed_g.pid.order;}
 float get_cons_vd(){return asserv_speed_d.pid.order;}
 
+// contraindre les vitesses et accélérations autorisées
+void constrain_speed_order(){
+    // vitesses actuelles du robot
+    float v = motionState.speed.v;
+    float vt = motionState.speed.vt;
+    // contraintes
+    float v_max = motionConstraint.v_max.v;
+    float vt_max = motionConstraint.v_max.vt;
+    float a_max = motionConstraint.a_max.a;
+    float at_max = motionConstraint.a_max.at;
+    float v_vt_max = motionConstraint.a_max.v_vt;
+    // vitesse consigne(o comme order) et consigne contrainte(oc)
+    float v_o = speed_asserv.speed_order.v;
+    float vt_o = speed_asserv.speed_order.vt;
+    float v_oc = speed_asserv.speed_order_constrained.v;
+    float vt_oc = speed_asserv.speed_order_constrained.vt;
+    // calcul des contraintes
+    float period = DEFAULT_PERIOD;
+    v_oc = limit_float(v_o,  v-a_max*period,  v+a_max*period);
+    v_oc = limit_float(v_oc,-v_max,v_max);
+    vt_oc = limit_float(vt_o,   vt-at_max*period,   vt+at_max*period);
+    vt_oc = limit_float(vt_oc,-vt_max,vt_max);
+    if (fabs(v_oc*vt_oc) > v_vt_max){
+        if (v_oc>0){v_oc = v_vt_max/fabs(vt_oc);}
+        else {v_oc = -v_vt_max/fabs(vt_oc);}
+    }
+    speed_asserv.speed_order_constrained.v = v_oc;
+    speed_asserv.speed_order_constrained.vt = vt_oc;
+}
 
 // effectue un pas d'asservissement
 void asserv_step(Odo *odo, float *commande_g, float *commande_d){
@@ -122,16 +154,18 @@ void asserv_step(Odo *odo, float *commande_g, float *commande_d){
 }
 
 void speed_asserv_step(Odo *odo, float *commande_g, float *commande_d){
+    // on commence par vérifier les contraintes de vitesses et accélération
+    constrain_speed_order();
     // variables intermédiaires permettant de passer des vitesses du robot aux vitesses roue gauche et droite
     float delta_v = odo->coefs.spacing * 0.5 * odo->state->speed.vt;
-    float delta_v_order = odo->coefs.spacing * 0.5 * speed_asserv.speed_order.vt;
+    float delta_v_order = odo->coefs.spacing * 0.5 * speed_asserv.speed_order_constrained.vt;
     float v_g, v_d, v_g_order, v_d_order;
     // vitesses gauche et droite
     v_g = odo->state->speed.v - delta_v;
     v_d = odo->state->speed.v + delta_v;
     // consignes des vitesses gauche et droite
-    v_g_order = speed_asserv.speed_order.v - delta_v_order;
-    v_d_order = speed_asserv.speed_order.v + delta_v_order;
+    v_g_order = speed_asserv.speed_order_constrained.v - delta_v_order;
+    v_d_order = speed_asserv.speed_order_constrained.v + delta_v_order;
     // calcul des PID
     pid_set_order(&(asserv_speed_g.pid), v_g_order);
     pid_set_order(&(asserv_speed_d.pid), v_d_order);

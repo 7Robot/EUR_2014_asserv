@@ -30,6 +30,7 @@ typedef struct {
 // Un asservissement en vitesse connait les asserv en vitesse des roues gauche et droite
 typedef struct {
     Speed speed_order;
+    Speed speed_order_constrained;
     Asserv *asserv_speed_g;
     Asserv *asserv_speed_d;
     MotionState *state;
@@ -54,6 +55,9 @@ void set_asserv_speed_mode();
 // obtenir les consignes vitesse roue gauche et droite
 float get_cons_vg();
 float get_cons_vd();
+
+// contraindre les vitesses et accélérations autorisées
+void constrain_speed_order();
 
 // effectue un pas d'asservissement
 void asserv_step(Odo *odo, float *commande_g, float *commande_d);

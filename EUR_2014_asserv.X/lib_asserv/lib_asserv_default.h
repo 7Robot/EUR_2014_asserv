@@ -15,7 +15,7 @@
 #endif
 
 #ifndef DEFAULT_CONSTRAINT_A_MAX
-#define DEFAULT_CONSTRAINT_A_MAX {1.0, 2.0, 1.0}
+#define DEFAULT_CONSTRAINT_A_MAX {2.0, 4.0, 2}
 #endif
 
 /*############################################################################*/
