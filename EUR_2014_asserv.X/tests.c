@@ -43,11 +43,11 @@ void test_Asserv_vitesse(float cons_v,float cons_vt)
 // Asserve en vitesse + vitesse angulaire
 void test_Asserv_vitesse_reglage()
 {
-    Speed speed = {0.3, 0};
-    Speed speed2 = {0.5, 0};
-    Speed speed3 = {0, 0};
-    Speed speed4 = {-0.3, 0};
-    Speed speed5 = {-0.5, 0};
+    Speed speed0 = {0, 0};
+    Speed speed5 = {0.5, 0};
+    Speed speed5n = {-0.5, 0};
+    Speed speed3 = {0.3, 0};
+    Speed speed3n = {-0.3, 0};
 
     /* Configure the oscillator for the device */
     ConfigureOscillator();
@@ -59,17 +59,15 @@ void test_Asserv_vitesse_reglage()
 
     // test de réponse à une commande
     set_debug_mode(1);
-    motion_speed(speed);
-    __delay_ms(1000);
-    motion_speed(speed2);
-    __delay_ms(1000);
-    motion_speed(speed3);
-    __delay_ms(1000);
-    motion_speed(speed4);
+    motion_speed(speed0);
     __delay_ms(1000);
     motion_speed(speed5);
     __delay_ms(1000);
-    motion_speed(speed3);
+    motion_speed(speed0);
+    __delay_ms(1000);
+    motion_speed(speed5n);
+    __delay_ms(1000);
+    motion_speed(speed0);
     __delay_ms(1000);
     motion_free();
 }
