@@ -1,3 +1,4 @@
+#include "extern_globals.h"
 #include "odo.h"
 #include "../lib_asserv_default.h"
 #include <math.h>

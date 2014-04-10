@@ -44,7 +44,7 @@ void pid_maj(Pid *pid, float value){
 
 // maj de l'erreur du PID en tenant compte du coef de moyennage mu_p
 void pid_maj_err(Pid *pid, float value){
-    pid->state.err = pid->coefs.mu_p * pid->state.err + (1-pid->coefs.mu_p) * value;
+    pid->state.err = pid->coefs.mu_p * pid->state.err + (1-pid->coefs.mu_p) * (pid->order - value);
 }
 
 // maj de l'intégrale de l'erreur du PID en tenant compte de sa limite max

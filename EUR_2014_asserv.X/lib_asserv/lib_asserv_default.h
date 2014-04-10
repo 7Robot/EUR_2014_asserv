@@ -38,8 +38,6 @@
 #define DEFAULT_ASSERV_MODE ASSERV_MODE_OFF
 #endif
 
-#endif // _LIB_ASSERV_DEFAULT_H_
-
 /*############################################################################*/
 /*                                   PID                                      */
 /*############################################################################*/
@@ -52,10 +50,10 @@
 #define DEFAULT_PID_COEFS_PD {10,0,0,0,0}
 #endif
 #ifndef DEFAULT_PID_COEFS_VG
-#define DEFAULT_PID_COEFS_VG {100,1,500,0,0}
+#define DEFAULT_PID_COEFS_VG {60,1,0,0,0}
 #endif
 #ifndef DEFAULT_PID_COEFS_VD
-#define DEFAULT_PID_COEFS_VD {100,1,500,0,0}
+#define DEFAULT_PID_COEFS_VD {50,1,0,0,0}
 #endif
 
 // valeurs max de l'intégrale en position et en vitesse

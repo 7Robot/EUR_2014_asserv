@@ -5,6 +5,7 @@
 
 #include "user.h"          /* User funct/params, such as InitApp              */
 #include "qei.h"           /* QEI definitions for easier use                  */
+#include "motor.h"
 #include <libpic30.h>
 #include "tests.h"
 #include "lib_asserv/lib_asserv.h"
@@ -28,7 +29,8 @@ void test_Asserv_vitesse(float cons_v,float cons_vt)
     motion_init(basculer_led);
 
     motion_speed(speed);
-    while(1);
+    __delay_ms(5000);
+    motion_free();
 }
 
 

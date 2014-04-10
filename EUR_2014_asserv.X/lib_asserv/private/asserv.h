@@ -3,12 +3,12 @@
 
 #include "motion.h"
 #include "pid.h"
+#include "odo.h"
 
 // mode de l'asservissement
 #define ASSERV_MODE_OFF 0
 #define ASSERV_MODE_POS 1
 #define ASSERV_MODE_SPEED 2
-
 
 /*****************************    Structures    *******************************/
 

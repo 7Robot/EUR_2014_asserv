@@ -1,3 +1,4 @@
+#include "extern_globals.h"
 #include "asserv.h"
 #include "odo.h"
 #include "pid.h"
@@ -75,13 +76,13 @@ void asserv_init(){
 
     // initialisation de l'asservissement en position
     pos_asserv.pos_order = (Position){0,0,0};
-    pos_asserv.state = &MotionState;
+    pos_asserv.state = &motionState;
     pos_asserv.asserv_speed_g = &asserv_speed_g;
     pos_asserv.asserv_speed_d = &asserv_speed_d;
     pos_asserv.done = 0;
     // initialisation de l'asservissement en vitesse
     speed_asserv.speed_order = (Speed){0,0};
-    speed_asserv.state = &MotionState;
+    speed_asserv.state = &motionState;
     speed_asserv.asserv_speed_g = &asserv_speed_g;
     speed_asserv.asserv_speed_d = &asserv_speed_d;
     speed_asserv.done = 0;
@@ -116,7 +117,7 @@ void asserv_step(Odo *odo, float *commande_g, float *commande_d){
     }
 }
 
-speed_asserv_step(Odo *odo, float *commande_g, float *commande_d){
+void speed_asserv_step(Odo *odo, float *commande_g, float *commande_d){
     // variables intermédiaires permettant de passer des vitesses du robot aux vitesses roue gauche et droite
     float delta_v = odo->coefs.spacing * 0.5 * odo->state->speed.vt;
     float delta_v_order = odo->coefs.spacing * 0.5 * speed_asserv.speed_order.vt;
@@ -143,8 +144,8 @@ speed_asserv_step(Odo *odo, float *commande_g, float *commande_d){
 
 // indique si l'asservissement en cours a terminé
 int asserv_done(){
-    if (asserv_mode = ASSERV_MODE_OFF) {return 1;}
-    else if (asserv_mode = ASSERV_MODE_POS) {return pos_asserv.done;}
-    else if (asserv_mode = ASSERV_MODE_SPEED) {return speed_asserv.done;}
+    if (asserv_mode == ASSERV_MODE_OFF) {return 1;}
+    else if (asserv_mode == ASSERV_MODE_POS) {return pos_asserv.done;}
+    else if (asserv_mode == ASSERV_MODE_SPEED) {return speed_asserv.done;}
     else {return 0;}
 }

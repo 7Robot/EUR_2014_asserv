@@ -1,3 +1,4 @@
+#include "extern_globals.h"
 #include "motion.h"
 #include "asserv.h"
 #include "odo.h"

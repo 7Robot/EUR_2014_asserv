@@ -137,10 +137,6 @@ void __attribute__((interrupt,auto_psv)) _T2Interrupt(void) {
     // commandes gauches et droite
     volatile static float commande_g, commande_d;
 
-    // periode (multiplieur des 10ms)
-    int periode = 100;
-    test_interrupt_led(int periode);
-
     // récupération des données des compteurs qei gauche et droit
     tics_g = (int)POS1CNT;
     tics_d = (int)POS2CNT;

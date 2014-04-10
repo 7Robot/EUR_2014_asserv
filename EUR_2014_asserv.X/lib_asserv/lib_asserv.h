@@ -2,6 +2,9 @@
 #define _LIB_ASSERV_H_
 
 #include "private/motion.h"
+#include "private/extern_globals.h"
+
+/******************************** Fonctions ***********************************/
 
 // consignes de déplacements du robot
 void motion_free(); // passer en roue libre
