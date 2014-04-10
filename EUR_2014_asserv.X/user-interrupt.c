@@ -43,7 +43,7 @@ void InitApp(void)
                 T2_IDLE_CON &
                 T2_GATE_OFF &
                 T2_PS_1_256 &
-                T2_SOURCE_INT, 1560 ); //1000Hz
+                T2_SOURCE_INT, 1560 ); // 100Hz
 
     ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
 
