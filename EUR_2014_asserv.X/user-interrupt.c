@@ -43,7 +43,7 @@ void InitApp(void)
                 T2_IDLE_CON &
                 T2_GATE_OFF &
                 T2_PS_1_256 &
-                T2_SOURCE_INT, 156 ); //1000Hz
+                T2_SOURCE_INT, 1560 ); //1000Hz
 
     ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
 
@@ -61,9 +61,9 @@ void InitApp(void)
                  & UART_TX_INT_PR4 & UART_TX_INT_DIS);
 				 
 	_ODCB5 = 1; //OPEN DRAIN pour AX12
+
+    AD1PCFGL = 0xFFFF;
 	
-	Init_PWM();
-	Init_QEI();
 }
 
 void Init_PWM(void)

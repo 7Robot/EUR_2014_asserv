@@ -100,7 +100,6 @@ int16_t main(void)
     responseReadyAX = 0;
 
     while (1){
-        OnRot(0.5, 1, 1);
         // PutAX(18, AX_GOAL_POSITION, 100);
         __delay_ms(10000);
         //PutAX(18, AX_GOAL_POSITION, 0);
