@@ -42,6 +42,8 @@ void OnSpeedOmega(float speed, float omega, float aDistMax, float dDistMax, floa
 
 void OnStop() { motion_stop(); }
 
+void OnBlock() { motion_block(); }
+
 void OnSetEpsilons(float dist, float speed, float theta, float omega) {
     motion_set_epsilons(dist, speed, theta, omega);
 }

@@ -60,12 +60,12 @@ void InitApp(void)
     ConfigIntUART2(UART_RX_INT_PR4 & UART_RX_INT_EN
                  & UART_TX_INT_PR4 & UART_TX_INT_DIS);
 				 
-	_ODCB5 = 1; //OPEN DRAIN pour AX12
+    _ODCB5 = 1; //OPEN DRAIN pour AX12
 
-    AD1PCFGL = 0xFFFF;
+    AD1PCFGL = 0xFFFF; //Pins analogiques en numérique pour que ATP marche !!
 	
-	Init_PWM();
-	Init_QEI();
+    Init_PWM();
+    Init_QEI();
 }
 
 void Init_PWM(void)
@@ -139,8 +139,8 @@ void Init_QEI(void)
     QEI2CONbits.TQCS = 0; // use PIC clock
 
     // configuration des pins A et B du module
-    RPINR16bits.QEA2R = 23; // 23 = pin RP23
-    RPINR16bits.QEB2R = 24;
+    RPINR16bits.QEA2R = 24;
+    RPINR16bits.QEB2R = 23; // 23 = pin RP23
 }
 
 void Set_Vitesse_MoteurD(float consigne)

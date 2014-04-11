@@ -1,10 +1,10 @@
-// Generated from version 1306051704 of semantic
+// Generated from version 1404111942 of semantic
 
 #ifndef _ASSERV_H_
 #define _ASSERV_H_
 
 #define BOARD_ID 1
-#define BOARD_NAME Mother
+#define BOARD_NAME Asserv
 
 
 void SendError();
@@ -17,9 +17,13 @@ void OnTest(unsigned char B, unsigned int H, unsigned long int I, char b, int h,
 
 void SendTest(unsigned char B, unsigned int H, unsigned long int I, char b, int h, long int i, float f);
 
+void SendUnimplemented();
+
 void SendX(float x);
 
 void SendY(float y);
+
+void OnBlock();
 
 void OnDist(float dist, float vMax, float aMax);
 
@@ -70,6 +74,8 @@ void OnSetTicByMeter(unsigned long int tic_by_meter);
 void OnSetX(float x);
 
 void OnSetXTheta(float x, float theta);
+
+void OnSetXY(float x, float y);
 
 void OnSetXYTheta(float x, float y, float theta);
 

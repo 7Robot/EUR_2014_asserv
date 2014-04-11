@@ -1,4 +1,4 @@
-// Generated from version 1306051704 of semantic
+// Generated from version 1404111942 of semantic
 
 #include "atp.h"
 
@@ -63,6 +63,15 @@ void SendTest(unsigned char B, unsigned int H, unsigned long int I, char b, int 
     SendBytes(bytes, 28);
 }
 
+void SendUnimplemented() {
+    char bytes[] = {
+        129,
+        251,
+        128
+    };
+    SendBytes(bytes, 3);
+}
+
 void SendX(float x) {
     char bytes[] = {
         129,
@@ -92,49 +101,52 @@ void SendY(float y) {
 }
 
 // You should redefine this function
-__attribute__((weak)) void OnDist(float dist, float vMax, float aMax) {}
+__attribute__((weak)) void OnBlock() { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnDistFree(float dist) {}
+__attribute__((weak)) void OnDist(float dist, float vMax, float aMax) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnDistRot(float dist, float rot, float vDistMax, float aDistMax, float vRotMax, float aRotMax) {}
+__attribute__((weak)) void OnDistFree(float dist) { SendUnimplemented(); }
+
+// You should redefine this function
+__attribute__((weak)) void OnDistRot(float dist, float rot, float vDistMax, float aDistMax, float vRotMax, float aRotMax) { SendUnimplemented(); }
 
 void SendDone() {
     char bytes[] = {
         129,
-        2,
+        3,
         128
     };
     SendBytes(bytes, 3);
 }
 
 // You should redefine this function
-__attribute__((weak)) void OnGetPos() {}
+__attribute__((weak)) void OnGetPos() { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnGetTheta() {}
+__attribute__((weak)) void OnGetTheta() { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnGetX() {}
+__attribute__((weak)) void OnGetX() { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnGetY() {}
+__attribute__((weak)) void OnGetY() { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnOdoBroadcastOff() {}
+__attribute__((weak)) void OnOdoBroadcastOff() { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnOdoBroadcastOn() {}
+__attribute__((weak)) void OnOdoBroadcastOn() { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnOdoBroadcastToggle() {}
+__attribute__((weak)) void OnOdoBroadcastToggle() { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnOdoDelay(unsigned long int delay) {}
+__attribute__((weak)) void OnOdoDelay(unsigned long int delay) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnOmega(float omega, float aMax, float dMax) {}
+__attribute__((weak)) void OnOmega(float omega, float aMax, float dMax) { SendUnimplemented(); }
 
 void SendPos(float x, float y, float theta) {
     char bytes[] = {
@@ -161,61 +173,64 @@ void SendPos(float x, float y, float theta) {
 }
 
 // You should redefine this function
-__attribute__((weak)) void OnReachTheta(float theta, float vMax, float aMax) {}
+__attribute__((weak)) void OnReachTheta(float theta, float vMax, float aMax) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnReachX(float x, float vMax, float aMax) {}
+__attribute__((weak)) void OnReachX(float x, float vMax, float aMax) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnReachY(float y, float vMax, float aMax) {}
+__attribute__((weak)) void OnReachY(float y, float vMax, float aMax) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnRot(float rot, float vMax, float aMax) {}
+__attribute__((weak)) void OnRot(float rot, float vMax, float aMax) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnRotFree(float rot) {}
+__attribute__((weak)) void OnRotFree(float rot) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnSetEpsilons(float dist, float speed, float theta, float omega) {}
+__attribute__((weak)) void OnSetEpsilons(float dist, float speed, float theta, float omega) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnSetSpacing(float spacing) {}
+__attribute__((weak)) void OnSetSpacing(float spacing) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnSetTheta(float theta) {}
+__attribute__((weak)) void OnSetTheta(float theta) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnSetTicByMeter(unsigned long int tic_by_meter) {}
+__attribute__((weak)) void OnSetTicByMeter(unsigned long int tic_by_meter) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnSetX(float x) {}
+__attribute__((weak)) void OnSetX(float x) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnSetXTheta(float x, float theta) {}
+__attribute__((weak)) void OnSetXTheta(float x, float theta) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnSetXYTheta(float x, float y, float theta) {}
+__attribute__((weak)) void OnSetXY(float x, float y) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnSetY(float y) {}
+__attribute__((weak)) void OnSetXYTheta(float x, float y, float theta) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnSetYTheta(float y, float theta) {}
+__attribute__((weak)) void OnSetY(float y) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnSpeed(float speed, float aMax, float dMax) {}
+__attribute__((weak)) void OnSetYTheta(float y, float theta) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnSpeedFree(float speed) {}
+__attribute__((weak)) void OnSpeed(float speed, float aMax, float dMax) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnSpeedOmega(float speed, float omega, float aDistMax, float dDistMax, float aRotMax, float dRotMax) {}
+__attribute__((weak)) void OnSpeedFree(float speed) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnStep(unsigned long int period, unsigned long int ticsG, unsigned long int ticsD, long int consignG, long int consignD) {}
+__attribute__((weak)) void OnSpeedOmega(float speed, float omega, float aDistMax, float dDistMax, float aRotMax, float dRotMax) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnStop() {}
+__attribute__((weak)) void OnStep(unsigned long int period, unsigned long int ticsG, unsigned long int ticsD, long int consignG, long int consignD) { SendUnimplemented(); }
+
+// You should redefine this function
+__attribute__((weak)) void OnStop() { SendUnimplemented(); }
 
 void SendTheta(float theta) {
     char bytes[] = {
@@ -247,6 +262,10 @@ int AtpDecode(int id,
     }
     if (id == 252) {
         OnTest(ucharv[0], ushortv[0], uintv[0], charv[0], shortv[0], intv[0], floatv[0]);
+        return 1;
+    }
+    if (id == 2) {
+        OnBlock();
         return 1;
     }
     if (id == 12) {
@@ -341,6 +360,10 @@ int AtpDecode(int id,
         OnSetXTheta(floatv[0], floatv[1]);
         return 1;
     }
+    if (id == 50) {
+        OnSetXY(floatv[0], floatv[1]);
+        return 1;
+    }
     if (id == 49) {
         OnSetXYTheta(floatv[0], floatv[1], floatv[2]);
         return 1;
@@ -375,3 +398,4 @@ int AtpDecode(int id,
     }
     return 0;
 }
+
