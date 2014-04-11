@@ -122,9 +122,9 @@ void constrain_speed_order(){
     float vt_oc = speed_asserv.speed_order_constrained.vt;
     // calcul des contraintes
     float period = DEFAULT_PERIOD;
-    v_oc = limit_float(v_o,  v-a_max*period,  v+a_max*period);
+    v_oc = limit_float(v_o,  v_oc-a_max*period,  v_oc+a_max*period);
     v_oc = limit_float(v_oc,-v_max,v_max);
-    vt_oc = limit_float(vt_o,   vt-at_max*period,   vt+at_max*period);
+    vt_oc = limit_float(vt_o,   vt_oc-at_max*period,   vt_oc+at_max*period);
     vt_oc = limit_float(vt_oc,-vt_max,vt_max);
     if (fabs(v_oc*vt_oc) > v_vt_max){
         if (v_oc>0){v_oc = v_vt_max/fabs(vt_oc);}
