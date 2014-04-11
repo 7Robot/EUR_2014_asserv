@@ -32,6 +32,6 @@
 #define MOTOR_2B_O _LATB14
 
 #define CONSIGNE_NULLE 0
-#define CONSIGNE_MAX 1000
+#define CONSIGNE_MAX 5000
 
 #endif // _LIBASSERV_ROBOT_H_

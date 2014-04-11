@@ -3,11 +3,12 @@
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
             <name>EUR_2014_asserv</name>
-            <creation-uuid>1b02fa60-b826-4f68-bbd8-d72154495995</creation-uuid>
+            <creation-uuid>0ac375ad-f464-42e7-bee8-9d207ab477b8</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>
             <header-extensions>h</header-extensions>
+            <asminc-extensions/>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
         </data>

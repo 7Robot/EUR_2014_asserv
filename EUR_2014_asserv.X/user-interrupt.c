@@ -43,7 +43,7 @@ void InitApp(void)
                 T2_IDLE_CON &
                 T2_GATE_OFF &
                 T2_PS_1_256 &
-                T2_SOURCE_INT, 156 ); //1000Hz
+                T2_SOURCE_INT, 1560 ); //100Hz
 
     ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
 
@@ -74,7 +74,7 @@ void Init_PWM(void)
     P1TCONbits.PTMOD = 0; // free-runnig mode
 
     /*
-* la période des PWM (temps entre 2 fronts montants)
+* la periode des PWM (temps entre 2 fronts montants)
 * est fixée à 1500 cycles de 40MHz
 * ça donne une periode de sortie de 37.5 µs soit 26.66 kHz
 * RMQ : les registres de rapport cycliques ayant une précision double

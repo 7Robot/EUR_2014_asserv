@@ -37,7 +37,7 @@
 
 // La définition de cette variable provoque le clignotement de la led à la
 // réception d?un packett
-//#define BLINK_ON_PACKET
+#define BLINK_ON_PACKET
 
 
 #define MAX_UCHAR 8

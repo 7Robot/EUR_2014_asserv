@@ -333,6 +333,7 @@ void recv(unsigned int pending) {
 
 void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void)
 {
+    led = led ^ 1;
     _U1RXIF = 0;      // On baisse le FLAG
 
     while(DataRdyUART1()) {
