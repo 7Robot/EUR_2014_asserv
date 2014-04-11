@@ -61,6 +61,8 @@ void InitApp(void)
                  & UART_TX_INT_PR4 & UART_TX_INT_DIS);
 				 
 	_ODCB5 = 1; //OPEN DRAIN pour AX12
+
+    AD1PCFGL = 0xFFFF;
 	
 	Init_PWM();
 	Init_QEI();
@@ -74,7 +76,7 @@ void Init_PWM(void)
     P1TCONbits.PTMOD = 0; // free-runnig mode
 
     /*
-* la periode des PWM (temps entre 2 fronts montants)
+* la période des PWM (temps entre 2 fronts montants)
 * est fixée à 1500 cycles de 40MHz
 * ça donne une periode de sortie de 37.5 µs soit 26.66 kHz
 * RMQ : les registres de rapport cycliques ayant une précision double
