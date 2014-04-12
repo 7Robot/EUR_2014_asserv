@@ -133,8 +133,18 @@ void constrain_speed_order(){
     vt_oc = limit_float(vt_o,   vt_oc-at_max*period,   vt_oc+at_max*period);
     vt_oc = limit_float(vt_oc,-vt_max,vt_max);
     if (fabs(v_oc*vt_oc) > v_vt_max){
-        if (v_oc>0){v_oc = v_vt_max/fabs(vt_oc);}
-        else {v_oc = -v_vt_max/fabs(vt_oc);}
+        if (v_oc>0){
+            v_oc = limit_float(
+                    v_vt_max/fabs(vt_oc),
+                    speed_asserv.speed_order_constrained.v-a_max*period,
+                    speed_asserv.speed_order_constrained.v+a_max*period);
+        }
+        else {
+            v_oc = limit_float(
+                    -v_vt_max/fabs(vt_oc),
+                    speed_asserv.speed_order_constrained.v-a_max*period,
+                    speed_asserv.speed_order_constrained.v+a_max*period);
+        }
     }
     speed_asserv.speed_order_constrained.v = v_oc;
     speed_asserv.speed_order_constrained.vt = vt_oc;
