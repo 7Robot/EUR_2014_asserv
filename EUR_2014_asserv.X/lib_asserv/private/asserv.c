@@ -79,7 +79,7 @@ void asserv_init(){
     // initialisation de l'asservissement en position
     pos_asserv.pos_order = (Position){0,0,0};
     // respect des contraintes d'accélération max avec ce coef
-    pos_asserv.kp = 0.9*motionConstraint.a_max.a; // ! motionConstraint doit être initialisé
+    pos_asserv.kp = 3*motionConstraint.a_max.a; // ! motionConstraint doit être initialisé
     pos_asserv.state = &motionState;
     pos_asserv.asserv_speed_g = &asserv_speed_g;
     pos_asserv.asserv_speed_d = &asserv_speed_d;

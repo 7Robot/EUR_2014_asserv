@@ -67,7 +67,7 @@ void test_Asserv_pos(){
     motion_pos(pos0);
     __delay_ms(100);
     motion_pos(pos05);
-    __delay_ms(3000);
+    __delay_ms(6000);
     motion_pos(pos0);
     __delay_ms(1000);
     motion_free();
