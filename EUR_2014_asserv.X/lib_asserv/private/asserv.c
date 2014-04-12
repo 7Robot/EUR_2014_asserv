@@ -78,6 +78,8 @@ void asserv_init(){
 
     // initialisation de l'asservissement en position
     pos_asserv.pos_order = (Position){0,0,0};
+    // respect des contraintes d'accélération max avec ce coef
+    pos_asserv.kp = 0.9*motionConstraint.a_max.a; // ! motionConstraint doit être initialisé
     pos_asserv.state = &motionState;
     pos_asserv.asserv_speed_g = &asserv_speed_g;
     pos_asserv.asserv_speed_d = &asserv_speed_d;
@@ -103,6 +105,10 @@ void set_asserv_speed_mode(){asserv_mode = ASSERV_MODE_SPEED;}
 // obtenir les consignes vitesse roue gauche et droite
 float get_cons_vg(){return asserv_speed_g.pid.order;}
 float get_cons_vd(){return asserv_speed_d.pid.order;}
+// obtenir les consignes en vitesse et vitesse angulaire
+float get_cons_v(){return speed_asserv.speed_order_constrained.v;}
+float get_cons_vt(){return speed_asserv.speed_order_constrained.vt;}
+
 
 // contraindre les vitesses et accélérations autorisées
 void constrain_speed_order(){
@@ -145,6 +151,7 @@ void asserv_step(Odo *odo, float *commande_g, float *commande_d){
             break;
         // si on est en asservissement en position
         case ASSERV_MODE_POS :
+            pos_asserv_step(odo, commande_g, commande_d);
             break;
         // si on est en asservissement en vitesse
         case ASSERV_MODE_SPEED :
@@ -177,6 +184,42 @@ void speed_asserv_step(Odo *odo, float *commande_g, float *commande_d){
     // vérification si on est arrivé à la bonne consigne
     if (pid_done(asserv_speed_g.pid) && pid_done(asserv_speed_d.pid)){
         speed_asserv.done = 1;
+    }
+}
+
+
+void pos_asserv_step(Odo *odo, float *commande_g, float *commande_d){
+    /*
+     * On calcule les consignes de vitesse et vitesse angulaire
+     * en fonction de la position actuelle et de la consigne de position.
+     *
+     * Idées :
+     * La priorité à la rotation
+     * on doit avoir une décroissance des consignes de vitesse plus lente que
+     * celles autorisées par l'accélération max
+     */
+    // distance et angle restants à parcourir
+    float x_c = pos_asserv.pos_order.x; // consigne en x
+    float y_c = pos_asserv.pos_order.y; // consigne en y
+    float x = odo->state->pos.x;
+    float y = odo->state->pos.y;
+    float d = sqrt((x_c-x)*(x_c-x) + (y_c-y)*(y_c-y));
+    float dt = atan2f(y_c-y,x_c-x);
+    float v_cons, vt_cons;
+    if (d<0.01) {*commande_g = 0; *commande_d = 0;}
+    else {
+        // si |dt| > pi/2 , on calcul beta = dt-pi et c'est beta la nouvelle consigne
+        // calcul de la consigne de vitesse et vitesse angulaire
+        if (fabs(dt)>PI/2) {
+            d = -d;
+            dt = dt-PI;
+        }
+        v_cons = pos_asserv.kp * d;
+        vt_cons = 2*dt/fabs(d)*v_cons; // priorité rotation
+        // appel de l'asserve en vitesse avec les bonnes consignes
+        speed_asserv.speed_order.v = v_cons;
+        speed_asserv.speed_order.vt = vt_cons;
+        speed_asserv_step(odo,commande_g,commande_d);
     }
 }
 

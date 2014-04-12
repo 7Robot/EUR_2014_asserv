@@ -14,6 +14,7 @@ extern volatile PositionAsserv pos_asserv;
 extern volatile SpeedAsserv speed_asserv;
 
 // motion
+extern volatile float motion_initialized;
 extern volatile MotionState motionState;
 extern volatile MotionConstraint motionConstraint;
 

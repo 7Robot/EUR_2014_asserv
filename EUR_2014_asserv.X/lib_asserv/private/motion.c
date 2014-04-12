@@ -6,6 +6,7 @@
 #include "../lib_asserv_default.h"
 
 /******************************    Variables    *******************************/
+volatile float motion_initialized = 0;
 volatile MotionState motionState;
 volatile MotionConstraint motionConstraint;
 static void(*done)(void); // callback
@@ -17,12 +18,14 @@ static void(*done)(void); // callback
 void motion_init(void(*_done)(void)) {
     Speed v_max = DEFAULT_CONSTRAINT_V_MAX;
     Acceleration a_max = DEFAULT_CONSTRAINT_A_MAX;
+    // initialiser les contraintes avant le reste (utile par exemple dans l'initialisation de l'asserve)
     motionConstraint.v_max = v_max;
     motionConstraint.a_max = a_max;
     done = _done;
     odo_init();
     asserv_init();
     debug_init();
+    motion_initialized = 1;
 }
 
 // assigner des valeurs à la position (x, y et theta)
@@ -68,12 +71,15 @@ void motion_speed(Speed speed){
 
 // renvoie les commandes des roues gauche et droite (appelé par l'interruption toutes les 10 ms)
 void motion_step(int tics_g, int tics_d, float *commande_g, float *commande_d){
-    // maj de l'odométrie
-    odo_step(&odo, tics_g, tics_d);
-    // on appelle la bonne fonction d'asservissement
-    asserv_step(&odo, commande_g, commande_d);
-    // indique si on est arrivé
-    if (asserv_done()) done();
-    // MODE DEBUG : enregistrer les consignes et etats des vitesses
-    if (debug_mode){debug_speed_asserv();}
+    if (!motion_initialized){*commande_g = 0; *commande_d = 0;}
+    else {
+        // maj de l'odométrie
+        odo_step(&odo, tics_g, tics_d);
+        // MODE DEBUG : enregistrer les consignes et etats des vitesses
+        if (debug_mode){debug_speed_asserv();}
+        // on appelle la bonne fonction d'asservissement
+        asserv_step(&odo, commande_g, commande_d);
+        // indique si on est arrivé
+        if (asserv_done()) done();
+    }
 }

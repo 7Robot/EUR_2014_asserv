@@ -38,7 +38,6 @@ typedef struct {
 } MotionConstraint;
 
 
-
 /******************************    Fonctions    *******************************/
 
 // initialiser la lib d'asservissement

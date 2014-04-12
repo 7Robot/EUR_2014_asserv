@@ -16,31 +16,6 @@
 /*############################################################################*/
 
 // Asserve en vitesse + vitesse angulaire
-void test_Asserv_vitesse(float cons_v,float cons_vt)
-{
-    Speed speed = {cons_v, cons_vt};
-    Speed speed_2 = {cons_v+0.1, cons_vt};
-
-    /* Configure the oscillator for the device */
-    ConfigureOscillator();
-    /* Initialize IO ports and peripherals */
-    InitTimers();
-    Init_PWM();
-    Init_QEI();
-    motion_init(basculer_led);
-
-    // stabilisation
-    motion_speed(speed);
-    __delay_ms(4000);
-    // test de réponse à une commande
-    set_debug_mode(1);
-    __delay_ms(500);
-    motion_speed(speed_2);
-    __delay_ms(4000);
-    motion_free();
-}
-
-// Asserve en vitesse + vitesse angulaire
 void test_Asserv_vitesse_reglage()
 {
     Speed speed0 = {0, 0};
@@ -66,6 +41,30 @@ void test_Asserv_vitesse_reglage()
     motion_speed(speed5n);
     __delay_ms(3000);
     motion_speed(speed0);
+    __delay_ms(1000);
+    motion_free();
+}
+
+// asserve en position
+void test_Asserv_pos(){
+    Position pos0 = {0, 0, 0};
+    Position pos05 = {0.5,0,0};
+
+    /* Configure the oscillator for the device */
+    ConfigureOscillator();
+    /* Initialize IO ports and peripherals */
+    InitTimers();
+    Init_PWM();
+    Init_QEI();
+    motion_init(basculer_led);
+
+    // test de réponse à une commande
+    set_debug_mode(1);
+    motion_pos(pos0);
+    __delay_ms(100);
+    motion_pos(pos05);
+    __delay_ms(3000);
+    motion_pos(pos0);
     __delay_ms(1000);
     motion_free();
 }

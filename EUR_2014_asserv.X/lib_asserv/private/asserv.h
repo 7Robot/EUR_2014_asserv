@@ -9,6 +9,8 @@
 #define ASSERV_MODE_OFF 0
 #define ASSERV_MODE_POS 1
 #define ASSERV_MODE_SPEED 2
+// constante pi
+#define PI 3.14159265359
 
 /*****************************    Structures    *******************************/
 
@@ -21,6 +23,7 @@ typedef struct {
 // Un asservissement en position connait les asserv en vitesse des roues gauche et droite
 typedef struct {
     Position pos_order;
+    float kp; // coef proportionnel qui doit être plus petit que l'accélération max
     Asserv *asserv_speed_g;
     Asserv *asserv_speed_d;
     MotionState *state;
@@ -62,6 +65,7 @@ void constrain_speed_order();
 // effectue un pas d'asservissement
 void asserv_step(Odo *odo, float *commande_g, float *commande_d);
 void speed_asserv_step(Odo *odo, float *commande_g, float *commande_d);
+void pos_asserv_step(Odo *odo, float *commande_g, float *commande_d);
 
 // indique si l'asservissement en cours a terminé
 int asserv_done();
