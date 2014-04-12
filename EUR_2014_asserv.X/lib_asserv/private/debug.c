@@ -34,8 +34,8 @@ void debug_speed_asserv(){
     if (debug_count < DEBUG_COUNT_MAX){
         (speedDebug.v)[debug_count] = motionState.speed.v;
         (speedDebug.vt)[debug_count] = motionState.speed.vt;
-        (speedDebug.cons_v)[debug_count] = get_cons_v();
-        (speedDebug.cons_vt)[debug_count] = get_cons_vt();
+        (speedDebug.cons_v)[debug_count] = speed_asserv.speed_order_constrained.v;
+        (speedDebug.cons_vt)[debug_count] = speed_asserv.speed_order_constrained.vt;
         debug_count++;
     }
 }

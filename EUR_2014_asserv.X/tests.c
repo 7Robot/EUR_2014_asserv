@@ -19,10 +19,14 @@
 void test_Asserv_vitesse_reglage()
 {
     Speed speed0 = {0, 0};
-    Speed speed5 = {0.5, 0};
-    Speed speed5n = {-0.5, 0};
+    Speed speed6 = {0.6, 0};
+    Speed speed6n = {-0.6, 0};
     Speed speed3 = {0.3, 0};
     Speed speed3n = {-0.3, 0};
+    Speed speed5r = {0,5};
+    Speed speed5rn = {0,-5};
+    Speed speedv_vt_1 = {0.5,2};
+    Speed speedv_vt_1n = {0.5,-2};
 
     /* Configure the oscillator for the device */
     ConfigureOscillator();
@@ -36,9 +40,9 @@ void test_Asserv_vitesse_reglage()
     set_debug_mode(1);
     motion_speed(speed0);
     __delay_ms(100);
-    motion_speed(speed5);
-    __delay_ms(1000);
-    motion_speed(speed5n);
+    motion_speed(speedv_vt_1);
+    __delay_ms(1500);
+    motion_speed(speedv_vt_1n);
     __delay_ms(3000);
     motion_speed(speed0);
     __delay_ms(1000);
