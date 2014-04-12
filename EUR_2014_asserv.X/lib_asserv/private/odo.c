@@ -1,7 +1,9 @@
 #include "extern_globals.h"
 #include "odo.h"
+#include "asserv.h"
 #include "../lib_asserv_default.h"
 #include <math.h>
+#include "tools.h"
 
 /******************************    Variables    *******************************/
 volatile Odo odo;
@@ -54,6 +56,7 @@ void odo_step(Odo *odo, int qei_g, int qei_d){
     odo->state->pos.x += d*cos(odo->state->pos.t + 0.5*dt); // calcul centré
     odo->state->pos.y += d*sin(odo->state->pos.t + 0.5*dt); // calcul centré
     odo->state->pos.t += dt;
+    odo->state->pos.t = principal_angle(odo->state->pos.t);
 
     // maj des vitesses
     odo->state->speed.v = d/(odo->period);

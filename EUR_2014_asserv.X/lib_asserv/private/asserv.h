@@ -9,8 +9,6 @@
 #define ASSERV_MODE_OFF 0
 #define ASSERV_MODE_POS 1
 #define ASSERV_MODE_SPEED 2
-// constante pi
-#define PI 3.14159265359
 
 /*****************************    Structures    *******************************/
 
@@ -60,6 +58,7 @@ float get_cons_vg();
 float get_cons_vd();
 
 // contraindre les vitesses et accélérations autorisées
+void constrain_speed(float v, float vt, float *v_constrained, float *vt_constrained);
 void constrain_speed_order();
 
 // effectue un pas d'asservissement

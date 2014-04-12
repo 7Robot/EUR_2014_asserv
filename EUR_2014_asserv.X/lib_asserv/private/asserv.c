@@ -109,43 +109,49 @@ float get_cons_vd(){return asserv_speed_d.pid.order;}
 float get_cons_v(){return speed_asserv.speed_order_constrained.v;}
 float get_cons_vt(){return speed_asserv.speed_order_constrained.vt;}
 
-
-// contraindre les vitesses et accélérations autorisées
-void constrain_speed_order(){
-    // vitesses actuelles du robot
-    float v = motionState.speed.v;
-    float vt = motionState.speed.vt;
+// observer les contraintes aux vitesse et vitesse angulaire
+void constrain_speed(float v, float vt, float *v_constrained, float *vt_constrained){
     // contraintes
     float v_max = motionConstraint.v_max.v;
     float vt_max = motionConstraint.v_max.vt;
     float a_max = motionConstraint.a_max.a;
     float at_max = motionConstraint.a_max.at;
     float v_vt_max = motionConstraint.a_max.v_vt;
+    float v_c_old = *v_constrained;
+
+    // calcul des contraintes
+    float period = DEFAULT_PERIOD;
+    *v_constrained = limit_float(v,  *v_constrained-a_max*period,  *v_constrained+a_max*period);
+    *v_constrained = limit_float(*v_constrained,-v_max,v_max);
+    *vt_constrained = limit_float(vt,   *vt_constrained-at_max*period,   *vt_constrained+at_max*period);
+    *vt_constrained = limit_float(*vt_constrained,-vt_max,vt_max);
+
+    if (fabs((*v_constrained)*(*vt_constrained)) > v_vt_max){
+        if (*v_constrained>0){
+            *v_constrained = limit_float(
+                    v_vt_max/fabs(*vt_constrained),
+                    v_c_old-a_max*period,
+                    v_c_old+a_max*period);
+        }
+        else {
+            *v_constrained = limit_float(
+                    -v_vt_max/fabs(*vt_constrained),
+                    v_c_old-a_max*period,
+                    v_c_old+a_max*period);
+        }
+    }
+}
+
+// contraindre les vitesses et accélérations autorisées
+void constrain_speed_order(){
+    
     // vitesse consigne(o comme order) et consigne contrainte(oc)
     float v_o = speed_asserv.speed_order.v;
     float vt_o = speed_asserv.speed_order.vt;
     float v_oc = speed_asserv.speed_order_constrained.v;
     float vt_oc = speed_asserv.speed_order_constrained.vt;
-    // calcul des contraintes
-    float period = DEFAULT_PERIOD;
-    v_oc = limit_float(v_o,  v_oc-a_max*period,  v_oc+a_max*period);
-    v_oc = limit_float(v_oc,-v_max,v_max);
-    vt_oc = limit_float(vt_o,   vt_oc-at_max*period,   vt_oc+at_max*period);
-    vt_oc = limit_float(vt_oc,-vt_max,vt_max);
-    if (fabs(v_oc*vt_oc) > v_vt_max){
-        if (v_oc>0){
-            v_oc = limit_float(
-                    v_vt_max/fabs(vt_oc),
-                    speed_asserv.speed_order_constrained.v-a_max*period,
-                    speed_asserv.speed_order_constrained.v+a_max*period);
-        }
-        else {
-            v_oc = limit_float(
-                    -v_vt_max/fabs(vt_oc),
-                    speed_asserv.speed_order_constrained.v-a_max*period,
-                    speed_asserv.speed_order_constrained.v+a_max*period);
-        }
-    }
+
+    constrain_speed(v_o, vt_o, &v_oc, &vt_oc);
     speed_asserv.speed_order_constrained.v = v_oc;
     speed_asserv.speed_order_constrained.vt = vt_oc;
 }
@@ -214,7 +220,7 @@ void pos_asserv_step(Odo *odo, float *commande_g, float *commande_d){
     float x = odo->state->pos.x;
     float y = odo->state->pos.y;
     float d = sqrt((x_c-x)*(x_c-x) + (y_c-y)*(y_c-y));
-    float dt = atan2f(y_c-y,x_c-x);
+    float dt = principal_angle(atan2f(y_c-y,x_c-x) - odo->state->pos.t);
     float v_cons, vt_cons;
     if (d<0.01) {*commande_g = 0; *commande_d = 0;}
     else {
@@ -226,6 +232,10 @@ void pos_asserv_step(Odo *odo, float *commande_g, float *commande_d){
         }
         v_cons = pos_asserv.kp * d;
         vt_cons = 2*dt/fabs(d)*v_cons; // priorité rotation
+
+        // appliquer les contraintes puis revérifier la priorité rotation
+        
+
         // appel de l'asserve en vitesse avec les bonnes consignes
         speed_asserv.speed_order.v = v_cons;
         speed_asserv.speed_order.vt = vt_cons;
