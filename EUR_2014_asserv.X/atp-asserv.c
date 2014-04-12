@@ -148,6 +148,9 @@ __attribute__((weak)) void OnOdoDelay(unsigned long int delay) { SendUnimplement
 // You should redefine this function
 __attribute__((weak)) void OnOmega(float omega, float aMax, float dMax) { SendUnimplemented(); }
 
+// You should redefine this function
+__attribute__((weak)) void OnOmegaFree(float omega) { SendUnimplemented(); }
+
 void SendPos(float x, float y, float theta) {
     char bytes[] = {
         129,
@@ -316,6 +319,10 @@ int AtpDecode(int id,
         OnOmega(floatv[0], floatv[1], floatv[2]);
         return 1;
     }
+    if (id == 23) {
+        OnOmegaFree(floatv[0]);
+        return 1;
+    }
     if (id == 19) {
         OnReachTheta(floatv[0], floatv[1], floatv[2]);
         return 1;
@@ -384,7 +391,7 @@ int AtpDecode(int id,
         OnSpeedFree(floatv[0]);
         return 1;
     }
-    if (id == 23) {
+    if (id == 24) {
         OnSpeedOmega(floatv[0], floatv[1], floatv[2], floatv[3], floatv[4], floatv[5]);
         return 1;
     }

@@ -51,6 +51,8 @@ void OnOdoDelay(unsigned long int delay);
 
 void OnOmega(float omega, float aMax, float dMax);
 
+void OnOmegaFree(float omega);
+
 void SendPos(float x, float y, float theta);
 
 void OnReachTheta(float theta, float vMax, float aMax);

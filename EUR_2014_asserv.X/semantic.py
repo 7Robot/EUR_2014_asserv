@@ -138,7 +138,11 @@ class Asserv(Proto):
         ("dMax", "f")
         ])
 
-    speedOmega = Packet(23, "arm", [
+    omegaFree = Packet(23, "arm", [
+        ("omega", "f"),
+        ])
+
+    speedOmega = Packet(24, "arm", [
         ("speed", "f"),
         ("omega", "f"),
         ("aDistMax", "f"),
