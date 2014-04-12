@@ -9,7 +9,6 @@
 */
 
 #include "atp-asserv.h"
-#include "libasserv_robot.h"
 #include "../asserv/asserv/libasserv.h"
 
 void OnDist(float dist, float vMax, float aMax) { motion_dist(dist, vMax, aMax); }
@@ -36,8 +35,10 @@ void OnSpeedFree(float speed) { motion_speed_free(speed); }
 
 void OnOmega(float omega, float aMax, float dMax) { motion_omega(omega, aMax, dMax); }
 
+void OnOmegaFree(float omega) { motion_omega_free(omega); }
+
 void OnSpeedOmega(float speed, float omega, float aDistMax, float dDistMax, float aRotMax, float dRotMax) {
-//    motion_omega_free(speed, omega, aDistMax, dDistMax, aRotMax, dRotMax);
+    motion_speed_omega(speed, omega, aDistMax, dDistMax, aRotMax, dRotMax);
 }
 
 void OnStop() { motion_stop(); }
