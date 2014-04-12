@@ -234,7 +234,8 @@ void pos_asserv_step(Odo *odo, float *commande_g, float *commande_d){
         vt_cons = 2*dt/fabs(d)*v_cons; // priorité rotation
 
         // appliquer les contraintes puis revérifier la priorité rotation
-        
+        constrain_speed(v_cons, vt_cons, &v_cons, &vt_cons);
+        if (fabs(dt)>0.087){v_cons = 0.5*d*fabs(vt_cons/dt);} // si dt > 5°
 
         // appel de l'asserve en vitesse avec les bonnes consignes
         speed_asserv.speed_order.v = v_cons;
