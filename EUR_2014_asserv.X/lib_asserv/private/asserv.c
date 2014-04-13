@@ -222,7 +222,10 @@ void pos_asserv_step(Odo *odo, float *commande_g, float *commande_d){
     float d = sqrt((x_c-x)*(x_c-x) + (y_c-y)*(y_c-y));
     float dt = principal_angle(atan2f(y_c-y,x_c-x) - odo->state->pos.t);
     float v_cons, vt_cons;
-    if (d<0.01) {*commande_g = 0; *commande_d = 0;}
+    if (d<0.01) {
+        *commande_g = 0;
+        *commande_d = 0;
+    }
     else {
         // si |dt| > pi/2 , on calcul beta = dt-pi et c'est beta la nouvelle consigne
         // calcul de la consigne de vitesse et vitesse angulaire

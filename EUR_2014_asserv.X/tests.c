@@ -54,7 +54,7 @@ void test_Asserv_pos(){
     Position pos0 = {0, 0, 0};
     Position pos05 = {0.5,0,0};
     Position pos_gauche = {0.5,0.5,0};
-    Position pos_test = {0.6,0,0};
+    Position pos_test = {0.2,0,0};
 
     /* Configure the oscillator for the device */
     ConfigureOscillator();
@@ -69,9 +69,9 @@ void test_Asserv_pos(){
     motion_pos(pos0);
     __delay_ms(100);
     motion_pos(pos_test);
-    __delay_ms(6000);
+    __delay_ms(2000);
     motion_pos(pos0);
-    __delay_ms(1000);
+    __delay_ms(2000);
     motion_free();
 }
 
