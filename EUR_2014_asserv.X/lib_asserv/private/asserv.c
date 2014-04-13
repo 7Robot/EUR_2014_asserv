@@ -198,7 +198,7 @@ void speed_asserv_step(Odo *odo, float *commande_g, float *commande_d){
     *commande_d = pid_process(&(asserv_speed_d.pid));
 
     // vérification si on est arrivé à la bonne consigne
-    if (pid_done(asserv_speed_g.pid) && pid_done(asserv_speed_d.pid)){
+    if (pid_done(&(asserv_speed_g.pid) && pid_done(&(asserv_speed_d.pid)))){
         speed_asserv.done = 1;
     } else {speed_asserv.done = 0;}
 }

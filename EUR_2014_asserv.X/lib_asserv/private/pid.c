@@ -64,7 +64,7 @@ float pid_process(Pid *pid){
             + pid->coefs.kd * pid->state.err_der;
 }
 
-// indique si le pid a terminé
+// indique si le pid est stable
 int pid_done(Pid *pid){
     return fabs(pid->state.err) <= pid->eps.err_eps && fabs(pid->state.err_der) <= pid->eps.der_eps;
 }

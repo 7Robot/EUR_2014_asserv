@@ -15,6 +15,7 @@
       <itemPath>lib_asserv/lib_asserv_default.h</itemPath>
       <itemPath>motor.h</itemPath>
       <itemPath>lib_asserv/private/extern_globals.h</itemPath>
+      <itemPath>lib_asserv/private/debug.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -33,6 +34,7 @@
       <itemPath>lib_asserv/private/asserv.c</itemPath>
       <itemPath>lib_asserv/private/tools.c</itemPath>
       <itemPath>motor.c</itemPath>
+      <itemPath>lib_asserv/private/debug.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -55,7 +57,7 @@
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>1.21</languageToolchainVersion>
+        <languageToolchainVersion></languageToolchainVersion>
         <platform>2</platform>
       </toolsSet>
       <compileType>
@@ -85,7 +87,7 @@
         <property key="enable-ansi-std" value="false"/>
         <property key="enable-ansi-warnings" value="false"/>
         <property key="enable-fatal-warnings" value="false"/>
-        <property key="enable-large-arrays" value="false"/>
+        <property key="enable-large-arrays" value="true"/>
         <property key="enable-omit-frame-pointer" value="false"/>
         <property key="enable-procedural-abstraction" value="false"/>
         <property key="enable-short-double" value="false"/>

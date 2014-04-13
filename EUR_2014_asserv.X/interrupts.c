@@ -14,7 +14,7 @@ void InitTimers()
                 T2_IDLE_CON &
                 T2_GATE_OFF &
                 T2_PS_1_64 &
-                T2_SOURCE_INT, 6250 );
+                T2_SOURCE_INT, 3125 ); // 5ms
 
     // activation de la priorité des interruptions
     _NSTDIS = 0;

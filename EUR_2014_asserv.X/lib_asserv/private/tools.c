@@ -17,7 +17,7 @@ long int limit_int(long int valeur, long int inf, long int sup){
 // angle principal
 float principal_angle(float angle){
     float alpha;
-    if (fabs(angle)<= PI/2){return angle;}
+    if (fabs(angle)< PI){return angle;}
     else {
         alpha = fmod(angle,2*PI);
         if (alpha>PI){alpha -= 2*PI;}

@@ -50,10 +50,10 @@
 #define DEFAULT_PID_COEFS_PD {10,0,0,0,0}
 #endif
 #ifndef DEFAULT_PID_COEFS_VG
-#define DEFAULT_PID_COEFS_VG {400,4,100,0.7,0.7}
+#define DEFAULT_PID_COEFS_VG {500,4,100,0.7,0.7}
 #endif
 #ifndef DEFAULT_PID_COEFS_VD
-#define DEFAULT_PID_COEFS_VD {400,4,100,0.7,0.7}
+#define DEFAULT_PID_COEFS_VD {500,4,100,0.7,0.7}
 #endif
 
 // valeurs max de l'intégrale en position et en vitesse

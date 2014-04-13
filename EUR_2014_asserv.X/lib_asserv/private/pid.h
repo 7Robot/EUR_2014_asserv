@@ -74,7 +74,7 @@ void pid_maj_err_der(Pid *pid, float err_old);
 float pid_process(Pid *pid);
 
 // indique si le pid a terminé
-int pid_done(Pid pid);
+int pid_done(Pid *pid);
 
 
 #endif // _PID_H_
