@@ -10,6 +10,7 @@
 
 #include "atp-asserv.h"
 #include "../asserv/asserv/libasserv.h"
+#include "user.h"
 
 void OnDist(float dist, float vMax, float aMax) { motion_dist(dist, vMax, aMax); }
 
@@ -42,6 +43,7 @@ void OnSpeedOmega(float speed, float omega, float aDistMax, float dDistMax, floa
 }
 
 void OnStop() { motion_stop(); }
+void OnAusecours() { OnStop(); }
 
 void OnBlock() { motion_block(); }
 
@@ -72,3 +74,33 @@ void OnSetXTheta(float x, float theta) { odo_set_x(x); odo_set_theta(theta); }
 void OnSetYTheta(float y, float theta) { odo_set_y(y); odo_set_theta(theta); }
 
 void OnSetXYTheta(float x, float y, float theta) { odo_set_x(x); odo_set_y(y); odo_set_theta(theta); }
+
+void OnOdoBroadcastOff() { odoBroadcast = 0; }
+
+void OnOdoBroadcastOn() { odoBroadcast = 1; }
+
+void OnOdoBroadcastToggle() { odoBroadcast = ! odoBroadcast; }
+
+void OnOdoDelay(unsigned long int delay) { odoBroadcastDelay = delay; }
+
+void OnGetPIDErr() {
+    float deltaErr, deltaDeriv, deltaInte;
+    float alphaErr, alphaDeriv, alphaInte;
+    motion_get_errors(&deltaErr, &deltaDeriv, &deltaInte,
+            &alphaErr, &alphaDeriv, &alphaInte);
+    SendPIDErr(deltaErr, deltaDeriv, deltaInte,
+            alphaErr, alphaDeriv, alphaInte);
+}
+
+extern int motor_corrector(int order);
+#include <xc.h>
+void OnGetOrders() {
+    float deltaOrder, alphaOrder;
+    int leftOrder, rightOrder, correctedLeftOrder, correctedRightOrder;
+    motion_get_orders(&deltaOrder, &alphaOrder, &leftOrder, &rightOrder);
+    correctedLeftOrder = motor_corrector(leftOrder);
+    correctedRightOrder = motor_corrector(rightOrder);
+    SendOrders(deltaOrder, alphaOrder, leftOrder, rightOrder,
+            correctedLeftOrder, correctedRightOrder,
+            P1DC3, P1DC2);
+}

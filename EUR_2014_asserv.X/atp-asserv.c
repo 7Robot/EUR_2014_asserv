@@ -72,6 +72,82 @@ void SendUnimplemented() {
     SendBytes(bytes, 3);
 }
 
+void SendOrders(float deltaOrder, float alphaOrder, int leftOrder, int rightOrder, int correctedLeftOrder, int correctedRightOrder, int effectiveLeftOrder, int effectiveRightOrder) {
+    char bytes[] = {
+        129,
+        8,
+        36,
+        ((char*)&deltaOrder)[0],
+        ((char*)&deltaOrder)[1],
+        ((char*)&deltaOrder)[2],
+        ((char*)&deltaOrder)[3],
+        36,
+        ((char*)&alphaOrder)[0],
+        ((char*)&alphaOrder)[1],
+        ((char*)&alphaOrder)[2],
+        ((char*)&alphaOrder)[3],
+        18,
+        ((char*)&leftOrder)[0],
+        ((char*)&leftOrder)[1],
+        18,
+        ((char*)&rightOrder)[0],
+        ((char*)&rightOrder)[1],
+        18,
+        ((char*)&correctedLeftOrder)[0],
+        ((char*)&correctedLeftOrder)[1],
+        18,
+        ((char*)&correctedRightOrder)[0],
+        ((char*)&correctedRightOrder)[1],
+        18,
+        ((char*)&effectiveLeftOrder)[0],
+        ((char*)&effectiveLeftOrder)[1],
+        18,
+        ((char*)&effectiveRightOrder)[0],
+        ((char*)&effectiveRightOrder)[1],
+        128
+    };
+    SendBytes(bytes, 31);
+}
+
+void SendPIDErr(float deltaErr, float deltaDeriv, float deltaInte, float alphaErr, float alphaDeriv, float alphaInte) {
+    char bytes[] = {
+        129,
+        6,
+        36,
+        ((char*)&deltaErr)[0],
+        ((char*)&deltaErr)[1],
+        ((char*)&deltaErr)[2],
+        ((char*)&deltaErr)[3],
+        36,
+        ((char*)&deltaDeriv)[0],
+        ((char*)&deltaDeriv)[1],
+        ((char*)&deltaDeriv)[2],
+        ((char*)&deltaDeriv)[3],
+        36,
+        ((char*)&deltaInte)[0],
+        ((char*)&deltaInte)[1],
+        ((char*)&deltaInte)[2],
+        ((char*)&deltaInte)[3],
+        36,
+        ((char*)&alphaErr)[0],
+        ((char*)&alphaErr)[1],
+        ((char*)&alphaErr)[2],
+        ((char*)&alphaErr)[3],
+        36,
+        ((char*)&alphaDeriv)[0],
+        ((char*)&alphaDeriv)[1],
+        ((char*)&alphaDeriv)[2],
+        ((char*)&alphaDeriv)[3],
+        36,
+        ((char*)&alphaInte)[0],
+        ((char*)&alphaInte)[1],
+        ((char*)&alphaInte)[2],
+        ((char*)&alphaInte)[3],
+        128
+    };
+    SendBytes(bytes, 33);
+}
+
 void SendX(float x) {
     char bytes[] = {
         129,
@@ -101,6 +177,9 @@ void SendY(float y) {
 }
 
 // You should redefine this function
+__attribute__((weak)) void OnAusecours() { SendUnimplemented(); }
+
+// You should redefine this function
 __attribute__((weak)) void OnBlock() { SendUnimplemented(); }
 
 // You should redefine this function
@@ -122,6 +201,12 @@ void SendDone() {
 }
 
 // You should redefine this function
+__attribute__((weak)) void OnGetOrders() { SendUnimplemented(); }
+
+// You should redefine this function
+__attribute__((weak)) void OnGetPIDErr() { SendUnimplemented(); }
+
+// You should redefine this function
 __attribute__((weak)) void OnGetPos() { SendUnimplemented(); }
 
 // You should redefine this function
@@ -132,6 +217,21 @@ __attribute__((weak)) void OnGetX() { SendUnimplemented(); }
 
 // You should redefine this function
 __attribute__((weak)) void OnGetY() { SendUnimplemented(); }
+
+void SendMode(int delta, int alpha) {
+    char bytes[] = {
+        129,
+        4,
+        18,
+        ((char*)&delta)[0],
+        ((char*)&delta)[1],
+        18,
+        ((char*)&alpha)[0],
+        ((char*)&alpha)[1],
+        128
+    };
+    SendBytes(bytes, 9);
+}
 
 // You should redefine this function
 __attribute__((weak)) void OnOdoBroadcastOff() { SendUnimplemented(); }
@@ -229,8 +329,39 @@ __attribute__((weak)) void OnSpeedFree(float speed) { SendUnimplemented(); }
 // You should redefine this function
 __attribute__((weak)) void OnSpeedOmega(float speed, float omega, float aDistMax, float dDistMax, float aRotMax, float dRotMax) { SendUnimplemented(); }
 
-// You should redefine this function
-__attribute__((weak)) void OnStep(unsigned long int period, unsigned long int ticsG, unsigned long int ticsD, long int consignG, long int consignD) { SendUnimplemented(); }
+void SendStep(float period, long int ticsG, long int ticsD, long int consignG, long int consignD) {
+    char bytes[] = {
+        129,
+        10,
+        36,
+        ((char*)&period)[0],
+        ((char*)&period)[1],
+        ((char*)&period)[2],
+        ((char*)&period)[3],
+        20,
+        ((char*)&ticsG)[0],
+        ((char*)&ticsG)[1],
+        ((char*)&ticsG)[2],
+        ((char*)&ticsG)[3],
+        20,
+        ((char*)&ticsD)[0],
+        ((char*)&ticsD)[1],
+        ((char*)&ticsD)[2],
+        ((char*)&ticsD)[3],
+        20,
+        ((char*)&consignG)[0],
+        ((char*)&consignG)[1],
+        ((char*)&consignG)[2],
+        ((char*)&consignG)[3],
+        20,
+        ((char*)&consignD)[0],
+        ((char*)&consignD)[1],
+        ((char*)&consignD)[2],
+        ((char*)&consignD)[3],
+        128
+    };
+    SendBytes(bytes, 28);
+}
 
 // You should redefine this function
 __attribute__((weak)) void OnStop() { SendUnimplemented(); }
@@ -267,6 +398,10 @@ int AtpDecode(int id,
         OnTest(ucharv[0], ushortv[0], uintv[0], charv[0], shortv[0], intv[0], floatv[0]);
         return 1;
     }
+    if (id == 1) {
+        OnAusecours();
+        return 1;
+    }
     if (id == 2) {
         OnBlock();
         return 1;
@@ -281,6 +416,14 @@ int AtpDecode(int id,
     }
     if (id == 16) {
         OnDistRot(floatv[0], floatv[1], floatv[2], floatv[3], floatv[4], floatv[5]);
+        return 1;
+    }
+    if (id == 7) {
+        OnGetOrders();
+        return 1;
+    }
+    if (id == 5) {
+        OnGetPIDErr();
         return 1;
     }
     if (id == 39) {
@@ -393,10 +536,6 @@ int AtpDecode(int id,
     }
     if (id == 24) {
         OnSpeedOmega(floatv[0], floatv[1], floatv[2], floatv[3], floatv[4], floatv[5]);
-        return 1;
-    }
-    if (id == 10) {
-        OnStep(uintv[0], uintv[1], uintv[2], intv[0], intv[1]);
         return 1;
     }
     if (id == 1) {

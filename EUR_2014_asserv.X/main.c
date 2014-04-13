@@ -80,6 +80,9 @@ void ConfigureOscillator(void)
 /* Main Program                                                               */
 /******************************************************************************/
 
+int odoBroadcast = 0;
+unsigned long int odoBroadcastDelay = 1000; // en ms
+
 int16_t main(void)
 {
     /* Configure the oscillator for the device */
@@ -93,18 +96,21 @@ int16_t main(void)
     AtpInit();
     motion_init(SendDone);
     SendBoardId();
-    __delay_ms(1000);
+    // Petit blink kikou au démarrage
+    int i;
+    for (i = 0 ; i < 14 ; i++) {
+        __delay_ms(50);
+        led = led ^ 1;
+    }
     SendBoardId();
 
     //pour les AX12
     responseReadyAX = 0;
 
     while (1){
-        //led = DataRdyUART1();
-        //OnRot(1, 1, 1);
-        // PutAX(18, AX_GOAL_POSITION, 100);
-        __delay_ms(10000);
-        //PutAX(18, AX_GOAL_POSITION, 0);
-        //led = !led;
+        if (odoBroadcast) {
+            OnGetPos();
+        }
+        __delay_ms(odoBroadcastDelay);
     }
 }

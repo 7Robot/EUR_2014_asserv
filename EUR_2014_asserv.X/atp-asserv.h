@@ -19,9 +19,15 @@ void SendTest(unsigned char B, unsigned int H, unsigned long int I, char b, int 
 
 void SendUnimplemented();
 
+void SendOrders(float deltaOrder, float alphaOrder, int leftOrder, int rightOrder, int correctedLeftOrder, int correctedRightOrder, int effectiveLeftOrder, int effectiveRightOrder);
+
+void SendPIDErr(float deltaErr, float deltaDeriv, float deltaInte, float alphaErr, float alphaDeriv, float alphaInte);
+
 void SendX(float x);
 
 void SendY(float y);
+
+void OnAusecours();
 
 void OnBlock();
 
@@ -33,6 +39,10 @@ void OnDistRot(float dist, float rot, float vDistMax, float aDistMax, float vRot
 
 void SendDone();
 
+void OnGetOrders();
+
+void OnGetPIDErr();
+
 void OnGetPos();
 
 void OnGetTheta();
@@ -40,6 +50,8 @@ void OnGetTheta();
 void OnGetX();
 
 void OnGetY();
+
+void SendMode(int delta, int alpha);
 
 void OnOdoBroadcastOff();
 
@@ -91,7 +103,7 @@ void OnSpeedFree(float speed);
 
 void OnSpeedOmega(float speed, float omega, float aDistMax, float dDistMax, float aRotMax, float dRotMax);
 
-void OnStep(unsigned long int period, unsigned long int ticsG, unsigned long int ticsD, long int consignG, long int consignD);
+void SendStep(float period, long int ticsG, long int ticsD, long int consignG, long int consignD);
 
 void OnStop();
 

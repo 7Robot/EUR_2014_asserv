@@ -22,6 +22,7 @@
 //include projet
 #include "user.h"
 #include "ax12.h"
+#include "atp-asserv.h"
 #include "libasserv_robot.h"
 #include "../asserv/asserv/libasserv.h"
 
@@ -43,7 +44,7 @@ void InitApp(void)
                 T2_IDLE_CON &
                 T2_GATE_OFF &
                 T2_PS_1_256 &
-                T2_SOURCE_INT, 1560 ); //100Hz
+                T2_SOURCE_INT, 120 ); //100Hz (1560)
 
     ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
 
@@ -80,7 +81,7 @@ void Init_PWM(void)
 * est fixée à 1500 cycles de 40MHz
 * ça donne une periode de sortie de 37.5 µs soit 26.66 kHz
 * RMQ : les registres de rapport cycliques ayant une précision double
-* leur valeur max sera 3000
+* leur valeur max sera >>>> 3000 <<<<
 */
     P1TPER = 1500;
 
@@ -143,40 +144,34 @@ void Init_QEI(void)
     RPINR16bits.QEB2R = 23; // 23 = pin RP23
 }
 
-void Set_Vitesse_MoteurD(float consigne)
+void Set_Vitesse_MoteurD(int consigne, int inverse)
 {
-	if (consigne < 0.0)
+	if (inverse)
 	{
-		consigne = -consigne;
 		MOTOR_1A_O = 0;
 		MOTOR_1B_O = 1;
 	}
 	else
 	{
 		MOTOR_1A_O = 1;
-		MOTOR_1B_O = 0;		
+		MOTOR_1B_O = 0;
 	}
-	if (consigne < CONSIGNE_NULLE) consigne = 0;
-	else if (consigne > CONSIGNE_MAX) consigne = CONSIGNE_MAX;
-	P1DC2 = (int)(consigne);
+	P1DC2 = consigne;
 }
 
-void Set_Vitesse_MoteurG(float consigne)
+void Set_Vitesse_MoteurG(int consigne, int inverse)
 {
-	if (consigne < 0.0)
+	if (inverse)
 	{
-		consigne = -consigne;
 		MOTOR_2A_O = 0;
 		MOTOR_2B_O = 1;
 	}
 	else
 	{
 		MOTOR_2A_O = 1;
-		MOTOR_2B_O = 0;		
+		MOTOR_2B_O = 0;
 	}
-	if (consigne < CONSIGNE_NULLE) consigne = 0;
-	else if (consigne > CONSIGNE_MAX) consigne = CONSIGNE_MAX;
-	P1DC3 = (int)(consigne);
+	P1DC3 = consigne;
 }
 
 /******************************************************************************/
@@ -296,6 +291,13 @@ static int diffg;
 static int old_ticg;
 static int compteur_ticg;
 
+int motor_corrector(int order)
+{
+    if (order <= CONSIGNE_NULLE) order = 0;
+    else if (order < CONSIGNE_MIN) order = CONSIGNE_MIN;
+    else if (order > CONSIGNE_MAX) order = CONSIGNE_MAX;
+    return order;
+}
 
 void __attribute__((interrupt, auto_psv)) _T2Interrupt(void)
 {
@@ -317,11 +319,18 @@ void __attribute__((interrupt, auto_psv)) _T2Interrupt(void)
     int consigneG, consigneD;
 	  
     motion_step(0.01, diffg, diffd, &consigneG, &consigneD);
-	
-    Set_Vitesse_MoteurD((float)consigneD);
-    Set_Vitesse_MoteurG((float)consigneG);
-	
-    led = !led;    // On bascule l'état de la LED
+
+    // r�cup�ration des signes
+    int inverseG = 0, inverseD = 0;
+    if (consigneG < 0) { inverseG = 1; consigneG = -consigneG; }
+    if (consigneD < 0) { inverseD = 1; consigneD = -consigneD; }
+
+    // corrections des consignes
+    int consigneGcorrected = motor_corrector(consigneG);
+    int consigneDcorrected = motor_corrector(consigneD);
+
+    Set_Vitesse_MoteurG(consigneGcorrected, inverseG);
+    Set_Vitesse_MoteurD(consigneDcorrected, inverseD);
 }
 
 /*************************************************

@@ -1,8 +1,8 @@
 #ifndef _LIBASSERV_ROBOT_H_
 #define _LIBASSERV_ROBOT_H_
 
-#define DEFAULT_DELTA_POS_COEFS { 1, 0, 0 }
-#define DEFAULT_ALPHA_POS_COEFS { 10, 0, 0 }
+#define DEFAULT_DELTA_POS_COEFS { 10000, 0, 0 }
+#define DEFAULT_ALPHA_POS_COEFS { 2000, 0, 0 }
 #define DEFAULT_DELTA_SPEED_COEFS { 1, 0, 0 }
 #define DEFAULT_ALPHA_SPEED_COEFS { 1, 0, 0 }
 
@@ -14,10 +14,16 @@
 #define DEFAULT_ROT_ACC_MAX     0.5
 #define DEFAULT_ROT_DEC_MAX     0.5
 
-#define DEFAULT_EPSILON_DIST    0.01
+/*#define DEFAULT_EPSILON_DIST    0.01
 #define DEFAULT_EPSILON_SPEED   0.001
 #define DEFAULT_EPSILON_THETA   0.05
-#define DEFAULT_EPSILON_OMEGA   0.001
+#define DEFAULT_EPSILON_OMEGA   0.001*/
+
+// GetPIDErr est pratique pour regler les epsilons
+#define DEFAULT_EPSILON_DIST    0.0005
+#define DEFAULT_EPSILON_SPEED   0.0015
+#define DEFAULT_EPSILON_THETA   0
+#define DEFAULT_EPSILON_OMEGA   0
 
 #define DEFAULT_TIC_BY_METER    13969
 #define DEFAULT_SPACING         0.219
@@ -32,7 +38,8 @@
 #define MOTOR_2A_O _LATB13
 #define MOTOR_2B_O _LATB14
 
-#define CONSIGNE_NULLE 0
-#define CONSIGNE_MAX 5000
+#define CONSIGNE_NULLE 5
+#define CONSIGNE_MIN 200 // semble être la valeur mini
+#define CONSIGNE_MAX 1000
 
 #endif // _LIBASSERV_ROBOT_H_

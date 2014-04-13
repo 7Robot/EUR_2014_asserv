@@ -24,13 +24,15 @@ void ConfigureOscillator(void); /* Handles clock switching/osc initialization */
 
 #define led _LATA2
 
-/* TODO User level functions prototypes (i.e. InitApp) go here */
+extern int odoBroadcast;
+extern unsigned long int odoBroadcastDelay;
 
 
 void InitApp(void);         /* I/O and Peripheral Initialization */
 void Init_PWM(void);
 void Init_QEI(void);
-void Set_Vitesse_MoteurD(float consigne);
-void Set_Vitesse_MoteurG(float consigne);
+int motor_corrector(int order);
+void Set_Vitesse_MoteurD(int consigne, int inverse);
+void Set_Vitesse_MoteurG(int consigne, int inverse);
 
 extern void InterruptAX(void);
