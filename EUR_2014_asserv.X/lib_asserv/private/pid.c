@@ -65,6 +65,6 @@ float pid_process(Pid *pid){
 }
 
 // indique si le pid a terminé
-int pid_done(Pid pid){
-    return fabs(pid.state.err) <= pid.eps.err_eps && fabs(pid.state.err_der) <= pid.eps.der_eps;
+int pid_done(Pid *pid){
+    return fabs(pid->state.err) <= pid->eps.err_eps && fabs(pid->state.err_der) <= pid->eps.der_eps;
 }

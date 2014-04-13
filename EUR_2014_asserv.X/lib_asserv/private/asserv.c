@@ -200,7 +200,7 @@ void speed_asserv_step(Odo *odo, float *commande_g, float *commande_d){
     // vérification si on est arrivé à la bonne consigne
     if (pid_done(asserv_speed_g.pid) && pid_done(asserv_speed_d.pid)){
         speed_asserv.done = 1;
-    }
+    } else {speed_asserv.done = 0;}
 }
 
 
@@ -215,30 +215,34 @@ void pos_asserv_step(Odo *odo, float *commande_g, float *commande_d){
      * celles autorisées par l'accélération max
      */
     // distance et angle restants à parcourir
-    float x_c = pos_asserv.pos_order.x; // consigne en x
-    float y_c = pos_asserv.pos_order.y; // consigne en y
+    float x_o = pos_asserv.pos_order.x; // consigne en x
+    float y_o = pos_asserv.pos_order.y; // consigne en y
     float x = odo->state->pos.x;
     float y = odo->state->pos.y;
-    float d = sqrt((x_c-x)*(x_c-x) + (y_c-y)*(y_c-y));
-    float dt = principal_angle(atan2f(y_c-y,x_c-x) - odo->state->pos.t);
+    float d = sqrt((x_o-x)*(x_o-x) + (y_o-y)*(y_o-y));
+    float dt = principal_angle(atan2f(y_o-y,x_o-x) - odo->state->pos.t);
     float v_cons, vt_cons;
     if (d<0.01) {
-        *commande_g = 0;
-        *commande_d = 0;
+        v_cons = 0;
+        vt_cons = 0;
+        // appel de l'asserve en vitesse avec les bonnes consignes
+        speed_asserv.speed_order.v = v_cons;
+        speed_asserv.speed_order.vt = vt_cons;
+        speed_asserv_step(odo,commande_g,commande_d);
     }
     else {
         // si |dt| > pi/2 , on calcul beta = dt-pi et c'est beta la nouvelle consigne
         // calcul de la consigne de vitesse et vitesse angulaire
         if (fabs(dt)>PI/2) {
             d = -d;
-            dt = dt-PI;
+            dt = principal_angle(dt+PI);
         }
         v_cons = pos_asserv.kp * d;
-        vt_cons = 2*dt/fabs(d)*v_cons; // priorité rotation
+        vt_cons = 2*dt*fabs(v_cons/d); // priorité rotation
 
         // appliquer les contraintes puis revérifier la priorité rotation
         constrain_speed(v_cons, vt_cons, &v_cons, &vt_cons);
-        if (fabs(dt)>0.087){v_cons = 0.5*d*fabs(vt_cons/dt);} // si dt > 5°
+        if (fabs(dt)>0.052){v_cons = 0.5*d*fabs(vt_cons/dt);} // si dt > 3°
 
         // appel de l'asserve en vitesse avec les bonnes consignes
         speed_asserv.speed_order.v = v_cons;
