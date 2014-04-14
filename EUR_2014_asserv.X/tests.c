@@ -40,10 +40,10 @@ void test_Asserv_vitesse_reglage()
     set_debug_mode(1);
     motion_speed(speed0);
     __delay_ms(100);
-    motion_speed(speedv_vt_1);
-    __delay_ms(1500);
-    motion_speed(speedv_vt_1n);
-    __delay_ms(3000);
+    motion_speed(speed3);
+    __delay_ms(1000);
+    motion_speed(speed3n);
+    __delay_ms(2000);
     motion_speed(speed0);
     __delay_ms(1500);
     motion_free();

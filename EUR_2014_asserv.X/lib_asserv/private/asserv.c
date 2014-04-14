@@ -144,7 +144,7 @@ void constrain_speed(float v, float vt, float *v_constrained, float *vt_constrai
 
 // contraindre les vitesses et accélérations autorisées
 void constrain_speed_order(){
-    
+
     // vitesse consigne(o comme order) et consigne contrainte(oc)
     float v_o = speed_asserv.speed_order.v;
     float vt_o = speed_asserv.speed_order.vt;

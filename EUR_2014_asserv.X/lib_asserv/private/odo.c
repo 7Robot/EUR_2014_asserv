@@ -47,7 +47,7 @@ void odo_step(Odo *odo, int qei_g, int qei_d){
     // sauvegarde des anciennes vitesses
     float v = odo->state->speed.v;
     float vt = odo->state->speed.vt;
-    
+
     // maj des tics
     odo->tics.tics_g = qei_g;
     odo->tics.tics_d = qei_d;
