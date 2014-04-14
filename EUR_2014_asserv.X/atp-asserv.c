@@ -72,7 +72,7 @@ void SendUnimplemented() {
     SendBytes(bytes, 3);
 }
 
-void SendOrders(float deltaOrder, float alphaOrder, int leftOrder, int rightOrder, int correctedLeftOrder, int correctedRightOrder, int effectiveLeftOrder, int effectiveRightOrder) {
+void SendOrders(float deltaOrder, float alphaOrder, int leftOrder, int rightOrder, int effectiveLeftOrder, int effectiveRightOrder) {
     char bytes[] = {
         129,
         8,
@@ -93,12 +93,6 @@ void SendOrders(float deltaOrder, float alphaOrder, int leftOrder, int rightOrde
         ((char*)&rightOrder)[0],
         ((char*)&rightOrder)[1],
         18,
-        ((char*)&correctedLeftOrder)[0],
-        ((char*)&correctedLeftOrder)[1],
-        18,
-        ((char*)&correctedRightOrder)[0],
-        ((char*)&correctedRightOrder)[1],
-        18,
         ((char*)&effectiveLeftOrder)[0],
         ((char*)&effectiveLeftOrder)[1],
         18,
@@ -106,7 +100,7 @@ void SendOrders(float deltaOrder, float alphaOrder, int leftOrder, int rightOrde
         ((char*)&effectiveRightOrder)[1],
         128
     };
-    SendBytes(bytes, 31);
+    SendBytes(bytes, 25);
 }
 
 void SendPIDErr(float deltaErr, float deltaDeriv, float deltaInte, float alphaErr, float alphaDeriv, float alphaInte) {

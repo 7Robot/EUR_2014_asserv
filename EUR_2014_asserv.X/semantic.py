@@ -57,8 +57,6 @@ class Asserv(Proto):
         ("alphaOrder", "f"),
         ("leftOrder", "h"),
         ("rightOrder", "h"),
-        ("correctedLeftOrder", "h"),
-        ("correctedRightOrder", "h"),
         ("effectiveLeftOrder", "h"),
         ("effectiveRightOrder", "h"),
         ])

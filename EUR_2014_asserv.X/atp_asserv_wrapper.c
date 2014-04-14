@@ -92,15 +92,12 @@ void OnGetPIDErr() {
             alphaErr, alphaDeriv, alphaInte);
 }
 
-extern int motor_corrector(int order);
 #include <xc.h>
+#include "libasserv_robot.h"
 void OnGetOrders() {
     float deltaOrder, alphaOrder;
-    int leftOrder, rightOrder, correctedLeftOrder, correctedRightOrder;
+    int leftOrder, rightOrder;
     motion_get_orders(&deltaOrder, &alphaOrder, &leftOrder, &rightOrder);
-    correctedLeftOrder = motor_corrector(leftOrder);
-    correctedRightOrder = motor_corrector(rightOrder);
     SendOrders(deltaOrder, alphaOrder, leftOrder, rightOrder,
-            correctedLeftOrder, correctedRightOrder,
-            P1DC3, P1DC2);
+            MOTOR_2B_O?-P1DC3:P1DC3, MOTOR_1B_O?-P1DC2:P1DC2);
 }

@@ -19,7 +19,7 @@ void SendTest(unsigned char B, unsigned int H, unsigned long int I, char b, int 
 
 void SendUnimplemented();
 
-void SendOrders(float deltaOrder, float alphaOrder, int leftOrder, int rightOrder, int correctedLeftOrder, int correctedRightOrder, int effectiveLeftOrder, int effectiveRightOrder);
+void SendOrders(float deltaOrder, float alphaOrder, int leftOrder, int rightOrder, int effectiveLeftOrder, int effectiveRightOrder);
 
 void SendPIDErr(float deltaErr, float deltaDeriv, float deltaInte, float alphaErr, float alphaDeriv, float alphaInte);
 
