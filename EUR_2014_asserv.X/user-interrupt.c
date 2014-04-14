@@ -326,11 +326,11 @@ void __attribute__((interrupt, auto_psv)) _T2Interrupt(void)
     if (consigneD < 0) { inverseD = 1; consigneD = -consigneD; }
 
     // corrections des consignes
-    int consigneGcorrected = motor_corrector(consigneG);
-    int consigneDcorrected = motor_corrector(consigneD);
+    consigneG = motor_corrector(consigneG);
+    consigneD = motor_corrector(consigneD);
 
-    Set_Vitesse_MoteurG(consigneGcorrected, inverseG);
-    Set_Vitesse_MoteurD(consigneDcorrected, inverseD);
+    Set_Vitesse_MoteurG(consigneG, inverseG);
+    Set_Vitesse_MoteurD(consigneD, inverseD);
 }
 
 /*************************************************
