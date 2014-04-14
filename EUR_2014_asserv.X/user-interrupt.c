@@ -156,7 +156,7 @@ void Set_Vitesse_MoteurD(int consigne, int inverse)
 		MOTOR_1A_O = 1;
 		MOTOR_1B_O = 0;
 	}
-	P1DC2 = consigne;
+	P1DC3 = consigne;
 }
 
 void Set_Vitesse_MoteurG(int consigne, int inverse)
@@ -171,7 +171,7 @@ void Set_Vitesse_MoteurG(int consigne, int inverse)
 		MOTOR_2A_O = 1;
 		MOTOR_2B_O = 0;
 	}
-	P1DC3 = consigne;
+	P1DC2 = consigne;
 }
 
 /******************************************************************************/
