@@ -69,7 +69,7 @@ void motion_speed(Speed speed){
 }
 
 
-// renvoie les commandes des roues gauche et droite (appelé par l'interruption toutes les 10 ms)
+// renvoie les commandes des roues gauche et droite (appelé par l'interruption toutes les 5 ms)
 void motion_step(int tics_g, int tics_d, float *commande_g, float *commande_d){
     if (!motion_initialized){*commande_g = 0; *commande_d = 0;}
     else {
