@@ -148,13 +148,13 @@ void Set_Vitesse_MoteurD(int consigne, int inverse)
 {
 	if (inverse)
 	{
-		MOTOR_1A_O = 0;
-		MOTOR_1B_O = 1;
+		MOTOR_1A_O = 1;
+		MOTOR_1B_O = 0;
 	}
 	else
 	{
-		MOTOR_1A_O = 1;
-		MOTOR_1B_O = 0;
+		MOTOR_1A_O = 0;
+		MOTOR_1B_O = 1;
 	}
 	P1DC3 = consigne;
 }
@@ -163,13 +163,13 @@ void Set_Vitesse_MoteurG(int consigne, int inverse)
 {
 	if (inverse)
 	{
-		MOTOR_2A_O = 0;
-		MOTOR_2B_O = 1;
+		MOTOR_2A_O = 1;
+		MOTOR_2B_O = 0;
 	}
 	else
 	{
-		MOTOR_2A_O = 1;
-		MOTOR_2B_O = 0;
+		MOTOR_2A_O = 0;
+		MOTOR_2B_O = 1;
 	}
 	P1DC2 = consigne;
 }
