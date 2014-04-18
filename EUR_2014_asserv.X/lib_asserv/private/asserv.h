@@ -18,6 +18,12 @@ typedef struct {
     MotionConstraint *constraint;
 } Asserv;
 
+// Une asserve possède un PID et connaît les contraintes de déplacement du robot
+typedef struct {
+    float d;
+    float dt;
+} DistanceDebug;
+
 // Un asservissement en position connait les asserv en vitesse des roues gauche et droite
 typedef struct {
     Position pos_order;
@@ -26,6 +32,7 @@ typedef struct {
     Asserv *asserv_speed_d;
     MotionState *state;
     int done;
+    DistanceDebug distance;
 } PositionAsserv;
 
 // Un asservissement en vitesse connait les asserv en vitesse des roues gauche et droite

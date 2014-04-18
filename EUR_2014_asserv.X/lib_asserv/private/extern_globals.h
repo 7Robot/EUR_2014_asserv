@@ -24,4 +24,5 @@ extern volatile Odo odo;
 // debug
 extern volatile int debug_mode;
 extern volatile int debug_count;
-extern volatile SpeedDebug speedDebug;
+//extern volatile SpeedDebug speedDebug;
+extern volatile PosDebug posDebug;

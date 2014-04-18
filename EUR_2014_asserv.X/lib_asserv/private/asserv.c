@@ -79,11 +79,12 @@ void asserv_init(){
     // initialisation de l'asservissement en position
     pos_asserv.pos_order = (Position){0,0,0};
     // respect des contraintes d'accélération max avec ce coef
-    pos_asserv.kp = 3*motionConstraint.a_max.a; // ! motionConstraint doit être initialisé
+    pos_asserv.kp = 1;
     pos_asserv.state = &motionState;
     pos_asserv.asserv_speed_g = &asserv_speed_g;
     pos_asserv.asserv_speed_d = &asserv_speed_d;
     pos_asserv.done = 0;
+    pos_asserv.distance = (DistanceDebug){0,0};
     // initialisation de l'asservissement en vitesse
     speed_asserv.speed_order = (Speed){0,0};
     speed_asserv.speed_order_constrained = (Speed){0,0};
@@ -221,7 +222,7 @@ void pos_asserv_step(Odo *odo, float *commande_g, float *commande_d){
     float y = odo->state->pos.y;
     float d = sqrt((x_o-x)*(x_o-x) + (y_o-y)*(y_o-y));
     float dt = principal_angle(atan2f(y_o-y,x_o-x) - odo->state->pos.t);
-    float v_o, vt_o;
+    float v_o, vt_o, v_oc, vt_oc;
     if (d<0.01) {
         v_o = 0;
         vt_o = 0;
@@ -238,16 +239,32 @@ void pos_asserv_step(Odo *odo, float *commande_g, float *commande_d){
             dt = principal_angle(dt+PI);
         }
         v_o = pos_asserv.kp * d;
-        vt_o = 2*dt*fabs(v_o/d); // priorité rotation
-
+        if (fabs(d)<0.1){
+            if (fabs(dt)<0.2){
+                vt_o = 10*dt*fabs(d*d*d);
+            } else {
+                vt_o = 4 * pos_asserv.kp * dt;
+            }
+        } else {
+            vt_o = 0;
+            //vt_o = 10 * pos_asserv.kp * dt * fabs(dt);
+        }
         // appliquer les contraintes puis revérifier la priorité rotation
-        constrain_speed(v_o, vt_o, &v_o, &vt_o);
-        if (fabs(dt)>0.052){v_o = 0.5*d*fabs(vt_o/dt);} // si dt > 3°
+        v_oc = speed_asserv.speed_order_constrained.v;
+        vt_oc = speed_asserv.speed_order_constrained.vt;
+        //constrain_speed(v_o, vt_o, &v_oc, &vt_oc);
+        //if (fabs(d)>0.1 && fabs(dt)>0.05){v_oc = 0.2*d*fabs(vt_oc/dt);} // si dt > 3°
 
         // appel de l'asserve en vitesse avec les bonnes consignes
         speed_asserv.speed_order.v = v_o;
         speed_asserv.speed_order.vt = vt_o;
         speed_asserv_step(odo,commande_g,commande_d);
+
+        // debug
+        if (debug_mode){
+            pos_asserv.distance.d = d;
+            pos_asserv.distance.dt = dt;
+        }
     }
 }
 

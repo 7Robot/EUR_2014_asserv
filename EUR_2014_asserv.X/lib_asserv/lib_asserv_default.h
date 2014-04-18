@@ -15,7 +15,7 @@
 #endif
 
 #ifndef DEFAULT_CONSTRAINT_A_MAX
-#define DEFAULT_CONSTRAINT_A_MAX {0.5, 1.6, 0.2}
+#define DEFAULT_CONSTRAINT_A_MAX {0.5, 1, 0.1}
 #endif
 
 /*############################################################################*/
@@ -50,10 +50,10 @@
 #define DEFAULT_PID_COEFS_PD {10,0,0,0,0}
 #endif
 #ifndef DEFAULT_PID_COEFS_VG
-#define DEFAULT_PID_COEFS_VG {800,8,100,0.7,0.7}
+#define DEFAULT_PID_COEFS_VG {400,4,50,0.7,0.7}
 #endif
 #ifndef DEFAULT_PID_COEFS_VD
-#define DEFAULT_PID_COEFS_VD {800,8,100,0.7,0.7}
+#define DEFAULT_PID_COEFS_VD {400,4,50,0.7,0.7}
 #endif
 
 // valeurs max de l'intégrale en position et en vitesse
@@ -61,7 +61,7 @@
 #define DEFAULT_PID_MAX_INT_POS 14
 #endif
 #ifndef DEFAULT_PID_MAX_INT_SPEED
-#define DEFAULT_PID_MAX_INT_SPEED 6
+#define DEFAULT_PID_MAX_INT_SPEED 12
 #endif
 
 // ainsi que les conditions d'arrêt des PID en position et vitesse

@@ -27,6 +27,7 @@ void test_Asserv_vitesse_reglage()
     Speed speed5rn = {0,-5};
     Speed speedv_vt_1 = {0.5,2};
     Speed speedv_vt_1n = {0.5,-2};
+    Speed speed_test = {0,2};
 
     /* Configure the oscillator for the device */
     ConfigureOscillator();
@@ -40,10 +41,10 @@ void test_Asserv_vitesse_reglage()
     set_debug_mode(1);
     motion_speed(speed0);
     __delay_ms(100);
-    motion_speed(speedv_vt_1);
-    __delay_ms(2000);
-    motion_speed(speedv_vt_1n);
-    __delay_ms(2000);
+    motion_speed(speed6n);
+    __delay_ms(1500);
+    motion_speed(speed6);
+    __delay_ms(1500);
     motion_speed(speed0);
     __delay_ms(1500);
     motion_free();
@@ -52,8 +53,10 @@ void test_Asserv_vitesse_reglage()
 // asserve en position
 void test_Asserv_pos(){
     Position pos0 = {0, 0, 0};
-    Position pos05 = {0.5,0,0};
-    Position pos_gauche = {0.5,0.5,0};
+    Position pos1 = {0.5,0,0};
+    Position pos2 = {0.25,0.25,0};
+    Position pos3 = {0.5,0.5,0};
+    Position pos4 = {0,0.5,0};
     Position pos_test = {0.2,0,0};
 
     /* Configure the oscillator for the device */
@@ -68,10 +71,20 @@ void test_Asserv_pos(){
     set_debug_mode(1);
     motion_pos(pos0);
     __delay_ms(100);
-    motion_pos(pos_test);
-    __delay_ms(2000);
+    //motion_pos(pos_test);
+    //__delay_ms(3000);
+    
+    motion_pos(pos1);
+    __delay_ms(3000);
+    motion_pos(pos2);
+    __delay_ms(3000);
+    motion_pos(pos3);
+    __delay_ms(3000);
+    motion_pos(pos4);
+    __delay_ms(3000);
+    
     motion_pos(pos0);
-    __delay_ms(2000);
+    __delay_ms(3000);
     motion_free();
 }
 
