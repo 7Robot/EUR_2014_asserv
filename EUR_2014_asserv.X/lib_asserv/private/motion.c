@@ -75,8 +75,6 @@ void motion_step(int tics_g, int tics_d, float *commande_g, float *commande_d){
     else {
         // maj de l'odométrie
         odo_step(&odo, tics_g, tics_d);
-        // MODE DEBUG : enregistrer les consignes et etats des vitesses
-        if (debug_mode){debug_speed_asserv();}
         // on appelle la bonne fonction d'asservissement
         asserv_step(&odo, commande_g, commande_d);
         // indique si on est arrivé

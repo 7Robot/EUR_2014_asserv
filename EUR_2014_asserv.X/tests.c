@@ -16,7 +16,7 @@
 /*############################################################################*/
 
 // Asserve en vitesse + vitesse angulaire
-void test_Asserv_vitesse_reglage()
+void test_Asserv_vitesse()
 {
     Speed speed0 = {0, 0};
     Speed speed6 = {0.6, 0};
@@ -41,9 +41,9 @@ void test_Asserv_vitesse_reglage()
     set_debug_mode(1);
     motion_speed(speed0);
     __delay_ms(100);
-    motion_speed(speed6n);
+    motion_speed(speed3);
     __delay_ms(1500);
-    motion_speed(speed6);
+    motion_speed(speed3n);
     __delay_ms(1500);
     motion_speed(speed0);
     __delay_ms(1500);

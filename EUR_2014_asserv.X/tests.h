@@ -2,7 +2,7 @@
 #define	TESTS_H
 
 // Asserve en vitesse + vitesse angulaire
-void test_Asserv_vitesse_reglage();
+void test_Asserv_vitesse();
 
 // asserve en position
 void test_Asserv_pos();

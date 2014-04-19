@@ -43,33 +43,35 @@
 /*############################################################################*/
 
 // 4 asserv différentes (position et vitese pour chaque roue) donc 4 PID
-#ifndef DEFAULT_PID_COEFS_PG
-#define DEFAULT_PID_COEFS_PG {10,0,0,0,0}
+#ifndef DEFAULT_PID_COEFS_DELTA
+#define DEFAULT_PID_COEFS_DELTA {100,0,0,0,0}
 #endif
-#ifndef DEFAULT_PID_COEFS_PD
-#define DEFAULT_PID_COEFS_PD {10,0,0,0,0}
+#ifndef DEFAULT_PID_COEFS_ALPHA
+#define DEFAULT_PID_COEFS_ALPHA {0,0,0,0,0}
 #endif
+/*
 #ifndef DEFAULT_PID_COEFS_VG
 #define DEFAULT_PID_COEFS_VG {400,4,50,0.7,0.7}
 #endif
 #ifndef DEFAULT_PID_COEFS_VD
 #define DEFAULT_PID_COEFS_VD {400,4,50,0.7,0.7}
 #endif
+ */
 
 // valeurs max de l'intégrale en position et en vitesse
-#ifndef DEFAULT_PID_MAX_INT_POS
-#define DEFAULT_PID_MAX_INT_POS 14
+#ifndef DEFAULT_PID_MAX_INT_DELTA
+#define DEFAULT_PID_MAX_INT_DELTA 14
 #endif
-#ifndef DEFAULT_PID_MAX_INT_SPEED
-#define DEFAULT_PID_MAX_INT_SPEED 12
+#ifndef DEFAULT_PID_MAX_INT_ALPHA
+#define DEFAULT_PID_MAX_INT_ALPHA 12
 #endif
 
 // ainsi que les conditions d'arrêt des PID en position et vitesse
-#ifndef DEFAULT_PID_EPS_POS
-#define DEFAULT_PID_EPS_POS {0.01,0.02}
+#ifndef DEFAULT_PID_EPS_DELTA
+#define DEFAULT_PID_EPS_DELTA {0.01,0.02}
 #endif
-#ifndef DEFAULT_PID_EPS_SPEED
-#define DEFAULT_PID_EPS_SPEED {0.01,0.02}
+#ifndef DEFAULT_PID_EPS_ALPHA
+#define DEFAULT_PID_EPS_ALPHA {0.01,0.02}
 #endif
 
 /*############################################################################*/

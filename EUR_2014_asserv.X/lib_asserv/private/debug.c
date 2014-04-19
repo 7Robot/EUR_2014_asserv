@@ -47,4 +47,5 @@ void debug_pos_asserv(){
         (posDebug.cons_vt)[debug_count] = speed_asserv.speed_order_constrained.vt;
         debug_count++;
     }
-}*/
+}
+ */

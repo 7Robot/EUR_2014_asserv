@@ -12,13 +12,6 @@
 
 /*****************************    Structures    *******************************/
 
-// Une asserve possède un PID et connaît les contraintes de déplacement du robot
-typedef struct {
-    Pid pid;
-    MotionConstraint *constraint;
-} Asserv;
-
-// Une asserve possède un PID et connaît les contraintes de déplacement du robot
 typedef struct {
     float d;
     float dt;
@@ -28,41 +21,43 @@ typedef struct {
 typedef struct {
     Position pos_order;
     float kp; // coef proportionnel qui doit être plus petit que l'accélération max
-    Asserv *asserv_speed_g;
-    Asserv *asserv_speed_d;
+    Pid pid_delta;
+    Pid pid_alpha;
     MotionState *state;
+    MotionConstraint *constraint;
     int done;
     DistanceDebug distance;
 } PositionAsserv;
 
-// Un asservissement en vitesse connait les asserv en vitesse des roues gauche et droite
+// Un asservissement en vitesse
 typedef struct {
     Speed speed_order;
     Speed speed_order_constrained;
-    Asserv *asserv_speed_g;
-    Asserv *asserv_speed_d;
+    Pid pid_delta;
+    Pid pid_alpha;
     MotionState *state;
+    MotionConstraint *constraint;
     int done;
 } SpeedAsserv;
 
 
 /******************************    Fonctions    *******************************/
 
-// initialiser le mode et les différents asservissement
+// initialiser le mode et les différents asservissements
 void asserv_init();
 
-// assigner un PID et des contraintes à un asservissement
-void set_asserv_pid(Asserv *asserv, Pid pid);
-void set_asserv_constraint(Asserv *asserv, MotionConstraint *constraint);
+// assigner 2 PID et des contraintes à l'asservissement en vitesse
+void set_speedAsserv_pids(Pid pid_delta, Pid pid_alpha);
+void set_speedAsserv_constraint(MotionConstraint *constraint);
 
 // choisir le mode d'asservissement (désactivé, en position, en vitesse)
 void set_asserv_off();
 void set_asserv_pos_mode();
 void set_asserv_speed_mode();
 
-// obtenir les consignes vitesse roue gauche et droite
-float get_cons_vg();
-float get_cons_vd();
+// obtenir les consignes en vitesse et vitesse angulaire
+float get_cons_v();
+float get_cons_vt();
 
 // contraindre les vitesses et accélérations autorisées
 void constrain_speed(float v, float vt, float *v_constrained, float *vt_constrained);
