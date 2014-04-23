@@ -19,6 +19,8 @@ void SendTest(unsigned char B, unsigned int H, unsigned long int I, char b, int 
 
 void SendUnimplemented();
 
+void SendMotionOrders(float deltaX, float deltaV, float deltaA, float alphaX, float alphaV, float alphaA);
+
 void SendOrders(float deltaOrder, float alphaOrder, int leftOrder, int rightOrder, int effectiveLeftOrder, int effectiveRightOrder);
 
 void SendPIDErr(float deltaErr, float deltaDeriv, float deltaInte, float alphaErr, float alphaDeriv, float alphaInte);
@@ -38,6 +40,8 @@ void OnDistFree(float dist);
 void OnDistRot(float dist, float rot, float vDistMax, float aDistMax, float vRotMax, float aRotMax);
 
 void SendDone();
+
+void OnGetMotionOrders();
 
 void OnGetOrders();
 

@@ -72,6 +72,45 @@ void SendUnimplemented() {
     SendBytes(bytes, 3);
 }
 
+void SendMotionOrders(float deltaX, float deltaV, float deltaA, float alphaX, float alphaV, float alphaA) {
+    char bytes[] = {
+        129,
+        29,
+        36,
+        ((char*)&deltaX)[0],
+        ((char*)&deltaX)[1],
+        ((char*)&deltaX)[2],
+        ((char*)&deltaX)[3],
+        36,
+        ((char*)&deltaV)[0],
+        ((char*)&deltaV)[1],
+        ((char*)&deltaV)[2],
+        ((char*)&deltaV)[3],
+        36,
+        ((char*)&deltaA)[0],
+        ((char*)&deltaA)[1],
+        ((char*)&deltaA)[2],
+        ((char*)&deltaA)[3],
+        36,
+        ((char*)&alphaX)[0],
+        ((char*)&alphaX)[1],
+        ((char*)&alphaX)[2],
+        ((char*)&alphaX)[3],
+        36,
+        ((char*)&alphaV)[0],
+        ((char*)&alphaV)[1],
+        ((char*)&alphaV)[2],
+        ((char*)&alphaV)[3],
+        36,
+        ((char*)&alphaA)[0],
+        ((char*)&alphaA)[1],
+        ((char*)&alphaA)[2],
+        ((char*)&alphaA)[3],
+        128
+    };
+    SendBytes(bytes, 33);
+}
+
 void SendOrders(float deltaOrder, float alphaOrder, int leftOrder, int rightOrder, int effectiveLeftOrder, int effectiveRightOrder) {
     char bytes[] = {
         129,
@@ -193,6 +232,9 @@ void SendDone() {
     };
     SendBytes(bytes, 3);
 }
+
+// You should redefine this function
+__attribute__((weak)) void OnGetMotionOrders() { SendUnimplemented(); }
 
 // You should redefine this function
 __attribute__((weak)) void OnGetOrders() { SendUnimplemented(); }
@@ -410,6 +452,10 @@ int AtpDecode(int id,
     }
     if (id == 16) {
         OnDistRot(floatv[0], floatv[1], floatv[2], floatv[3], floatv[4], floatv[5]);
+        return 1;
+    }
+    if (id == 9) {
+        OnGetMotionOrders();
         return 1;
     }
     if (id == 7) {

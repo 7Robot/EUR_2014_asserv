@@ -60,6 +60,15 @@ class Asserv(Proto):
         ("effectiveLeftOrder", "h"),
         ("effectiveRightOrder", "h"),
         ])
+    getMotionOrders = Packet(9, "arm")
+    MotionOrders = Packet(29, "pic", [
+        ("deltaX", "f"),
+        ("deltaV", "f"),
+        ("deltaA", "f"),
+        ("alphaX", "f"),
+        ("alphaV", "f"),
+        ("alphaA", "f"),
+        ])
 
     step = Packet(10, "pic", [
         ("period", "f"),
