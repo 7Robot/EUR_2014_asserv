@@ -12,7 +12,7 @@
 #define FCY             SYS_FREQ/2
 
 #define BAUDRATEAX12 57600
-#define BRGVAL ((FCY / BAUDRATEAX12 / 16) - 1)
+#define BRGVALAX12 ((FCY / BAUDRATEAX12 / 16) - 1)
 
 /******************************************************************************/
 /* System Function Prototypes                                                 */
@@ -24,3 +24,5 @@ go here. */
 
 void ConfigureOscillator(void); /* Handles clock switching/osc initialization */
 void InitTimers();
+// initialize all things
+void Init_All();

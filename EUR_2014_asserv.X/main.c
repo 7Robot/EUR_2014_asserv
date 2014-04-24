@@ -17,11 +17,14 @@
 
 #include <stdint.h>        /* Includes uint16_t definition                    */
 #include <stdbool.h>       /* Includes true/false definition                  */
+#include <uart.h>
 
 #include "user.h"          /* User funct/params, such as InitApp              */
 #include "qei.h"           /* QEI definitions for easier use                  */
 #include <libpic30.h>
 #include "tests.h"
+#include "ax12.h"
+#include "actions_ax12.h"
 #include "lib_asserv/lib_asserv_default.h"
 #include "lib_asserv/lib_asserv.h"
 
@@ -47,6 +50,6 @@ _FICD(ICS_PGD1 & JTAGEN_OFF);
 
 int16_t main(void)
 {
-    test_Asserv_angle();
+    test_ax12();
     return 1;
 }

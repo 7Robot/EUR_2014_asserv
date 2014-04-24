@@ -2,12 +2,15 @@
 
 #include <stdint.h>        /* Includes uint16_t definition                    */
 #include <stdbool.h>       /* Includes true/false definition                  */
+#include <uart.h>
 
 #include "user.h"          /* User funct/params, such as InitApp              */
 #include "qei.h"           /* QEI definitions for easier use                  */
 #include "motor.h"
 #include <libpic30.h>
 #include "tests.h"
+#include "ax12.h"
+#include "actions_ax12.h"
 #include "lib_asserv/lib_asserv.h"
 #include "lib_asserv/private/tools.h"
 
@@ -31,13 +34,8 @@ void test_Asserv_vitesse()
     Speed speedv_vt_1n = {0.5,-2};
     Speed speed_test = {0,2};
 
-    /* Configure the oscillator for the device */
-    ConfigureOscillator();
-    /* Initialize IO ports and peripherals */
-    InitTimers();
-    Init_PWM();
-    Init_QEI();
-    motion_init(basculer_led);
+    // initialize
+    Init_All();
 
     // test de réponse à une commande
     set_debug_mode(1);
@@ -65,13 +63,8 @@ void test_Asserv_pos(){
     Position pos4 = {0,0.5,0};
     Position pos_test = {-3.0,0,0};
 
-    /* Configure the oscillator for the device */
-    ConfigureOscillator();
-    /* Initialize IO ports and peripherals */
-    InitTimers();
-    Init_PWM();
-    Init_QEI();
-    motion_init(basculer_led);
+    // initialize
+    Init_All();
 
     // test de réponse à une commande
     set_debug_mode(1);
@@ -101,13 +94,8 @@ void test_Asserv_angle(){
     float alpha = a2;
     int i = 0;
 
-    /* Configure the oscillator for the device */
-    ConfigureOscillator();
-    /* Initialize IO ports and peripherals */
-    InitTimers();
-    Init_PWM();
-    Init_QEI();
-    motion_init(basculer_led);
+    // initialize
+    Init_All();
 
     // test de réponse à une commande
     set_debug_mode(1);
@@ -117,6 +105,23 @@ void test_Asserv_angle(){
         alpha = alpha + a2;
     }
     motion_free();
+}
+
+// test des ax12 integrés à l'asserve
+void test_ax12(){
+    // initialize
+    Init_All();
+    responseReadyAX = 0;
+    while (1) {
+        init_arm(1);
+        __delay_ms(100);
+        init_arm(2);
+        __delay_ms(100);
+        catch_arm(1);
+        pull_arm(1);
+        // led1 = !led1;
+        __delay_ms(1000);
+    }
 }
 
 

@@ -3,12 +3,27 @@
 #include <stdint.h>        /* Includes uint16_t definition   */
 #include <stdbool.h>       /* Includes true/false definition */
 #include <timer.h>
+#include <uart.h>
+
+#include "user.h"
 #include "tests.h"
 #include "lib_asserv/lib_asserv.h"
 #include "motor.h"
 
 void InitTimers()
 {
+    OpenUART2(UART_EN & UART_IDLE_CON & UART_IrDA_DISABLE & UART_MODE_FLOW
+        & UART_UEN_00 & UART_DIS_WAKE & UART_DIS_LOOPBACK
+        & UART_DIS_ABAUD & UART_UXRX_IDLE_ONE & UART_BRGH_SIXTEEN
+        & UART_NO_PAR_8BIT & UART_1STOPBIT,
+          UART_INT_TX_BUF_EMPTY & UART_IrDA_POL_INV_ZERO
+        & UART_SYNC_BREAK_DISABLED & UART_TX_ENABLE & UART_TX_BUF_NOT_FUL & UART_INT_RX_CHAR
+        & UART_ADR_DETECT_DIS & UART_RX_OVERRUN_CLEAR,
+          BRGVALAX12);
+
+    ConfigIntUART2(UART_RX_INT_PR4 & UART_RX_INT_EN
+                 & UART_TX_INT_PR4 & UART_TX_INT_DIS);
+    
     // activation du timer 2
     OpenTimer2(T2_ON &
                 T2_IDLE_CON &
@@ -16,6 +31,9 @@ void InitTimers()
                 T2_PS_1_64 &
                 T2_SOURCE_INT, 3125 ); // 3125 pour 5ms
 
+
+    // Open drain sur la pin RB5(pour les AX12)
+    _ODCB5 = 1;
     // activation de la priorité des interruptions
     _NSTDIS = 0;
     // configuration des interruptions
@@ -147,4 +165,17 @@ void __attribute__((interrupt,auto_psv)) _T2Interrupt(void) {
     PWM_Moteurs_droit(commande_d);
     // on baisse le flag
     _T2IF = 0;
+}
+
+/*************************************************
+* TX et RX Interrupt *
+*************************************************/
+void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void){
+    led = !led;
+    InterruptAX();
+    _U2RXIF = 0; // On baisse le FLAG
+}
+
+void __attribute__((__interrupt__, no_auto_psv)) _U2TXInterrupt(void){
+   _U2TXIF = 0; // clear TX interrupt flag
 }

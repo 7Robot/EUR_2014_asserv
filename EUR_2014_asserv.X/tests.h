@@ -10,6 +10,9 @@ void test_Asserv_pos();
 // asserve en angle
 void test_Asserv_angle();
 
+// test des ax12 integrés à l'asserve
+void test_ax12();
+
 /******************************************************************************/
 /*                      Tests avec les interruptions                          */
 /******************************************************************************/

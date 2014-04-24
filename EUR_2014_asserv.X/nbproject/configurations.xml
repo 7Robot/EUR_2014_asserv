@@ -16,6 +16,8 @@
       <itemPath>motor.h</itemPath>
       <itemPath>lib_asserv/private/extern_globals.h</itemPath>
       <itemPath>lib_asserv/private/debug.h</itemPath>
+      <itemPath>actions_ax12.h</itemPath>
+      <itemPath>ax12.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -35,6 +37,8 @@
       <itemPath>lib_asserv/private/tools.c</itemPath>
       <itemPath>motor.c</itemPath>
       <itemPath>lib_asserv/private/debug.c</itemPath>
+      <itemPath>actions_ax12.c</itemPath>
+      <itemPath>ax12.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

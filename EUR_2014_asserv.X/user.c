@@ -2,8 +2,13 @@
 
 #include <stdint.h>          /* For uint16_t definition                       */
 #include <stdbool.h>         /* For true/false definition                     */
-#include "user.h"            /* variables/params used by user.c               */
 #include <timer.h>
+
+#include "user.h"          /* User funct/params, such as InitApp              */
+#include "qei.h"           /* QEI definitions for easier use                  */
+#include <libpic30.h>
+#include "tests.h"
+#include "lib_asserv/lib_asserv.h"
 
 /******************************************************************************/
 /* User Functions                                                             */
@@ -22,4 +27,15 @@ void ConfigureOscillator(void)
      * attention, cela entraine donc une FCY et une FPériphériques à 40 MHZ
      */
     while (!OSCCONbits.LOCK);       // attente que la PLL soit lockée sur se nouvelle configuration.
+}
+
+// initialize all things
+void Init_All(){
+    /* Configure the oscillator for the device */
+    ConfigureOscillator();
+    /* Initialize IO ports and peripherals */
+    InitTimers();
+    Init_PWM();
+    Init_QEI();
+    motion_init(basculer_led);
 }
