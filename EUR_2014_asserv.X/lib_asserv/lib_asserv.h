@@ -11,6 +11,9 @@ void motion_free(); // passer en roue libre
 void motion_pos(Position pos); // aller à cette position
 void motion_speed(Speed speed); // avancer à cette vitesse
 
+// checker si le déplacement est terminé
+int motion_done();
+
 // renvoie les commandes des roues gauche et droite (appelé par l'interruption toutes les 10 ms)
 void motion_step(int tics_g, int tics_d, float *commande_g, float *commande_d);
 

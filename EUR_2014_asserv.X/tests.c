@@ -73,22 +73,18 @@ void test_Asserv_pos(){
 
     // test de réponse à une commande
     set_debug_mode(1);
-    motion_pos(pos0);
-    __delay_ms(100);
     //motion_pos(pos_test);
     //__delay_ms(3000);
-    
     motion_pos(pos1);
-    __delay_ms(3000);
+    while (!motion_done());
     motion_pos(pos2);
-    __delay_ms(3000);
+    while (!motion_done());
     motion_pos(pos3);
-    __delay_ms(3000);
+    while (!motion_done());
     motion_pos(pos4);
-    __delay_ms(3000);
-    
+    while (!motion_done());
     motion_pos(pos0);
-    __delay_ms(3000);
+    while (!motion_done());
     motion_free();
 }
 

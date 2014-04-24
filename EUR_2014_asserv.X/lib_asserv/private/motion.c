@@ -68,6 +68,11 @@ void motion_speed(Speed speed){
     set_asserv_speed_mode();
 }
 
+// checker si le déplacement est terminé
+int motion_done(){
+    return asserv_done();
+}
+
 
 // renvoie les commandes des roues gauche et droite (appelé par l'interruption toutes les 5 ms)
 void motion_step(int tics_g, int tics_d, float *commande_g, float *commande_d){
@@ -78,6 +83,9 @@ void motion_step(int tics_g, int tics_d, float *commande_g, float *commande_d){
         // on appelle la bonne fonction d'asservissement
         asserv_step(&odo, commande_g, commande_d);
         // indique si on est arrivé
-        if (asserv_done()) done();
+        if (asserv_done()){
+            done();
+            motion_free();
+        }
     }
 }

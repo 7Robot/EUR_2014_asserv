@@ -21,8 +21,6 @@ typedef struct {
 typedef struct {
     Position pos_order;
     float kp; // coef proportionnel qui doit être plus petit que l'accélération max
-    Pid pid_delta;
-    Pid pid_alpha;
     MotionState *state;
     MotionConstraint *constraint;
     int done;
