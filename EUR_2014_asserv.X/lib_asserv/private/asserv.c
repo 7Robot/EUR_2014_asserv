@@ -12,6 +12,7 @@
 volatile int asserv_mode;
 volatile PositionAsserv pos_asserv;
 volatile SpeedAsserv speed_asserv;
+volatile AngleAsserv angle_asserv;
 
 
 
@@ -57,6 +58,12 @@ void asserv_init(){
     speed_asserv.pid_delta = pid_delta;
     speed_asserv.pid_alpha = pid_alpha;
     speed_asserv.done = 0;
+    // initialisation de l'asservissement en angle
+    angle_asserv.angle_order = 0;
+    angle_asserv.state = &motionState;
+    angle_asserv.constraint = &motionConstraint;
+    angle_asserv.pid_alpha = pid_alpha;
+    angle_asserv.done = 0;
 }
 
 // assigner un PID et des contraintes à un asservissement
@@ -70,6 +77,7 @@ void set_speedAsserv_constraint(MotionConstraint *constraint){ speed_asserv.cons
 void set_asserv_off(){asserv_mode = ASSERV_MODE_OFF;}
 void set_asserv_pos_mode(){asserv_mode = ASSERV_MODE_POS;}
 void set_asserv_speed_mode(){asserv_mode = ASSERV_MODE_SPEED;}
+void set_asserv_angle_mode(){asserv_mode = ASSERV_MODE_ANGLE;}
 
 // obtenir les consignes en vitesse et vitesse angulaire
 float get_cons_v(){return speed_asserv.speed_order_constrained.v;}
@@ -140,6 +148,11 @@ void asserv_step(Odo *odo, float *commande_g, float *commande_d){
         case ASSERV_MODE_SPEED :
             //if (debug_mode){debug_speed_asserv();}
             speed_asserv_step(odo, commande_g, commande_d);
+            break;
+        // si on est en asservissement en angle
+        case ASSERV_MODE_ANGLE :
+            //if (debug_mode){debug_speed_asserv();}
+            angle_asserv_step(odo, commande_g, commande_d);
             break;
     }
 }
@@ -235,10 +248,36 @@ void pos_asserv_step(Odo *odo, float *commande_g, float *commande_d){
     }
 }
 
+// asservissement en angle
+void angle_asserv_step(Odo *odo, float *commande_g, float *commande_d){
+    // angle restant à parcourir
+    float dt = principal_angle(angle_asserv.angle_order - odo->state->pos.t);
+    float vt_o;
+
+    // si on est arrivé on ne bouge plus
+    if (fabs(dt) < 0.02) {
+        angle_asserv.done = 1;
+        *commande_g = 0;
+        *commande_d = 0;
+    }
+
+    // calcul de la vitesse angulaire nécessaire
+    vt_o = 2 * dt;
+    // appel de l'asserve en vitesse avec les bonnes consignes
+    speed_asserv.speed_order.v = 0;
+    speed_asserv.speed_order.vt = vt_o;
+    speed_asserv_step(odo,commande_g,commande_d);
+
+    // mode debug
+    if (debug_mode){
+    }
+}
+
 // indique si l'asservissement en cours a terminé
 int asserv_done(){
     if (asserv_mode == ASSERV_MODE_OFF) {return 1;}
     else if (asserv_mode == ASSERV_MODE_POS) {return pos_asserv.done;}
     else if (asserv_mode == ASSERV_MODE_SPEED) {return speed_asserv.done;}
+    else if (asserv_mode == ASSERV_MODE_ANGLE) {return angle_asserv.done;}
     else {return 0;}
 }

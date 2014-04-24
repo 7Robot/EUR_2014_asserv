@@ -9,6 +9,7 @@
 #define ASSERV_MODE_OFF 0
 #define ASSERV_MODE_POS 1
 #define ASSERV_MODE_SPEED 2
+#define ASSERV_MODE_ANGLE 3
 
 /*****************************    Structures    *******************************/
 
@@ -38,6 +39,15 @@ typedef struct {
     int done;
 } SpeedAsserv;
 
+// Un asservissement en angle
+typedef struct {
+    float angle_order;
+    Pid pid_alpha;
+    MotionState *state;
+    MotionConstraint *constraint;
+    int done;
+} AngleAsserv;
+
 
 /******************************    Fonctions    *******************************/
 
@@ -52,6 +62,7 @@ void set_speedAsserv_constraint(MotionConstraint *constraint);
 void set_asserv_off();
 void set_asserv_pos_mode();
 void set_asserv_speed_mode();
+void set_asserv_angle_mode();
 
 // obtenir les consignes en vitesse et vitesse angulaire
 float get_cons_v();
@@ -65,6 +76,7 @@ void constrain_speed_order();
 void asserv_step(Odo *odo, float *commande_g, float *commande_d);
 void speed_asserv_step(Odo *odo, float *commande_g, float *commande_d);
 void pos_asserv_step(Odo *odo, float *commande_g, float *commande_d);
+void angle_asserv_step(Odo *odo, float *commande_g, float *commande_d);
 
 // indique si l'asservissement en cours a terminé
 int asserv_done();

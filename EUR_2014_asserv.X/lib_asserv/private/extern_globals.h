@@ -8,6 +8,7 @@
 extern volatile int asserv_mode;
 extern volatile PositionAsserv pos_asserv;
 extern volatile SpeedAsserv speed_asserv;
+extern volatile AngleAsserv angle_asserv;
 
 // motion
 extern volatile float motion_initialized;

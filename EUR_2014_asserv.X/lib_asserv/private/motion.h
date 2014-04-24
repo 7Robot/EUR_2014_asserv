@@ -68,6 +68,7 @@ float get_vd();
 void motion_free(); // passer en roue libre
 void motion_pos(Position pos); // aller à cette position
 void motion_speed(Speed speed); // avancer à cette vitesse
+void motion_angle(float abs_angle); // tourner pour être à un angle (absolu) alpha
 
 // checker si le déplacement est terminé
 int motion_done();

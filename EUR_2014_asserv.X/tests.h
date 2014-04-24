@@ -7,6 +7,9 @@ void test_Asserv_vitesse();
 // asserve en position
 void test_Asserv_pos();
 
+// asserve en angle
+void test_Asserv_angle();
+
 /******************************************************************************/
 /*                      Tests avec les interruptions                          */
 /******************************************************************************/

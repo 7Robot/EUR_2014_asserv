@@ -9,6 +9,8 @@
 #include <libpic30.h>
 #include "tests.h"
 #include "lib_asserv/lib_asserv.h"
+#include "lib_asserv/private/tools.h"
+
 
 
 /*############################################################################*/
@@ -61,7 +63,7 @@ void test_Asserv_pos(){
     Position pos2 = {0.25,0.25,0};
     Position pos3 = {0.5,0.5,0};
     Position pos4 = {0,0.5,0};
-    Position pos_test = {0.2,0,0};
+    Position pos_test = {-3.0,0,0};
 
     /* Configure the oscillator for the device */
     ConfigureOscillator();
@@ -73,8 +75,10 @@ void test_Asserv_pos(){
 
     // test de réponse à une commande
     set_debug_mode(1);
-    //motion_pos(pos_test);
-    //__delay_ms(3000);
+    motion_pos(pos_test);
+    while (!motion_done());
+    while(1){};
+    /*
     motion_pos(pos1);
     while (!motion_done());
     motion_pos(pos2);
@@ -85,9 +89,35 @@ void test_Asserv_pos(){
     while (!motion_done());
     motion_pos(pos0);
     while (!motion_done());
-    motion_free();
+    motion_free();*/
 }
 
+// asserve en angle
+void test_Asserv_angle(){
+    float a0 = 0;
+    float a1 = PI/2;
+    float a2 = -PI/2;
+    float a3 = PI;
+    float alpha = a2;
+    int i = 0;
+
+    /* Configure the oscillator for the device */
+    ConfigureOscillator();
+    /* Initialize IO ports and peripherals */
+    InitTimers();
+    Init_PWM();
+    Init_QEI();
+    motion_init(basculer_led);
+
+    // test de réponse à une commande
+    set_debug_mode(1);
+    for (i=0;i<1;i++){
+        motion_angle(alpha);
+        while (!motion_done());
+        alpha = alpha + a2;
+    }
+    motion_free();
+}
 
 
 /******************************************************************************/

@@ -67,6 +67,12 @@ void motion_speed(Speed speed){
     speed_asserv.speed_order = speed;
     set_asserv_speed_mode();
 }
+// tourner pour être à un angle (absolu) alpha
+void motion_angle(float abs_angle){
+    angle_asserv.done = 0;
+    angle_asserv.angle_order = abs_angle;
+    set_asserv_angle_mode();
+}
 
 // checker si le déplacement est terminé
 int motion_done(){
