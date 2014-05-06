@@ -7,8 +7,6 @@
 # i  signed int
 # f  float
 
-from protos import Packet, Proto
-
 # yymmjjhhmm
 version = 1404111942
 
@@ -18,7 +16,6 @@ class Common(Proto):
         super(Common, self)
 
     unimplemented = Packet(251, "pic")
-
     test = Packet(252, "both", [
             ("B", "B"),
             ("H", "H"),
@@ -34,36 +31,49 @@ class Common(Proto):
             ("id", "B")
         ])
 
-#class Demo(Proto):
-#    type = 1
-#
-#    blinkOn = Packet(1, "arm")
-#    blinkOff = Packet(2, "arm")
-#
-#    setDelay = Packet(3, "arm", [
-#            ("delay", "H")
-#        ])
-#
-#    ledOn = Packet(4, "arm")
-#    ledOff = Packet(5, "arm")
-#
-#    setCallback = Packet(6, "arm", [
-#            ("nbloop", "B")
-#        ])
-#    callback = Packet(7, "pic")
-
-
 class Asserv(Proto):
     type = 1
 
     stop = Packet(1, "arm")
+    ausecours = Packet(1, "arm")
     block = Packet(2, "arm")
     done = Packet(3, "pic")
+    mode = Packet(4, "pic", [
+        ("delta", "h"),
+        ("alpha", "h"),
+        ])
+    getPIDErr = Packet(5, "arm")
+    PIDErr = Packet(6, "pic", [
+        ("deltaErr", "f"),
+        ("deltaDeriv", "f"),
+        ("deltaInte", "f"),
+        ("alphaErr", "f"),
+        ("alphaDeriv", "f"),
+        ("alphaInte", "f"),
+        ])
+    getOrders = Packet(7, "arm")
+    Orders = Packet(8, "pic", [
+        ("deltaOrder", "f"),
+        ("alphaOrder", "f"),
+        ("leftOrder", "h"),
+        ("rightOrder", "h"),
+        ("effectiveLeftOrder", "h"),
+        ("effectiveRightOrder", "h"),
+        ])
+    getMotionOrders = Packet(9, "arm")
+    MotionOrders = Packet(29, "pic", [
+        ("deltaX", "f"),
+        ("deltaV", "f"),
+        ("deltaA", "f"),
+        ("alphaX", "f"),
+        ("alphaV", "f"),
+        ("alphaA", "f"),
+        ])
 
-    step = Packet(10, "arm", [
-        ("period", "I"),
-        ("ticsG", "I"),
-        ("ticsD", "I"),
+    step = Packet(10, "pic", [
+        ("period", "f"),
+        ("ticsG", "i"),
+        ("ticsD", "i"),
         ("consignG", "i"),
         ("consignD", "i")
         ])
@@ -182,89 +192,6 @@ class Asserv(Proto):
     setYTheta = Packet(48, "arm", [("y", "f"), ("theta", "f")])
     setXYTheta = Packet(49, "arm", [("x", "f"), ("y", "f"), ("theta", "f")])
     setXY = Packet(50, "arm", [("x", "f"), ("y", "f")])
-
-
-#class Mother(Proto):
-#    type = 6
-#
-#    # Pince pour les verres
-#    sortirPince = Packet(1, "arm")
-#    chopperVerre = Packet(2, "arm")
-#    lacherVerres = Packet(3, "arm")
-#    getNombreVerres = Packet(4, "arm")
-#    nombreVerres = Packet(5, "pic", [
-#            ("n", "H"),
-#        ])
-#    pasDeVerreEvent = Packet(6, "pic")
-#
-#    # Bras pour les bougies
-#    BougiesHitTop = Packet(10, "arm")
-#    BougiesHitTopConfirm = Packet(11, "pic")
-#
-#    BougiesHitBot = Packet(12, "arm")
-#    BougiesHitBotConfirm = Packet(13, "pic")
-#
-#    BougiesOff = Packet(14, "arm")
-#    BougiesOffConfirm = Packet(15, "pic")
-#
-#    BougiesOn = Packet(16, "arm")
-#    BougiesOnConfirm = Packet(17, "pic")
-#
-#    # Arrêt d’urgence
-#    getEmergencyState = Packet(20, "arm")
-#    emergencyState = Packet(21, "pic", [
-#            ("emergency_state", "B"),
-#        ])
-#
-#    # Trois switchs
-#    getSwitchOneState = Packet(30, "arm")
-#    switchOne = Packet(31, "pic", [
-#            ("state", "B"),
-#        ])
-#    getSwitchTwoState = Packet(32, "arm")
-#    switchTwo  = Packet(33, "pic", [
-#            ("state", "B"),
-#        ])
-#    getSwitchThreeState = Packet(34, "arm")
-#    switchThree  = Packet(35, "pic", [
-#            ("state", "B"),
-#        ])
-#
-#    # Start Laisse
-#    getStartLaisseState = Packet(40, "arm")
-#    StartLaisseState = Packet(41, "pic", [
-#            ("state", "B"),
-#        ])
-#
-#    # FunnyAction
-#    FunnyAction = Packet(50, "arm")
-#    StopFunnyAction = Packet(51, "arm")
-#
-#    # AX12
-#    stopAX12 = Packet(60, "arm")
-#    startAX12 = Packet(61, "arm")
-#    getAX12Torque = Packet(62, "arm", [
-#            ("id", "B"),
-#            ("torque", "i"),
-#        ])
-#    AX12Torque = Packet(63, "pic", [
-#            ("id", "B"),
-#            ("torque", "i"),
-#        ])
-#
-#
-#class Turret(Proto):
-#    type = 8
-#    on = Packet(1, "arm")
-#    off = Packet(2, "arm")
-#    getPos = Packet(10, "arm", [
-#        ("id", "B")
-#    ])
-#    pos = Packet(11, "pic", [
-#        ("id", "B"),
-#        ("distance", "B"),
-#        ("angle", "B")
-#    ])
 
 
 # Rappel des types struct.pack usuelles :
