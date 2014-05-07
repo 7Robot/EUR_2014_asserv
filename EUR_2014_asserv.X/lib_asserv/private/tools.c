@@ -20,7 +20,7 @@ float principal_angle(float angle){
     if (fabs(angle)< PI){return angle;}
     else {
         alpha = fmod(angle,2*PI);
-        if (alpha<0){alpha += 2*PI} // décalage de 2PI remarqué par Ken si l'angle est négatif
+        if (alpha<-PI){alpha += 2*PI} // décalage de 2PI remarqué par Ken si l'angle est négatif
         if (alpha>PI){alpha -= 2*PI;}
         return alpha;
     }
