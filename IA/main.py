@@ -14,7 +14,7 @@ if __name__ == "__main__":
     config = configparser.ConfigParser()
     config.read(configfile)
 
-    #semantic_file = '/home/robot/EUR"
+    #semantic_file = '/home/robot/EUR'
     if not semantic_file and 'atp' in config and 'semantic' in config['atp']:
         semantic_file = config['atp']['semantic']
     if not semantic_file:
@@ -39,6 +39,20 @@ if __name__ == "__main__":
     stream = sys.stdin.buffer
 
     host, port = ('localhost',1301)
+    try:
+            port = int(port)
+    except ValueError:
+            print("%s: error: PORT must be an positive integer" %sys.argv[0])
+            sys.exit(1)
+    try:
+            sock = socket.socket()
+            sock.connect((host, port))
+        except Exception as e:
+            print("%s:" %sys.argv[0], e)
+            sys.exit(1)
+        file = sock.makefile(mode="rw")
+        stream = file.buffer
+
    
     #transmitter = ''
     if not transmitter and 'atp' in config and 'transmitter' in config['atp']:
@@ -47,7 +61,7 @@ if __name__ == "__main__":
     callback = print_packet
 
     channel = Channel(stream, callback, board.lower(), proto,
-            transmitter = transmitter, follow = args.follow)
+            transmitter = transmitter, follow = True)
     
     while True:
         try:

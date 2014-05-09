@@ -194,6 +194,20 @@ class Asserv(Proto):
     setXY = Packet(50, "arm", [("x", "f"), ("y", "f")])
 
 
+class Turret(Proto):
+    type = 8
+    on = Packet(1, "arm")
+    off = Packet(2, "arm")
+    getPos = Packet(10, "arm", [
+        ("id", "B")
+    ])
+    pos = Packet(11, "pic", [
+        ("id", "B"),
+        ("distance", "B"),
+        ("angle", "B")
+    ])
+
+
 # Rappel des types struct.pack usuelles :
 # B  unsigned char
 # H  unsigned short
