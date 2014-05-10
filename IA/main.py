@@ -11,12 +11,13 @@ from robots import robinch
 import boardThread
 
 if __name__ == "__main__":
+
+    robot = robinch.Robinch()
+    boardth = boardThread.BoardThread(robot)
+    boardth.start()
     while True:
         try:
-            robot = robinch.Robinch()
-            boardth = boardThread.BoardThread(robot)
-            boardth.start()
-
+            pass
         except KeyboardInterrupt:
             break
 
