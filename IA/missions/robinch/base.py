@@ -7,6 +7,6 @@ class base(Mission):
         super(base, self).__init__(robot, boardth)
         self.name = 'base'
 
-    def mission(self):
+    def go(self, state):
         logging.warn("starting mission base")
-        pass
+        return state

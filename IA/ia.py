@@ -10,6 +10,7 @@ class IA:
         self.robot = robot
         self.boardth = boardth 
         self.logging = logging
+        self.state = 0
 
         self._load_all_missions(robot.name)
 
@@ -24,5 +25,13 @@ class IA:
                 self.logging.warn('mission %s loaded ...' % m.name)
 
 
+    def get_msg(self):
+        return self.robot.queue.get(True)
+
+
     def run(self):
-        pass
+        while True:
+            m = self.get_msg()
+            for mission in self.missions:
+                self.state = mission.go(m, self.state)
+

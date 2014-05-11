@@ -1,6 +1,8 @@
-#/usr/bin/python
+#/usr/bin/python3
 
 from mathutils.types import Vertex
+from queue import Queue
+
 
 class Robinch:
     def __init__(self):
@@ -9,6 +11,7 @@ class Robinch:
         self.boards  = { "Asserv": 1301, "Turret": 1308 }
         self.semantic = '/home/ken/depots/EUR_2014_asserv/EUR_2014_asserv.X/semantic.py'
         self.host = 'localhost'
+        self.queue = Queue()
 
         #position et orientation initiale du robot
         self.pos = Vertex(-12000, -7000)

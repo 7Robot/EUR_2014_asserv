@@ -5,7 +5,7 @@ import socket
 from atp.channel import Channel
 from atp.protos import load as load_protos
 import logging
-import event
+from msg.msg import Msg
 
 class BoardThread(threading.Thread):
     def __init__(self, robot):
@@ -14,7 +14,6 @@ class BoardThread(threading.Thread):
         self.robot = robot
         self.channels = dict()
         self.streams = dict()
-        self.event = event.Event()
         self.host = self.robot.host
         self.logging = logging
 
@@ -35,4 +34,5 @@ class BoardThread(threading.Thread):
         self.logging.warn("[%s.%s]" %(board, name))
         for arg in args:
             self.logging.warn("\t%s:%s" % (arg, args[arg]))
-        self.event.callback(board, name, args)
+        msg = Msg(board, name, args)
+        self.robot.queue.put(msg, True)
