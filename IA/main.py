@@ -17,9 +17,5 @@ if __name__ == "__main__":
     boardth = boardThread.BoardThread(robot)
     boardth.start()
     IA = ia.IA(robot, boardth)
-    while True:
-        try:
-            pass
-        except KeyboardInterrupt:
-            break
+    IA.run()
 

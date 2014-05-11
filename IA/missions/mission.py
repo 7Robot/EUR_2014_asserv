@@ -18,7 +18,7 @@ class Mission:
     def send_event(self, msg):
         self.robot.queue.put(msg, True)
 
-    def go(self, state):
+    def go(self, msg, state):
         logging.warn('Mission not implemented')
         return state
 

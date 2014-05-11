@@ -31,7 +31,12 @@ class IA:
 
     def run(self):
         while True:
-            m = self.get_msg()
-            for mission in self.missions:
-                self.state = mission.go(m, self.state)
+            try:
+                m = self.get_msg()
+                for mission in self.missions:
+                    self.state = mission.go(m, self.state)
+                    logging.warn("going to state %s" % self.state)
+
+            except KeyboardInterrupt:
+                break
 

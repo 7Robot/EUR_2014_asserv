@@ -193,6 +193,8 @@ class Asserv(Proto):
     setXYTheta = Packet(49, "arm", [("x", "f"), ("y", "f"), ("theta", "f")])
     setXY = Packet(50, "arm", [("x", "f"), ("y", "f")])
 
+    start = Packet(51, "pic", [("color", "i")])
+
 
 class Turret(Proto):
     type = 8
