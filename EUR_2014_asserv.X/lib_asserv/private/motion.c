@@ -45,6 +45,11 @@ void set_acceleration_a(MotionState *state, float a){state->acc.a = a;}
 void set_acceleration_at(MotionState *state, float at){state->acc.at = at;}
 void set_acceleration_v_vt(MotionState *state, float v_vt){state->acc.v_vt = v_vt;}
 
+// connaître l'état du robot
+Position get_position(){return motionState.pos;}
+Speed get_speed(){return motionState.speed;}
+Acceleration get_acceleration(){return motionState.acc;}
+
 // obtenir les vitesses des roues gauche et droite
 float get_vg(){
     float delta_v = odo.coefs.spacing * 0.5 * motionState.speed.vt;

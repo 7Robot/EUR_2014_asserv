@@ -4,7 +4,10 @@
 #include "private/motion.h"
 #include "private/extern_globals.h"
 
-/******************************** Fonctions ***********************************/
+/*##############################   MOTION   ##################################*/
+
+// initialiser la lib d'asservissement
+void motion_init(void(*_done)(void));
 
 // consignes de déplacements du robot
 void motion_free(); // passer en roue libre
@@ -17,6 +20,13 @@ int motion_done();
 
 // renvoie les commandes des roues gauche et droite (appelé par l'interruption toutes les 10 ms)
 void motion_step(int tics_g, int tics_d, float *commande_g, float *commande_d);
+
+/*############################   MOTION STATE   ##############################*/
+
+// connaître l'état du robot
+Position get_position();
+Speed get_speed();
+Acceleration get_acceleration();
 
 
 #endif // _LIB_ASSERV_H_

@@ -18,6 +18,9 @@
       <itemPath>lib_asserv/private/debug.h</itemPath>
       <itemPath>actions_ax12.h</itemPath>
       <itemPath>ax12.h</itemPath>
+      <itemPath>atp-asserv.h</itemPath>
+      <itemPath>atp-user.h</itemPath>
+      <itemPath>atp.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -39,6 +42,9 @@
       <itemPath>lib_asserv/private/debug.c</itemPath>
       <itemPath>actions_ax12.c</itemPath>
       <itemPath>ax12.c</itemPath>
+      <itemPath>atp-asserv-wrapper.c</itemPath>
+      <itemPath>atp-asserv.c</itemPath>
+      <itemPath>atp.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

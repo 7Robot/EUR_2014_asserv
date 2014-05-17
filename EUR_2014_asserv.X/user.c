@@ -9,6 +9,7 @@
 #include <libpic30.h>
 #include "tests.h"
 #include "lib_asserv/lib_asserv.h"
+#include "atp-asserv.h"
 
 /******************************************************************************/
 /* User Functions                                                             */
@@ -37,5 +38,5 @@ void Init_All(){
     InitTimers();
     Init_PWM();
     Init_QEI();
-    motion_init(basculer_led);
+    motion_init(SendDone);
 }
