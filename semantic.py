@@ -65,6 +65,23 @@ class Asserv(Proto):
         ("vTheta", "f")
         ])
 
+    init_arm = Packet(50, "arm", [
+        ("arm", "H")
+        ])
+    catch_arm = Packet(51, "arm", [
+        ("arm", "H")
+        ])
+    stock_arm = Packet(52, "arm", [
+        ("arm", "H")
+        ])
+    pull_arm = Packet(53, "arm", [
+        ("arm", "H")
+        ])
+    push_arm = Packet(54, "arm", [
+        ("arm", "H")
+        ])
+    launch_net = Packet(55, "arm")
+
 
 #    odoBroadcastOn = Packet(43, "arm")
 #    odoBroadcastOff = Packet(44, "arm")
