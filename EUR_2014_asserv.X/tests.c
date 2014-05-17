@@ -114,6 +114,7 @@ void test_ax12(){
     // initialize
     Init_All();
     responseReadyAX = 0;
+    
     init_arm(1);
     __delay_ms(100);
     init_arm(2);
