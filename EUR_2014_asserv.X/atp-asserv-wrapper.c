@@ -18,3 +18,39 @@ void OnMotion_speed(float v, float vTheta){
     Speed speed = {v,vTheta};
     motion_speed(speed);
 }
+
+void OnInit_arm(int choix)
+{
+    init_arm(choix);
+
+}
+
+void OnCatch_arm(int choix)
+{
+    catch_arm(choix);
+}
+
+
+void OnStock_arm(int choix)
+{
+    stock_arm(choix);
+}
+
+void OnPull_arm(int choix)
+{
+    pull_arm(choix);
+}
+
+void OnPush_arm(int choix)
+{
+    push_arm(choix);
+}
+
+void Onlaunch_net()
+{
+
+    launch_net();
+}
+
+
+

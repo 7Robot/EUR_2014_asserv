@@ -41,6 +41,26 @@ void SendSpeed(float v, float vTheta);
 
 void OnStop();
 
+void OnInit_arm(int);
+
+void OnCatch_arm(int);
+
+void OnStock_arm(int);
+
+void OnPull_arm(int);
+
+void OnPush_arm(int);
+
+void Onlaunch_net(void);
+
+
+
+
+
+
+
+
+
 
 int AtpDecode(int id,
         unsigned char *ucharv, int ucharc,

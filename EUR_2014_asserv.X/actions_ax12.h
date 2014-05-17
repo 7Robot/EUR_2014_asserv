@@ -24,6 +24,6 @@ void catch_arm(int);
 void stock_arm(int);
 void pull_arm(int);
 void push_arm(int);
-void launch_net(int);
+void launch_net(void);
 #endif	/* ACTIONS_AX12_H */
 

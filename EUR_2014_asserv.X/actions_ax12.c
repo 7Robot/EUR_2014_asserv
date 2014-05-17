@@ -221,7 +221,7 @@ void push_arm(int arm) {
     init_arm(arm);
 }
 
-void launch_net(int arm) {
+void launch_net() {
     PutAX(18, AX_TORQUE_LIMIT, 650);
     __delay_ms(40);
 
