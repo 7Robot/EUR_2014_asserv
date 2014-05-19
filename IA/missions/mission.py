@@ -1,6 +1,7 @@
 #/usr/bin/python
 import logging
 from msg.msg import Msg, InternalMsg
+import threading
 
 class Mission:
     def __init__(self, robot, boardth):
@@ -21,6 +22,15 @@ class Mission:
         
     def send_event(self, msg):
         self.robot.queue.put(msg, True)
+        
+    def create_timer(self, duration, timername=None):
+        '''Creer un timer qui va envoyer un evenement interne Timer_end. 
+        self.dispatch.add_event se termine immediatement apres l'ajout dans la queue
+        donc le thread du Timer s'arrete apres l'execution du add_event()
+        donc il n'y a pas de probleme d'execution concurrente entre le thread du timer
+        et l'ia qui gere les missions'''
+        t = threading.Timer(duration, self.create_send_internal, [timername])
+        t.start()
 
     def go(self, msg, state):
         logging.warn('Mission not implemented')
