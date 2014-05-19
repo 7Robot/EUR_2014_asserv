@@ -16,5 +16,9 @@ class WaitForSignal(Mission):
                 state = 127
             elif msg.color == 1:
                 state = 1
+        elif (msg.board == "internal" and msg.name == "fin_du_match"):
+            logging.warn("End of match, stopping robot ...")
+            self.asserv.stop()
+            
 
         return state
