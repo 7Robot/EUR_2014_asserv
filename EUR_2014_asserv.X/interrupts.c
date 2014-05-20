@@ -38,6 +38,13 @@ void InitTimers()
     _NSTDIS = 0;
     // configuration des interruptions
     ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
+
+    // Ici interruption des actions des bras
+
+
+
+    
+
 }
 
 /******************************************************************************/
