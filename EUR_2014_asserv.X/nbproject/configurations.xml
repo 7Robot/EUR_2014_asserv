@@ -64,7 +64,6 @@
         <developmentServer>localhost</developmentServer>
         <targetDevice>dsPIC33FJ128MC804</targetDevice>
         <targetHeader></targetHeader>
-        <targetPluginBoard></targetPluginBoard>
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC16</languageToolchain>
         <languageToolchainVersion>1.21</languageToolchainVersion>
@@ -77,7 +76,6 @@
         </linkerTool>
         <loading>
           <useAlternateLoadableFile>false</useAlternateLoadableFile>
-          <parseOnProdLoad>false</parseOnProdLoad>
           <alternateLoadableFile></alternateLoadableFile>
         </loading>
       </compileType>
@@ -129,8 +127,6 @@
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
       </C30>
-      <C30-AR>
-      </C30-AR>
       <C30-AS>
       </C30-AS>
       <C30-LD>

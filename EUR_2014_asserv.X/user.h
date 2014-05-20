@@ -14,6 +14,10 @@
 #define BAUDRATEAX12 57600
 #define BRGVALAX12 ((FCY / BAUDRATEAX12 / 16) - 1)
 
+
+volatile char actionBras; // bus de bit du bras
+volatile char numBras;
+
 /******************************************************************************/
 /* System Function Prototypes                                                 */
 /******************************************************************************/
