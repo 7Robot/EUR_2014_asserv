@@ -34,6 +34,7 @@ class Common(Proto):
 class Asserv(Proto):
     type = 1
 
+########### Messages d'asserv et d'odo ##########
     stop = Packet(1, "arm")
     ausecours = Packet(1, "arm")
     block = Packet(2, "arm")
@@ -149,7 +150,7 @@ class Asserv(Proto):
         ])
 
     omegaFree = Packet(23, "arm", [
-        ("omega", "f"),
+        ("omega", "f")
         ])
 
     speedOmega = Packet(24, "arm", [
@@ -192,9 +193,21 @@ class Asserv(Proto):
     setYTheta = Packet(48, "arm", [("y", "f"), ("theta", "f")])
     setXYTheta = Packet(49, "arm", [("x", "f"), ("y", "f"), ("theta", "f")])
     setXY = Packet(50, "arm", [("x", "f"), ("y", "f")])
+    
+    ########## Message de debut de match et autres (51<n<71)###########
 
     start = Packet(51, "pic", [("color", "i")])
+    
+    ########### Message de lance balles (>70) ############
 
+    launchBall = Packet(71, "arm")
+    doneLaunch = Packet(72, "pic")
+    
+    getBalls = Packet(73, "arm")
+    balls = Packet(74, "pic", [
+        ("amount", "H")
+        ])
+    
 
 class Turret(Proto):
     type = 8
