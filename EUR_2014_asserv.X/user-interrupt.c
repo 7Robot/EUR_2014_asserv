@@ -63,10 +63,8 @@ void InitApp(void)
 				 
     _ODCB5 = 1; //OPEN DRAIN pour AX12
 
-    AD1PCFGL = 0xFFFF; //Pins analogiques en numérique pour que ATP marche !!
-	
-    Init_PWM();
-    Init_QEI();
+    AD1PCFGL = 0xFFFF; //Pins analogiques en numï¿½rique pour que ATP marche !!
+    
 }
 
 void Init_PWM(void)
@@ -320,7 +318,7 @@ void __attribute__((interrupt, auto_psv)) _T2Interrupt(void)
 	  
     motion_step(0.01, diffg, diffd, &consigneG, &consigneD);
 
-    // récupération des signes
+    // rï¿½cupï¿½ration des signes
     int inverseG = 0, inverseD = 0;
     if (consigneG < 0) { inverseG = 1; consigneG = -consigneG; }
     if (consigneD < 0) { inverseD = 1; consigneD = -consigneD; }
