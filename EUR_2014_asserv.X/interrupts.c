@@ -38,6 +38,15 @@ void InitTimers()
     _NSTDIS = 0;
     // configuration des interruptions
     ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
+
+    // Ici interruption des actions des bras
+IFS2bits.SPI2IF = 0; // Flag SPI2 Event Interrupt Priority
+IPC8bits.SPI2IP = 2; // Priority SPI2 Event Interrupt Priority
+IEC2bits.SPI2IE = 1; //Enable SPI2 Event Interrupt Priority
+
+
+    
+
 }
 
 /******************************************************************************/
@@ -178,4 +187,27 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void){
 
 void __attribute__((__interrupt__, no_auto_psv)) _U2TXInterrupt(void){
    _U2TXIF = 0; // clear TX interrupt flag
+}
+
+
+// interruption lié au bras du robot
+void __attribute__((interrupt, no_auto_psv)) _SPI2Interrupt(void){
+    led=1;
+    IFS2bits.SPI2IF = 0;
+    if ((actionBras & BOUGIE_init_arm) == BOUGIE_init_arm) {
+        init_arm(numBras);
+        actionBras &= ~BOUGIE_init_arm;
+    } else if ((actionBras & BOUGIE_catch_arm) == BOUGIE_catch_arm) {
+       catch_arm(int arm);
+        actionBras &= ~BOUGIE_catch_arm;
+    } else if ((actionBras & BOUGIE_stock_arm) == BOUGIE_stock_arm) {
+        stock_arm(int arm);
+        actionBras &= ~BOUGIE_stock_arm;
+    } else if ((actionBras & BOUGIE_pull_arm) == BOUGIE_pull_arm) {
+        pull_arm(int arm);
+        actionBras &= ~BOUGIE_pull_arm;
+    }
+    
+
+
 }

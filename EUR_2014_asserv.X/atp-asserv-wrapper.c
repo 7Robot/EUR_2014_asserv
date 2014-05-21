@@ -21,8 +21,9 @@ void OnMotion_speed(float v, float vTheta){
 
 void OnInit_arm(unsigned int choix)
 {
-    init_arm(choix);
-
+    actionBras |= BOUGIE_init_arm ;
+    numBras=choix;
+    IFS2bits.SPI2IF = 1;
 }
 
 void OnCatch_arm(unsigned int choix)
@@ -52,5 +53,7 @@ void Onlaunch_net()
     launch_net();
 }
 
+void On() {
 
+}
 

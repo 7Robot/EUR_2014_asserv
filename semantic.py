@@ -66,19 +66,19 @@ class Asserv(Proto):
         ])
 
     init_arm = Packet(50, "arm", [
-        ("arm", "H")
+        ("choix", "H")
         ])
     catch_arm = Packet(51, "arm", [
-        ("arm", "H")
+        ("choix", "H")
         ])
     stock_arm = Packet(52, "arm", [
-        ("arm", "H")
+        ("choix", "H")
         ])
     pull_arm = Packet(53, "arm", [
-        ("arm", "H")
+        ("choix", "H")
         ])
     push_arm = Packet(54, "arm", [
-        ("arm", "H")
+        ("choix", "H")
         ])
     launch_net = Packet(55, "arm")
 
