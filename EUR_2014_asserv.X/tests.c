@@ -114,17 +114,20 @@ void test_Asserv_angle(){
 
 // test des ax12 integrés à l'asserve
 void test_ax12(){
-    Position pos0 = {0,-0.36,0};
-    Position pos1 = {0.36,-0.36,0};
+
+  //  Position pos0 = {0,-0.36,0};
+    //Position pos1 = {0.36,-0.36,0};
     // initialize
     Init_All();
     responseReadyAX = 0;
-    
-    init_arm(1);
+    while(1)
+    {
+    //init_arm(1);
+    launch_net();
     __delay_ms(100);
-    init_arm(2);
-    __delay_ms(100);
-
+   // init_arm(2);
+    //__delay_ms(100);
+    }
         /*catch_arm(1);
         catch_arm(2);
         motion_angle(-PI/2);
@@ -141,16 +144,7 @@ void test_ax12(){
         pull_arm(1);
         __delay_ms(1000);*/
     while(1){__delay_ms(5000);}
-    //__delay_ms(5000);
-}
-
-void test_atp(){
-
-    Init_All();
-    responseReadyAX = 0;
-
-
-    while(1);
+    __delay_ms(5000);
 }
 
 
