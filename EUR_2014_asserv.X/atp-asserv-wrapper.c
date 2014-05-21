@@ -31,32 +31,31 @@ void OnInit_arm(unsigned int choix)
 void OnCatch_arm(unsigned int choix)
 {
     actionBras |= BOUGIE_catch_arm ;
-    catch_arm(choix);
+    numBras=choix;
 }
 
 
 void OnStock_arm(unsigned int choix)
 {
     actionBras |= BOUGIE_stock_arm ;
-    stock_arm(choix);
+    numBras=choix;
 }
 
 void OnPull_arm(unsigned int choix)
 {
     actionBras |= BOUGIE_pull_arm;
-    pull_arm(choix);
+    numBras=choix;
 }
 
 void OnPush_arm(unsigned int choix)
 {
     actionBras |= BOUGIE_push_arm;
-    push_arm(choix);
+    numBras=choix;
 }
 
 void Onlaunch_net()
 {
     actionBras |= BOUGIE_launch_net;
-    launch_net();
 }
 
 void On() {

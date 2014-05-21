@@ -213,7 +213,11 @@ void __attribute__((interrupt, no_auto_psv)) _SPI2Interrupt(void){
     } else if ((actionBras & BOUGIE_pull_arm) == BOUGIE_pull_arm) {
         pull_arm( numBras);
         actionBras &= ~BOUGIE_pull_arm;
-    
+
+    } else if ((actionBras & BOUGIE_push_arm) == BOUGIE_push_arm) {
+        push_arm( numBras);
+        actionBras &= ~BOUGIE_push_arm;
+
     } else if ((actionBras & BOUGIE_launch_net) == BOUGIE_launch_net) {
         launch_net();
         actionBras &= ~BOUGIE_launch_net;
