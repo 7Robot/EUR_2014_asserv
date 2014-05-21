@@ -32,19 +32,21 @@ void InitTimers()
                 T2_GATE_OFF &
                 T2_PS_1_64 &
                 T2_SOURCE_INT, 3125 ); // 3125 pour 5ms
+    // configuration des interruptions
+    ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
 
 
     // Open drain sur la pin RB5(pour les AX12)
     _ODCB5 = 1;
     // activation de la priorité des interruptions
     _NSTDIS = 0;
-    // configuration des interruptions
-    ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
+    
+    AD1PCFGL = 0xFFFF; //Pins analogiques en num�rique pour que ATP marche !!
 
     // Ici interruption des actions des bras
-IFS2bits.SPI2IF = 0; // Flag SPI2 Event Interrupt Priority
-IPC8bits.SPI2IP = 2; // Priority SPI2 Event Interrupt Priority
-IEC2bits.SPI2IE = 1; //Enable SPI2 Event Interrupt Priority
+    IFS2bits.SPI2IF = 0; // Flag SPI2 Event Interrupt Priority
+    IPC8bits.SPI2IP = 2; // Priority SPI2 Event Interrupt Priority
+    IEC2bits.SPI2IE = 1; //Enable SPI2 Event Interrupt Priority
 
 
     
