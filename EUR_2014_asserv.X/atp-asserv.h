@@ -23,7 +23,7 @@ void OnAusecours();
 
 void OnBlock();
 
-void OnCatch_arm(unsigned int arm);
+void OnCatch_arm(unsigned int choix);
 
 void SendDone();
 
@@ -31,7 +31,7 @@ void OnGetPos();
 
 void OnGetSpeed();
 
-void OnInit_arm(unsigned int arm);
+void OnInit_arm(unsigned int choix);
 
 void OnLaunch_net();
 
@@ -43,13 +43,13 @@ void OnMotion_speed(float v, float vTheta);
 
 void SendPos(float x, float y, float theta);
 
-void OnPull_arm(unsigned int arm);
+void OnPull_arm(unsigned int choix);
 
-void OnPush_arm(unsigned int arm);
+void OnPush_arm(unsigned int choix);
 
 void SendSpeed(float v, float vTheta);
 
-void OnStock_arm(unsigned int arm);
+void OnStock_arm(unsigned int choix);
 
 void OnStop();
 

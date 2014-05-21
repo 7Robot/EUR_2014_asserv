@@ -79,7 +79,7 @@ __attribute__((weak)) void OnAusecours() { SendUnimplemented(); }
 __attribute__((weak)) void OnBlock() { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnCatch_arm(unsigned int arm) { SendUnimplemented(); }
+__attribute__((weak)) void OnCatch_arm(unsigned int choix) { SendUnimplemented(); }
 
 void SendDone() {
     char bytes[] = {
@@ -97,7 +97,7 @@ __attribute__((weak)) void OnGetPos() { SendUnimplemented(); }
 __attribute__((weak)) void OnGetSpeed() { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnInit_arm(unsigned int arm) { SendUnimplemented(); }
+__attribute__((weak)) void OnInit_arm(unsigned int choix) { SendUnimplemented(); }
 
 // You should redefine this function
 __attribute__((weak)) void OnLaunch_net() { SendUnimplemented(); }
@@ -136,10 +136,10 @@ void SendPos(float x, float y, float theta) {
 }
 
 // You should redefine this function
-__attribute__((weak)) void OnPull_arm(unsigned int arm) { SendUnimplemented(); }
+__attribute__((weak)) void OnPull_arm(unsigned int choix) { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnPush_arm(unsigned int arm) { SendUnimplemented(); }
+__attribute__((weak)) void OnPush_arm(unsigned int choix) { SendUnimplemented(); }
 
 void SendSpeed(float v, float vTheta) {
     char bytes[] = {
@@ -161,7 +161,7 @@ void SendSpeed(float v, float vTheta) {
 }
 
 // You should redefine this function
-__attribute__((weak)) void OnStock_arm(unsigned int arm) { SendUnimplemented(); }
+__attribute__((weak)) void OnStock_arm(unsigned int choix) { SendUnimplemented(); }
 
 // You should redefine this function
 __attribute__((weak)) void OnStop() { SendUnimplemented(); }

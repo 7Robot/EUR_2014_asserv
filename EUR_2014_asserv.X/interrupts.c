@@ -9,6 +9,7 @@
 #include "tests.h"
 #include "lib_asserv/lib_asserv.h"
 #include "motor.h"
+#include "actions_ax12.h"
 
 void InitTimers()
 {
@@ -198,13 +199,13 @@ void __attribute__((interrupt, no_auto_psv)) _SPI2Interrupt(void){
         init_arm(numBras);
         actionBras &= ~BOUGIE_init_arm;
     } else if ((actionBras & BOUGIE_catch_arm) == BOUGIE_catch_arm) {
-       catch_arm(int arm);
+       catch_arm( numBras);
         actionBras &= ~BOUGIE_catch_arm;
     } else if ((actionBras & BOUGIE_stock_arm) == BOUGIE_stock_arm) {
-        stock_arm(int arm);
+        stock_arm( numBras);
         actionBras &= ~BOUGIE_stock_arm;
     } else if ((actionBras & BOUGIE_pull_arm) == BOUGIE_pull_arm) {
-        pull_arm(int arm);
+        pull_arm( numBras);
         actionBras &= ~BOUGIE_pull_arm;
     }
     
