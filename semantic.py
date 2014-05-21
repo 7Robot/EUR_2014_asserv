@@ -200,13 +200,16 @@ class Asserv(Proto):
     
     ########### Message de lance balles (>70) ############
 
-    launchBall = Packet(71, "arm")
+    launchBalls = Packet(71, "arm", [
+        ("amount", "H")
+        ])
     doneLaunch = Packet(72, "pic")
     
     getBalls = Packet(73, "arm")
     balls = Packet(74, "pic", [
         ("amount", "H")
         ])
+    stopLaunch = Packet(75, "arm")
     
 
 class Turret(Proto):
