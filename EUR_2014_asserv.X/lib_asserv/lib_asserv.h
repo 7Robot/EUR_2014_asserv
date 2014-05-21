@@ -2,7 +2,7 @@
 #define _LIB_ASSERV_H_
 
 #include "private/motion.h"
-#include "private/extern_globals.h"
+#include "private/extern_globals_asserv.h"
 
 /*##############################   MOTION   ##################################*/
 

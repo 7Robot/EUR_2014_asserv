@@ -22,6 +22,7 @@
 #include "user.h"          /* User funct/params, such as InitApp              */
 #include "qei.h"           /* QEI definitions for easier use                  */
 #include <libpic30.h>
+#include "globals.h"
 #include "tests.h"
 #include "ax12.h"
 #include "actions_ax12.h"

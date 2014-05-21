@@ -1,4 +1,4 @@
-#include "extern_globals.h"
+#include "extern_globals_asserv.h"
 #include "../lib_asserv_default.h"
 #include "debug.h"
 #include "motion.h"

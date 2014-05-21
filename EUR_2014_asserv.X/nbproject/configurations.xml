@@ -14,13 +14,15 @@
       <itemPath>lib_asserv/private/tools.h</itemPath>
       <itemPath>lib_asserv/lib_asserv_default.h</itemPath>
       <itemPath>motor.h</itemPath>
-      <itemPath>lib_asserv/private/extern_globals.h</itemPath>
       <itemPath>lib_asserv/private/debug.h</itemPath>
       <itemPath>actions_ax12.h</itemPath>
       <itemPath>ax12.h</itemPath>
       <itemPath>atp-asserv.h</itemPath>
       <itemPath>atp-user.h</itemPath>
       <itemPath>atp.h</itemPath>
+      <itemPath>globals.h</itemPath>
+      <itemPath>lib_asserv/private/extern_globals_asserv.h</itemPath>
+      <itemPath>extern_globals.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -68,7 +70,7 @@
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC16</languageToolchain>
         <languageToolchainVersion>1.21</languageToolchainVersion>
-        <platform>3</platform>
+        <platform>2</platform>
       </toolsSet>
       <compileType>
         <linkerTool>

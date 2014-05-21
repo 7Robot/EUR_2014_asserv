@@ -5,6 +5,7 @@
 #include <timer.h>
 #include <uart.h>
 
+#include "extern_globals.h"
 #include "user.h"
 #include "tests.h"
 #include "lib_asserv/lib_asserv.h"
