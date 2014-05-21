@@ -135,8 +135,8 @@ void AtpInit() {
     ConfigIntUART1(config);
 
     __builtin_write_OSCCONL(OSCCON & 0xBF);
-     _RP5R = 3; // RP5 (pin 14) = U1TX (p.167)
-    _U1RXR = 6; // RP6 (pin 15) = U1RX (p.165)
+     _RP3R = 3; // RP5 (pin 14) = U1TX (p.167)
+    _U1RXR = 2; // RP6 (pin 15) = U1RX (p.165)
     __builtin_write_OSCCONL(OSCCON | 0x40);
 }
 

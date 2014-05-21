@@ -1,9 +1,9 @@
 // Generated from version 1404111942 of semantic
 
-#ifndef _ASSERVBOARD_H_
-#define _ASSERVBOARD_H_
+#ifndef _ATP_ASSERV_H_
+#define _ATP_ASSERV_H_
 
-#define BOARD_ID 1
+#define BOARD_ID 2
 #define BOARD_NAME Asserv
 
 
@@ -23,11 +23,17 @@ void OnAusecours();
 
 void OnBlock();
 
+void OnCatch_arm(unsigned int arm);
+
 void SendDone();
 
 void OnGetPos();
 
 void OnGetSpeed();
+
+void OnInit_arm(unsigned int arm);
+
+void OnLaunch_net();
 
 void OnMotion_angle(float theta);
 
@@ -37,29 +43,15 @@ void OnMotion_speed(float v, float vTheta);
 
 void SendPos(float x, float y, float theta);
 
+void OnPull_arm(unsigned int arm);
+
+void OnPush_arm(unsigned int arm);
+
 void SendSpeed(float v, float vTheta);
 
+void OnStock_arm(unsigned int arm);
+
 void OnStop();
-
-void OnInit_arm(int);
-
-void OnCatch_arm(int);
-
-void OnStock_arm(int);
-
-void OnPull_arm(int);
-
-void OnPush_arm(int);
-
-void Onlaunch_net(void);
-
-
-
-
-
-
-
-
 
 
 int AtpDecode(int id,
@@ -71,4 +63,4 @@ int AtpDecode(int id,
         long int *intv, int intc,
         float *floatv, int floatc);
 
-#endif // _ASSERVBOARD_H_
+#endif // _ASSERV_H_

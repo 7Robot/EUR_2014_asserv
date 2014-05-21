@@ -19,29 +19,29 @@ void OnMotion_speed(float v, float vTheta){
     motion_speed(speed);
 }
 
-void OnInit_arm(int choix)
+void OnInit_arm(unsigned int choix)
 {
     init_arm(choix);
 
 }
 
-void OnCatch_arm(int choix)
+void OnCatch_arm(unsigned int choix)
 {
     catch_arm(choix);
 }
 
 
-void OnStock_arm(int choix)
+void OnStock_arm(unsigned int choix)
 {
     stock_arm(choix);
 }
 
-void OnPull_arm(int choix)
+void OnPull_arm(unsigned int choix)
 {
     pull_arm(choix);
 }
 
-void OnPush_arm(int choix)
+void OnPush_arm(unsigned int choix)
 {
     push_arm(choix);
 }

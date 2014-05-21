@@ -1,7 +1,6 @@
 // Generated from version 1404111942 of semantic
 
 #include "atp.h"
-#include "atp-asserv.h"
 
 
 void SendError() {
@@ -79,6 +78,9 @@ __attribute__((weak)) void OnAusecours() { SendUnimplemented(); }
 // You should redefine this function
 __attribute__((weak)) void OnBlock() { SendUnimplemented(); }
 
+// You should redefine this function
+__attribute__((weak)) void OnCatch_arm(unsigned int arm) { SendUnimplemented(); }
+
 void SendDone() {
     char bytes[] = {
         129,
@@ -93,6 +95,12 @@ __attribute__((weak)) void OnGetPos() { SendUnimplemented(); }
 
 // You should redefine this function
 __attribute__((weak)) void OnGetSpeed() { SendUnimplemented(); }
+
+// You should redefine this function
+__attribute__((weak)) void OnInit_arm(unsigned int arm) { SendUnimplemented(); }
+
+// You should redefine this function
+__attribute__((weak)) void OnLaunch_net() { SendUnimplemented(); }
 
 // You should redefine this function
 __attribute__((weak)) void OnMotion_angle(float theta) { SendUnimplemented(); }
@@ -127,6 +135,12 @@ void SendPos(float x, float y, float theta) {
     SendBytes(bytes, 18);
 }
 
+// You should redefine this function
+__attribute__((weak)) void OnPull_arm(unsigned int arm) { SendUnimplemented(); }
+
+// You should redefine this function
+__attribute__((weak)) void OnPush_arm(unsigned int arm) { SendUnimplemented(); }
+
 void SendSpeed(float v, float vTheta) {
     char bytes[] = {
         129,
@@ -145,6 +159,9 @@ void SendSpeed(float v, float vTheta) {
     };
     SendBytes(bytes, 13);
 }
+
+// You should redefine this function
+__attribute__((weak)) void OnStock_arm(unsigned int arm) { SendUnimplemented(); }
 
 // You should redefine this function
 __attribute__((weak)) void OnStop() { SendUnimplemented(); }
@@ -175,12 +192,24 @@ int AtpDecode(int id,
         OnBlock();
         return 1;
     }
+    if (id == 51) {
+        OnCatch_arm(ushortv[0]);
+        return 1;
+    }
     if (id == 30) {
         OnGetPos();
         return 1;
     }
     if (id == 40) {
         OnGetSpeed();
+        return 1;
+    }
+    if (id == 50) {
+        OnInit_arm(ushortv[0]);
+        return 1;
+    }
+    if (id == 55) {
+        OnLaunch_net();
         return 1;
     }
     if (id == 12) {
@@ -193,6 +222,18 @@ int AtpDecode(int id,
     }
     if (id == 11) {
         OnMotion_speed(floatv[0], floatv[1]);
+        return 1;
+    }
+    if (id == 53) {
+        OnPull_arm(ushortv[0]);
+        return 1;
+    }
+    if (id == 54) {
+        OnPush_arm(ushortv[0]);
+        return 1;
+    }
+    if (id == 52) {
+        OnStock_arm(ushortv[0]);
         return 1;
     }
     if (id == 1) {

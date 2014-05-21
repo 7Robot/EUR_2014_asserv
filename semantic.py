@@ -32,7 +32,7 @@ class Common(Proto):
         ])
 
 class Asserv(Proto):
-    type = 1
+    type = 2
 
     stop = Packet(1, "arm")
     ausecours = Packet(1, "arm")

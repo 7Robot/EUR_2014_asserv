@@ -10,6 +10,7 @@
 #include "tests.h"
 #include "lib_asserv/lib_asserv.h"
 #include "atp-asserv.h"
+#include "atp.h"
 
 /******************************************************************************/
 /* User Functions                                                             */
@@ -38,5 +39,7 @@ void Init_All(){
     InitTimers();
     Init_PWM();
     Init_QEI();
-    motion_init(basculer_led);
+    AtpInit();
+    motion_init(SendDone);
+    SendBoardId();
 }

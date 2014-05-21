@@ -120,7 +120,7 @@ void test_ax12(){
     init_arm(2);
     __delay_ms(100);
 
-        catch_arm(1);
+        /*catch_arm(1);
         catch_arm(2);
         motion_angle(-PI/2);
         while (!motion_done());
@@ -134,7 +134,9 @@ void test_ax12(){
         motion_angle(PI);
         while (!motion_done());
         pull_arm(1);
-        __delay_ms(1000);
+        __delay_ms(1000);*/
+    //while(1){__delay_ms(5000);}
+    __delay_ms(5000);
 }
 
 
