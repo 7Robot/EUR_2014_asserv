@@ -32,11 +32,14 @@ void test_Asserv_vitesse()
     Speed speed5rn = {0,-5};
     Speed speedv_vt_1 = {0.5,2};
     Speed speedv_vt_1n = {0.5,-2};
-    Speed speed_test = {0,2};
+    Speed speed_test = {0.3,0};
 
     // initialize
     Init_All();
+    motion_speed(speed_test);
+    __delay_ms(1000);
 
+    /*
     // test de réponse à une commande
     set_debug_mode(1);
     motion_speed(speed0);
@@ -52,6 +55,8 @@ void test_Asserv_vitesse()
     motion_speed(speed0);
     __delay_ms(1500);
     motion_free();
+     */
+    while(1);
 }
 
 // asserve en position
@@ -135,8 +140,17 @@ void test_ax12(){
         while (!motion_done());
         pull_arm(1);
         __delay_ms(1000);*/
-    //while(1){__delay_ms(5000);}
-    __delay_ms(5000);
+    while(1){__delay_ms(5000);}
+    //__delay_ms(5000);
+}
+
+void test_atp(){
+
+    Init_All();
+    responseReadyAX = 0;
+
+
+    while(1);
 }
 
 

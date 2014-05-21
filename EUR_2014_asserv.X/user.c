@@ -37,9 +37,11 @@ void Init_All(){
     ConfigureOscillator();
     /* Initialize IO ports and peripherals */
     InitTimers();
+    __delay_ms(500);
     Init_PWM();
     Init_QEI();
     AtpInit();
     motion_init(SendDone);
+    __delay_ms(1000);
     SendBoardId();
 }

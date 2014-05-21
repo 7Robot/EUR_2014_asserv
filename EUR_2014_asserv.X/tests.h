@@ -13,6 +13,9 @@ void test_Asserv_angle();
 // test des ax12 integrés à l'asserve
 void test_ax12();
 
+// teste les commande atp
+void test_atp();
+
 /******************************************************************************/
 /*                      Tests avec les interruptions                          */
 /******************************************************************************/

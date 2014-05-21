@@ -20,9 +20,9 @@
       <itemPath>atp-asserv.h</itemPath>
       <itemPath>atp-user.h</itemPath>
       <itemPath>atp.h</itemPath>
-      <itemPath>globals.h</itemPath>
       <itemPath>lib_asserv/private/extern_globals_asserv.h</itemPath>
       <itemPath>extern_globals.h</itemPath>
+      <itemPath>globals.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"

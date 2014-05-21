@@ -175,10 +175,12 @@ void speed_asserv_step(Odo *odo, float *commande_g, float *commande_d){
     *commande_g = commande_delta - commande_alpha;
     *commande_d = commande_delta + commande_alpha;
 
+    /*
     // vérification si on est arrivé à la bonne consigne
     if (pid_done(speed_asserv.pid_delta) && pid_done(speed_asserv.pid_alpha)){
         speed_asserv.done = 1;
     } else {speed_asserv.done = 0;}
+     */
 }
 
 
