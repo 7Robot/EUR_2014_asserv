@@ -9,7 +9,7 @@ class Robinch:
         self.name = 'robinch'
         self.transmitter = 'arm'
         self.boards  = { "Asserv": 1301, "Turret": 1308 }
-        self.semantic = '../semantic.py'
+        self.semantic = '../semantic_robinch.py'
         self.host = 'localhost'
         self.queue = Queue()
 

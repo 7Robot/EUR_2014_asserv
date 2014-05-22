@@ -8,7 +8,7 @@ class Fatman:
         self.name = 'fatman'
         self.transmitter = 'arm'
         self.boards  = { "Asserv": 1302}
-        self.semantic = '../semantic.py'
+        self.semantic = '../semantic_fatman.py'
         self.host = 'localhost'
         self.queue = Queue()
 

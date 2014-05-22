@@ -24,10 +24,8 @@ class IA:
                 self.missions += [m]
                 self.logging.warn('mission %s loaded ...' % m.name)
 
-
     def get_msg(self):
         return self.robot.queue.get(True)
-
 
     def run(self):
         while True:
