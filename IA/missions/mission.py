@@ -20,7 +20,7 @@ class Mission:
         return self._state
 
     def _set_state(self, state):
-        logging.warn("[%s:state] %s -> %s" %(self.__class__.__name__,self._state, state))
+        logging.warn("[%s:state] %s -> %s" %(self.name,self._state, state))
         self._state = state
     
     state = property(_get_state, _set_state)
