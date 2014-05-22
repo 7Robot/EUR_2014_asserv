@@ -6,13 +6,13 @@ class Turn(Mission):
         super(Turn, self).__init__(robot, boardth)
         self.name = 'Turning mission'
         
-    def go(self, msg, state):
+    def go(self, msg):
         if (msg.board == "internal" and msg.name == 'turn'):
             self.asserv.reachTheta(msg.target, 0.1, 0.1)
-            state = "turning"
+            self.state = "turning"
 
-        elif (state == "turning"):
+        elif (self.state == "turning"):
             if msg.board == "asserv" and msg.name == 'done'):
                 self.target = None
                 self.axe = None
-                state = "done"
+                self.state = "off"

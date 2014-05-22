@@ -10,7 +10,6 @@ class IA:
         self.robot = robot
         self.boardth = boardth 
         self.logging = logging
-        self.state = 0
 
         self._load_all_missions(robot.name)
 
@@ -34,8 +33,8 @@ class IA:
             try:
                 m = self.get_msg()
                 for mission in self.missions:
-                    self.state = mission.go(m, self.state)
-                    logging.warn("going to state %s" % self.state)
+                    mission.go(m)
+                    logging.warn("going to state"))
 
             except KeyboardInterrupt:
                 break

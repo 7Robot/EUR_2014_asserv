@@ -4,13 +4,27 @@ from msg.msg import Msg, InternalMsg
 import threading
 
 class Mission:
+
+    data = {}
+
     def __init__(self, robot, boardth):
         self.robot = robot
         self.name = 'Mission Name not implemented'
+        self._state = 'off'
         
         boards = boardth.channels
         for b in boards:
             setattr(self,b.lower(),boards[b])
+
+    def _get_state(self):
+        return self._state
+
+    def _set_state(self, state):
+        logging.warn("[%s:state] %s -> %s" %(self.__class__.__name__,self._state, state))
+        self._state = state
+    
+    state = property(_get_state, _set_state)
+
 
     def create_send_event(self, board, name, args):
         m = Msg(board, name, args)
@@ -32,7 +46,7 @@ class Mission:
         t = threading.Timer(duration, self.create_send_internal, [timername])
         t.start()
 
-    def go(self, msg, state):
+    def go(self, msg):
         logging.warn('Mission not implemented')
         return state
 

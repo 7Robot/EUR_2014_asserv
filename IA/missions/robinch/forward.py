@@ -14,25 +14,27 @@ class Forward(Mission):
         elif (axe == 'y'):
             self.asserv.reachY(target, 0.1, 0.1)
         
-    def go(self, msg, state):
+    def go(self, msg):
         if (msg.board == "internal" and msg.name == 'forward'):
             self.target = msg.target
             self.axe = msg.axe  
+            self.current_mission = msg.mission
             self.walk(msg.axe, msg.target)
-            state = "forward"            
+            self.state = "forward"            
         
-        elif (state == "forward"):
+        elif (self.state == "forward"):
             if (msg.board == "internal" and msg.name == 'alert'):
                 self.asserv.stop()
-                state = "waiting"
+                self.state = "waiting"
             elif msg.board == "asserv" and msg.name == 'done'):
                 self.target = None
                 self.axe = None
-                state = "done"
+                self.state = "off"
+                self.create_send_internal('done')
+                self.current_mission = None
                 
-        elif (state == "waiting"):
+        elif (self.state == "waiting"):
             if (msg.board == 'asserv' and msg.name == 'freepath'):
                 self.walk(self.axe, self.target)
-                state = "forward"
+                self.state = "forward"
                 
-        return state

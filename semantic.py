@@ -203,7 +203,6 @@ class Asserv(Proto):
     launchBalls = Packet(71, "arm", [
         ("amount", "H")
         ])
-    doneLaunch = Packet(72, "pic")
     
     getBalls = Packet(73, "arm")
     balls = Packet(74, "pic", [
