@@ -1,6 +1,8 @@
 # GENERIC files
 *~
+.~*
 *.swp
+*.orig
 
 # MPLAB-X files
 *.d
