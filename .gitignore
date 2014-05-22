@@ -2,6 +2,7 @@
 *~
 .~*
 *.swp
+*.orig
 
 # MPLAB-X files
 *.d

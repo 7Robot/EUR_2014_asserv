@@ -147,6 +147,12 @@ void test_ax12(){
     __delay_ms(5000);
 }
 
+// test des ax12 integrés à l'asserve
+void test_atp(){
+    Init_All();
+    while(1);
+}
+
 
 /******************************************************************************/
 /*                      Tests avec les interruptions                          */
