@@ -15,4 +15,4 @@ class Msg:
 
 class InternalMsg(Msg):
     def __init__(self, name, args=None):
-        super(Msg, self).__init__("internal", name, args)
+        super().__init__("internal", name, args)
