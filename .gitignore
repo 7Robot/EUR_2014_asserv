@@ -15,6 +15,7 @@
 *.sdb
 *.obj.dmp
 *.map
+*.orig
 
 # MPLAB-X folders
 EUR_2014_asserv.X/html/
