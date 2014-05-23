@@ -12,10 +12,15 @@ class Lances(Mission):
     def go(self, msg):
         if (self.state = 'off' and msg.board == 'internal' and msg.name == 'beginlances'):
             self.state = 'on'
-            self.create_send_internal('forward', {'target':0.62, 'axe':'x', 'mission':self.name})
+            self.create_send_internal('forward', {'target':0.62, 'axe':'x'})
 
+<<<<<<< HEAD
         elif (self.state == 'on' and msg.board == 'internal' and msg.name == 'done'):
                 self.asserv.odoBroadcastOn()
+=======
+        elif (self.state == 'on'):
+            if (msg.board == 'internal' and msg.name == 'forward_done'):
+>>>>>>> 69e8380b5d31401eacd8392b79887f943c569b2d
                 self.asserv.speed(0.05, 0.1, 0.1)
                 self.asserv.launchBalls(5)
                 self.state = "speed_lances"
