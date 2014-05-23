@@ -225,16 +225,18 @@ void pos_asserv_step(Odo *odo, float *commande_g, float *commande_d){
                 dt = principal_angle(dt+PI);
             }
         }
-        v_o = pos_asserv.kp * d;
+        
         if (fabs(d)<0.1){
-            vt_o = pos_asserv.kp * 200 * dt * fabs(d*d);
+            v_o = pos_asserv.kp * d * (1-0.636619772*fabs(dt)); // 0.636619772 = 1/(pi/2)
+            vt_o = pos_asserv.kp * 20 * dt * fabs(d);
         } else {
+            v_o = pos_asserv.kp * d;
             vt_o = 2 * pos_asserv.kp * dt;
         }
         // appliquer les contraintes puis revérifier la priorité rotation
-        v_oc = speed_asserv.speed_order_constrained.v;
-        vt_oc = speed_asserv.speed_order_constrained.vt;
-        //constrain_speed(v_o, vt_o, &v_oc, &vt_oc);
+        // v_oc = speed_asserv.speed_order_constrained.v;
+        // vt_oc = speed_asserv.speed_order_constrained.vt;
+        // constrain_speed(v_o, vt_o, &v_oc, &vt_oc);
         //if (fabs(d)>0.1 && fabs(dt)>0.05){v_oc = 0.2*d*fabs(vt_oc/dt);} // si dt > 3°
 
         // appel de l'asserve en vitesse avec les bonnes consignes
