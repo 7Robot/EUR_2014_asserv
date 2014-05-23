@@ -12,7 +12,7 @@ class Lances(Mission):
     def go(self, msg):
         if (msg.board == 'internal' and msg.name == 'beginlances'):
             self.state = 'on'
-            self.create_send_internal('forward', {'target':0.62, 'axe':'x', 'mission':self.name})
+            self.create_send_internal('forward', {'target':0.62, 'axe':'x'})
 
         elif (self.state == 'on'):
             if (msg.board == 'internal' and msg.name == 'done'):
