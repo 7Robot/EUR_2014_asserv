@@ -15,7 +15,7 @@ class Lances(Mission):
             self.create_send_internal('forward', {'target':0.62, 'axe':'x'})
 
         elif (self.state == 'on'):
-            if (msg.board == 'internal' and msg.name == 'done'):
+            if (msg.board == 'internal' and msg.name == 'forward_done'):
                 self.asserv.speed(0.05, 0.1, 0.1)
                 self.asserv.launchBalls(5)
                 self.state = "speed_lances"
