@@ -81,6 +81,17 @@ __attribute__((weak)) void OnBlock() { SendUnimplemented(); }
 // You should redefine this function
 __attribute__((weak)) void OnCatch_arm(unsigned int choix) { SendUnimplemented(); }
 
+void SendCaught(unsigned char success) {
+    char bytes[] = {
+        129,
+        52,
+        1,
+        success,
+        128
+    };
+    SendBytes(bytes, 5);
+}
+
 // You should redefine this function
 __attribute__((weak)) void OnConvoyer() { SendUnimplemented(); }
 
@@ -199,7 +210,7 @@ int AtpDecode(int id,
         OnCatch_arm(ushortv[0]);
         return 1;
     }
-    if (id == 56) {
+    if (id == 57) {
         OnConvoyer();
         return 1;
     }
@@ -215,7 +226,7 @@ int AtpDecode(int id,
         OnInit_arm(ushortv[0]);
         return 1;
     }
-    if (id == 55) {
+    if (id == 56) {
         OnLaunch_net();
         return 1;
     }
@@ -231,15 +242,15 @@ int AtpDecode(int id,
         OnMotion_speed(floatv[0], floatv[1]);
         return 1;
     }
-    if (id == 53) {
+    if (id == 54) {
         OnPull_arm(ushortv[0]);
         return 1;
     }
-    if (id == 54) {
+    if (id == 55) {
         OnPush_arm(ushortv[0]);
         return 1;
     }
-    if (id == 52) {
+    if (id == 53) {
         OnStock_arm(ushortv[0]);
         return 1;
     }

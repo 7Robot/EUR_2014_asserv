@@ -3,7 +3,6 @@
 #include "atp.h"
 #include "atp-asserv.h"
 #include "lib_asserv/lib_asserv.h"
-
 #include "actions_ax12.h"
 
 
@@ -69,9 +68,6 @@ void Onlaunch_net()
 
 void OnConvoyer()
 {
-      actionBras |= BOUGIE_convoyer;
+    actionBras |= BOUGIE_convoyer;
     IFS2bits.SPI2IF = 1;
-
-
-
 }

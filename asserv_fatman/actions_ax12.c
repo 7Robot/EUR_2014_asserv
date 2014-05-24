@@ -7,7 +7,7 @@
 #include <uart.h>
 #include <delay.h>
 #include "actions_ax12.h"
-
+#include "atp-asserv.h"
 
 int S1;
 int S2;
@@ -68,7 +68,7 @@ void init_arm(int arm) {
 /******************************************************************************/
 
 void catch_arm(int arm) {
-
+    int position =0;
     choose_arm(arm);
 
 
@@ -101,6 +101,15 @@ void catch_arm(int arm) {
     __delay_ms(40);
     PutAX(S3, AX_GOAL_POSITION, 180);
     __delay_ms(400);
+
+    GetAX(S3, AX_PRESENT_POSITION);
+    while(!responseReadyAX);
+
+    position = (responseAX.params[1]*256 + responseAX.params[0]);
+    __delay_ms(10);
+
+    SendCaught((position>180));
+
 
     stock_arm(arm);
 }
@@ -237,7 +246,7 @@ void launch_net() {
 
 }
 
-void convoyer() // fonction qui enclenche de tapis roulant
+void convoyer() // fonction qui enclenche le tapis roulant
 {
 
     PutAX(CONV, AX_CW_ANGLE_LIMIT, 0); // on met le servo en "roue libre"
