@@ -82,6 +82,11 @@ class Asserv(Proto):
         ])
     launch_net = Packet(55, "arm")
 
+    convoyer = Packet(56, "arm")
+
+
+
+
 
 #    odoBroadcastOn = Packet(43, "arm")
 #    odoBroadcastOff = Packet(44, "arm")
