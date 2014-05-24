@@ -14,10 +14,10 @@
 
 void InitTimers()
 {
-    // Open drain sur la pin RB5(pour les AX12)
-    _ODCB5 = 1;
-    // activation de la priorité des interruptions
-    _NSTDIS = 0;
+    _ODCB5 = 1; // Open drain sur la pin RB5(pour les AX12)
+    _NSTDIS = 0; // activation de la priorité des interruptions
+    AD1PCFGL = 0xFFFF; //Pins analogiques en numérique pour que ATP marche !!
+
 
     OpenUART2(UART_EN & UART_IDLE_CON & UART_IrDA_DISABLE & UART_MODE_FLOW
         & UART_UEN_00 & UART_DIS_WAKE & UART_DIS_LOOPBACK
@@ -40,8 +40,6 @@ void InitTimers()
     // configuration des interruptions
     ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
     
-    AD1PCFGL = 0xFFFF; //Pins analogiques en num�rique pour que ATP marche !!
-
     // Ici interruption des actions des bras
     IFS2bits.SPI2IF = 0; // Flag SPI2 Event Interrupt Priority
     IPC8bits.SPI2IP = 2; // Priority SPI2 Event Interrupt Priority

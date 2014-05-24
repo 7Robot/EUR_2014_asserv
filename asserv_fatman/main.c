@@ -51,6 +51,6 @@ _FICD(ICS_PGD1 & JTAGEN_OFF);
 
 int16_t main(void)
 {
-    test_atp();
+    test_ax12();
     return 1;
 }
