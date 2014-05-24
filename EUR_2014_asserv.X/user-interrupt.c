@@ -127,9 +127,10 @@ void Init_QEI(void)
     // configuration des pins A et B du module
     // ce sont des pins dites remapable,
     // ce qui veut dire que l'on peut choisir presque toutes les IO du PIC
-    RPINR14bits.QEA1R = 25; // 25 = pin RP25
-    RPINR14bits.QEB1R = 22;
-
+    //RPINR14bits.QEA1R = 25; // 25 = pin RP25
+    //RPINR14bits.QEB1R = 22;
+    RPINR14bits.QEA1R = 24; // 25 = pin RP25
+    RPINR14bits.QEB1R = 23;
 
     // module QEI2 identique = Moteur Gauche
     QEI2CONbits.QEISIDL = 1; // module toujours actif, meme en etat de pause du pic
@@ -138,21 +139,21 @@ void Init_QEI(void)
     QEI2CONbits.TQCS = 0; // use PIC clock
 
     // configuration des pins A et B du module
-    RPINR16bits.QEA2R = 24;
-    RPINR16bits.QEB2R = 23; // 23 = pin RP23
+    RPINR16bits.QEA2R = 25;
+    RPINR16bits.QEB2R = 22; // 23 = pin RP23
 }
 
 void Set_Vitesse_MoteurD(int consigne, int inverse)
 {
 	if (inverse)
 	{
-		MOTOR_1A_O = 1;
-		MOTOR_1B_O = 0;
+		MOTOR_1A_O = 0;
+		MOTOR_1B_O = 1;
 	}
 	else
 	{
-		MOTOR_1A_O = 0;
-		MOTOR_1B_O = 1;
+		MOTOR_1A_O = 1;
+		MOTOR_1B_O = 0;
 	}
 	P1DC3 = consigne;
 }
@@ -161,13 +162,13 @@ void Set_Vitesse_MoteurG(int consigne, int inverse)
 {
 	if (inverse)
 	{
-		MOTOR_2A_O = 1;
-		MOTOR_2B_O = 0;
+		MOTOR_2A_O = 0;
+		MOTOR_2B_O = 1;
 	}
 	else
 	{
-		MOTOR_2A_O = 0;
-		MOTOR_2B_O = 1;
+		MOTOR_2A_O = 1;
+		MOTOR_2B_O = 0;
 	}
 	P1DC2 = consigne;
 }

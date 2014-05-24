@@ -107,6 +107,8 @@ int16_t main(void)
     //pour les AX12
     responseReadyAX = 0;
 
+    //Set_Vitesse_MoteurG(400, 0);
+
     while (1){
         if (odoBroadcast) {
             OnGetPos();
