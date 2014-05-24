@@ -59,7 +59,7 @@ void OnPush_arm(unsigned int choix)
     IFS2bits.SPI2IF = 1;
 }
 
-void Onlaunch_net()
+void OnLaunch_net()
 {
     actionBras |= BOUGIE_launch_net;
     IFS2bits.SPI2IF = 1;

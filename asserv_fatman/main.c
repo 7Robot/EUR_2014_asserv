@@ -39,7 +39,7 @@
 // Select Oscillator and switching.
 _FOSCSEL(FNOSC_FRCPLL & IESO_OFF);
 // Select clock.
-_FOSC(POSCMD_NONE & OSCIOFNC_OFF & FCKSM_CSDCMD);
+_FOSC(POSCMD_NONE & OSCIOFNC_OFF & IOL1WAY_OFF & FCKSM_CSDCMD);
 // Watchdog Timer.
 _FWDT(FWDTEN_OFF);
 // Select debug channel.
@@ -53,10 +53,25 @@ _FICD(ICS_PGD1 & JTAGEN_OFF);
 int16_t main(void) {
 
     Init_All();
-    init_arm(1);
-    init_arm(2);
+  //  init_arm(1);
+   // init_arm(2);
+
+
+
+    // PutAX(CONV, AX_CW_ANGLE_LIMIT, 0); // on met le servo en "roue libre"
+     //PutAX(CONV, AX_CCW_ANGLE_LIMIT, 0);
+
+
+
 
     while (1) {
+
+    PutAX(CONV, AX_MOVING_SPEED, 0b11111111111); // le bit de poids fort gère le sens, les autres la vitesse
+    __delay_ms(1000); // temps de déroulage du tapis
+
+    // PutAX(CONV, AX_MOVING_SPEED, 0b01111111111); // le bit de poids fort gère le sens, les autres la vitesse
+  //  __delay_ms(1000); // temps de déroulage du tapis
+
 
     }
     return 1;

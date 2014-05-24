@@ -68,6 +68,7 @@ void init_arm(int arm) {
 /******************************************************************************/
 
 void catch_arm(int arm) {
+     SendBoardId();
     int position =0;
     choose_arm(arm);
 
@@ -78,7 +79,6 @@ void catch_arm(int arm) {
     __delay_ms(50);
     PutAX(S3, AX_TORQUE_LIMIT, 650);
     __delay_ms(50);
-
     PutAX(S1, AX_MOVING_SPEED, 650);
     __delay_ms(50);
     PutAX(S2, AX_MOVING_SPEED, 650);
@@ -108,8 +108,8 @@ void catch_arm(int arm) {
     position = (responseAX.params[1]*256 + responseAX.params[0]);
     __delay_ms(10);
 
-    SendCaught((position>180));
-
+    SendCaught((position>180)?'\1':'\0');
+   
 
     stock_arm(arm);
 }
@@ -140,7 +140,7 @@ void stock_arm(int arm) {
 
     PutAX(S1, AX_GOAL_POSITION, 562);
     __delay_ms(100);
-    PutAX(S2, AX_GOAL_POSITION, 350);
+    PutAX(S2, AX_GOAL_POSITION, 200);
     __delay_ms(100);
     PutAX(S3, AX_GOAL_POSITION, 180);
     __delay_ms(1000);
@@ -257,7 +257,7 @@ void convoyer() // fonction qui enclenche le tapis roulant
     __delay_ms(5000); // temps de déroulage du tapis
 
     PutAX(CONV, AX_CCW_ANGLE_LIMIT, 255); // arret de la roue libre
-
+__delay_ms(5000); // temps de déroulage du tapis
 }
 
 

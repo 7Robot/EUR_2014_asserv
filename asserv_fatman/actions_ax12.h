@@ -9,13 +9,14 @@
 #define	ACTIONS_AX12_H
 
 
-#define BOUGIE_init_arm (1<<1)
+#define BOUGIE_init_arm (1<<0)
+#define BOUGIE_launch_net (1<<1)
 #define BOUGIE_catch_arm (1<<2)
 #define BOUGIE_stock_arm (1<<3)
 #define BOUGIE_pull_arm (1<<4)
 #define BOUGIE_push_arm (1<<5)
 #define BOUGIE_convoyer (1<<6)
-#define BOUGIE_launch_net (1<<7)
+
 
 
 

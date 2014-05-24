@@ -204,7 +204,7 @@ void __attribute__((interrupt, no_auto_psv)) _SPI2Interrupt(void){
         actionBras &= ~BOUGIE_catch_arm;
 
     } else if ((actionBras & BOUGIE_stock_arm) == BOUGIE_stock_arm) {
-        stock_arm( numBras);
+        stock_arm(numBras);
         actionBras &= ~BOUGIE_stock_arm;
 
     } else if ((actionBras & BOUGIE_pull_arm) == BOUGIE_pull_arm) {
@@ -218,6 +218,10 @@ void __attribute__((interrupt, no_auto_psv)) _SPI2Interrupt(void){
     } else if ((actionBras & BOUGIE_launch_net) == BOUGIE_launch_net) {
         launch_net();
         actionBras &= ~BOUGIE_launch_net;
+    
+    } else if ((actionBras & BOUGIE_convoyer) == BOUGIE_convoyer) {
+        convoyer();
+        actionBras &= ~BOUGIE_convoyer;
     }
 
 
