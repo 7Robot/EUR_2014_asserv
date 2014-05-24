@@ -81,6 +81,9 @@ __attribute__((weak)) void OnBlock() { SendUnimplemented(); }
 // You should redefine this function
 __attribute__((weak)) void OnCatch_arm(unsigned int choix) { SendUnimplemented(); }
 
+// You should redefine this function
+__attribute__((weak)) void OnConvoyer() { SendUnimplemented(); }
+
 void SendDone() {
     char bytes[] = {
         129,
@@ -194,6 +197,10 @@ int AtpDecode(int id,
     }
     if (id == 51) {
         OnCatch_arm(ushortv[0]);
+        return 1;
+    }
+    if (id == 56) {
+        OnConvoyer();
         return 1;
     }
     if (id == 30) {

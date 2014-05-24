@@ -25,6 +25,8 @@ void OnBlock();
 
 void OnCatch_arm(unsigned int choix);
 
+void OnConvoyer();
+
 void SendDone();
 
 void OnGetPos();
