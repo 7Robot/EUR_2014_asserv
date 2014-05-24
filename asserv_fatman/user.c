@@ -41,7 +41,7 @@ void Init_All(){
     Init_PWM();
     Init_QEI();
     motion_init(SendDone);
-    //AtpInit();
+    AtpInit();
     __delay_ms(1000);
     SendBoardId();
 }

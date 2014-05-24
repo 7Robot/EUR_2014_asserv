@@ -1,3 +1,6 @@
+#ifndef _USER_H_
+#define _USER_H_
+
 /******************************************************************************/
 /* User Level #define Macros                                                  */
 /******************************************************************************/
@@ -30,3 +33,5 @@ void ConfigureOscillator(void); /* Handles clock switching/osc initialization */
 void InitTimers();
 // initialize all things
 void Init_All();
+
+#endif // _USER_H_
