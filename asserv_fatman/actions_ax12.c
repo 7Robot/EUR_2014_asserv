@@ -217,23 +217,40 @@ void push_arm(int arm) {
     __delay_ms(140);
     PutAX(S1, AX_GOAL_POSITION, 820);
     __delay_ms(200);
-    
+
     init_arm(arm);
 }
 
 void launch_net() {
-    PutAX(18, AX_TORQUE_LIMIT, 650);
+    PutAX(LAU, AX_TORQUE_LIMIT, 650);
     __delay_ms(40);
 
-    PutAX(18, AX_MOVING_SPEED, 650);
+    PutAX(LAU, AX_MOVING_SPEED, 650);
     __delay_ms(40);
 
-    PutAX(18, AX_GOAL_POSITION, 512);
+    PutAX(LAU, AX_GOAL_POSITION, 512);
     __delay_ms(50);
-    PutAX(18, AX_GOAL_POSITION, 330);
+    PutAX(LAU, AX_GOAL_POSITION, 330);
     __delay_ms(500);
-    PutAX(18, AX_GOAL_POSITION, 512);
+    PutAX(LAU, AX_GOAL_POSITION, 512);
     __delay_ms(50);
+
+}
+
+void conveyor(void) // fonction qui enclenche de tapis roulant
+{
+
+    PutAX(CONV, AX_CW_ANGLE_LIMIT, 0); // on met le servo en "roue libre"
+    PutAX(CONV, AX_CCW_ANGLE_LIMIT, 0);
+
+
+
+
+
+    PutAX(CONV, AX_MOVING_SPEED, 0b11111111111); // le bit de poids fort gère le sens, les autres la vitesse
+    __delay_ms(3000); // temps de déroulage du tapis
+
+    PutAX(CONV, AX_CCW_ANGLE_LIMIT, 255); // arret de la roue libre
 
 }
 

@@ -1,7 +1,9 @@
+#include <xc.h>
 #include "extern_globals.h"
 #include "atp.h"
 #include "atp-asserv.h"
 #include "lib_asserv/lib_asserv.h"
+
 #include "actions_ax12.h"
 
 
@@ -26,12 +28,14 @@ void OnInit_arm(unsigned int choix)
 {
     actionBras |= BOUGIE_init_arm ;
     numBras=choix;
+    IFS2bits.SPI2IF = 1;
 }
 
 void OnCatch_arm(unsigned int choix)
 {
     actionBras |= BOUGIE_catch_arm ;
     numBras=choix;
+    IFS2bits.SPI2IF = 1;
 }
 
 
@@ -39,26 +43,26 @@ void OnStock_arm(unsigned int choix)
 {
     actionBras |= BOUGIE_stock_arm ;
     numBras=choix;
+    IFS2bits.SPI2IF = 1;
 }
 
 void OnPull_arm(unsigned int choix)
 {
     actionBras |= BOUGIE_pull_arm;
     numBras=choix;
+    IFS2bits.SPI2IF = 1;
 }
 
 void OnPush_arm(unsigned int choix)
 {
     actionBras |= BOUGIE_push_arm;
     numBras=choix;
+    IFS2bits.SPI2IF = 1;
 }
 
 void Onlaunch_net()
 {
     actionBras |= BOUGIE_launch_net;
-}
-
-void On() {
-
+    IFS2bits.SPI2IF = 1;
 }
 

@@ -119,10 +119,12 @@ void test_ax12(){
     //Position pos1 = {0.36,-0.36,0};
     // initialize
     Init_All();
-    responseReadyAX = 0;
+   // responseReadyAX = 0;
     while(1){
+
         init_arm(2);
-        __delay_ms(1000);/*
+      //  conveyor();
+        __delay_ms(3000);/*
         PutAX(17, AX_GOAL_POSITION, 100);
         __delay_ms(1000);
         PutAX(17, AX_GOAL_POSITION, 500);*/

@@ -15,6 +15,7 @@
 #define BOUGIE_pull_arm (1<<4)
 #define BOUGIE_push_arm (1<<5)
 #define BOUGIE_launch_net (1<<6)
+#define BOUGIE_conveyor (1<<7)
 
 
 
@@ -27,6 +28,9 @@
 #define SG2             42
 #define SG3             2
 
+#define LAU             18
+#define CONV            15
+
 
 void choose_arm(int);
 void init_arm(int);
@@ -35,6 +39,7 @@ void stock_arm(int);
 void pull_arm(int);
 void push_arm(int);
 void launch_net(void);
+void conveyor(void);
 
 
 
