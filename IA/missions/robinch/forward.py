@@ -25,7 +25,7 @@ class Forward(Mission):
             if (msg.board == "internal" and msg.name == 'alert'):
                 self.asserv.stop()
                 self.state = "waiting"
-            elif msg.board == "asserv" and msg.name == 'done'):
+            elif (msg.board == "asserv" and msg.name == 'done'):
                 self.target = None
                 self.axe = None
                 self.state = "off"
@@ -35,4 +35,9 @@ class Forward(Mission):
             if (msg.board == 'asserv' and msg.name == 'freepath'):
                 self.walk(self.axe, self.target)
                 self.state = "forward"
-                
+            elif (msg.board == "asserv" and msg.name == 'done'):
+                self.target = None
+                self.axe = None
+                self.state = "off"
+                self.create_send_internal('forward_done')
+
