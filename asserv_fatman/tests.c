@@ -120,31 +120,12 @@ void test_ax12(){
     // initialize
     Init_All();
     responseReadyAX = 0;
-    while(1)
-    {
-    //init_arm(1);
-    launch_net();
-    __delay_ms(100);
-   // init_arm(2);
-    //__delay_ms(100);
+    while(1){
+        __delay_ms(1000);
+        PutAX(17, AX_GOAL_POSITION, 100);
+        __delay_ms(1000);
+        PutAX(17, AX_GOAL_POSITION, 500);
     }
-        /*catch_arm(1);
-        catch_arm(2);
-        motion_angle(-PI/2);
-        while (!motion_done());
-        push_arm(2);
-        motion_pos(pos0);
-        while (!motion_done());
-        motion_angle(0);
-        while (!motion_done());
-        motion_pos(pos1);
-        while (!motion_done());
-        motion_angle(PI);
-        while (!motion_done());
-        pull_arm(1);
-        __delay_ms(1000);*/
-    while(1){__delay_ms(5000);}
-    __delay_ms(5000);
 }
 
 // test des ax12 integrés à l'asserve

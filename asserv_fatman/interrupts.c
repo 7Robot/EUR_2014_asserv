@@ -14,6 +14,11 @@
 
 void InitTimers()
 {
+    // Open drain sur la pin RB5(pour les AX12)
+    _ODCB5 = 1;
+    // activation de la priorité des interruptions
+    _NSTDIS = 0;
+
     OpenUART2(UART_EN & UART_IDLE_CON & UART_IrDA_DISABLE & UART_MODE_FLOW
         & UART_UEN_00 & UART_DIS_WAKE & UART_DIS_LOOPBACK
         & UART_DIS_ABAUD & UART_UXRX_IDLE_ONE & UART_BRGH_SIXTEEN
@@ -23,8 +28,8 @@ void InitTimers()
         & UART_ADR_DETECT_DIS & UART_RX_OVERRUN_CLEAR,
           BRGVALAX12);
 
-    ConfigIntUART2(UART_RX_INT_PR4 & UART_RX_INT_EN
-                 & UART_TX_INT_PR4 & UART_TX_INT_DIS);
+    ConfigIntUART2(UART_RX_INT_PR5 & UART_RX_INT_EN
+                 & UART_TX_INT_PR5 & UART_TX_INT_DIS);
     
     // activation du timer 2
     OpenTimer2(T2_ON &
@@ -34,12 +39,6 @@ void InitTimers()
                 T2_SOURCE_INT, 3125 ); // 3125 pour 5ms
     // configuration des interruptions
     ConfigIntTimer2(T2_INT_PRIOR_4 & T2_INT_ON);
-
-
-    // Open drain sur la pin RB5(pour les AX12)
-    _ODCB5 = 1;
-    // activation de la priorité des interruptions
-    _NSTDIS = 0;
     
     AD1PCFGL = 0xFFFF; //Pins analogiques en num�rique pour que ATP marche !!
 
@@ -163,6 +162,8 @@ void InitTimers()
 /* TODO Add interrupt routine code here. */
 
 void __attribute__((interrupt,auto_psv)) _T2Interrupt(void) {
+    // on baisse le flag
+    _T2IF = 0;
     // compteurs QEI gauche et droit
     volatile static int tics_g, tics_d;
     // commandes gauches et droite
@@ -176,17 +177,15 @@ void __attribute__((interrupt,auto_psv)) _T2Interrupt(void) {
     // mettre ici les pwm gauche et droit
     PWM_Moteurs_gauche(commande_g);
     PWM_Moteurs_droit(commande_d);
-    // on baisse le flag
-    _T2IF = 0;
 }
 
 /*************************************************
 * TX et RX Interrupt *
 *************************************************/
 void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void){
+    _U2RXIF = 0; // On baisse le FLAG
     led = !led;
     InterruptAX();
-    _U2RXIF = 0; // On baisse le FLAG
 }
 
 void __attribute__((__interrupt__, no_auto_psv)) _U2TXInterrupt(void){
