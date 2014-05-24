@@ -1,7 +1,7 @@
 // Generated from version 1404111942 of semantic
 
-#ifndef _ASSERV_H_
-#define _ASSERV_H_
+#ifndef _ATP_ASSERV_H_
+#define _ATP_ASSERV_H_
 
 #define BOARD_ID 1
 #define BOARD_NAME Asserv
@@ -41,6 +41,8 @@ void OnDistRot(float dist, float rot, float vDistMax, float aDistMax, float vRot
 
 void SendDone();
 
+void SendDoneLaunch();
+
 void OnGetMotionOrders();
 
 void OnGetOrders();
@@ -54,6 +56,8 @@ void OnGetTheta();
 void OnGetX();
 
 void OnGetY();
+
+void OnLaunchBalls(unsigned int amount);
 
 void SendMode(int delta, int alpha);
 
@@ -107,9 +111,13 @@ void OnSpeedFree(float speed);
 
 void OnSpeedOmega(float speed, float omega, float aDistMax, float dDistMax, float aRotMax, float dRotMax);
 
+void SendStart(long int color);
+
 void SendStep(float period, long int ticsG, long int ticsD, long int consignG, long int consignD);
 
 void OnStop();
+
+void OnStopLaunch();
 
 void SendTheta(float theta);
 

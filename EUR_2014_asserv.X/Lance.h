@@ -34,7 +34,11 @@
 void InitLance(void);
 void LaunchBalls(int RemainingBalls);
 void FireBall(void);
-void AbordLaunch(void);
+void AbortLaunch(void);
+
+// ATP func
+void OnStopLaunch();
+void OnLaunchBalls(unsigned int amount);
 
 #endif	/* LANCE_H */
 

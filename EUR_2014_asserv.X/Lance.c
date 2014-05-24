@@ -22,6 +22,7 @@
 #include "timer.h"         /* Include timer fonctions                         */
 #include "outcompare.h"
 #include "Lance.h"
+#include "atp-asserv.h"
 #include <libpic30.h>
 
 /******************************************************************************/
@@ -81,12 +82,14 @@ void LaunchBalls(int BallsAfterShoot)
         }
         else
         {
-            break;
+            FirePermission = 0;
+            MOTOR_LANCE = 0; // Turn off the motor
+            return;
         }
     }
     FirePermission = 0;
     MOTOR_LANCE = 0; // Turn off the motor
-
+    SendDoneLaunch();
 }
 
 void FireBall(void)
@@ -96,9 +99,22 @@ void FireBall(void)
     OC1RS = LOAD;        // Recharges
 }
 
-void AbordLaunch(void)
+void AbortLaunch(void)
 {
     FirePermission = 0;
+}
+
+void OnStopLaunch()
+{
+    actionLance |= LANCE_ABORT;
+    IFS2bits.SPI2IF = 1;
+}
+
+void OnLaunchBalls(unsigned int amount)
+{
+    actionLance |= LANCE_LAUNCH;
+    actionBalls = amount;
+    IFS2bits.SPI2IF = 1;
 }
 
 /*************************************************
@@ -113,7 +129,7 @@ void __attribute__((interrupt, no_auto_psv)) _SPI2Interrupt(void)
         LaunchBalls(actionBalls);  // TODO Mettre variable Global pour le param
         actionLance &= ~LANCE_LAUNCH;
     } else if ((actionLance & LANCE_ABORT) == LANCE_ABORT) {
-        AbordLaunch();
+        AbortLaunch();
         actionLance &= ~LANCE_ABORT;
     }
 }

@@ -233,6 +233,15 @@ void SendDone() {
     SendBytes(bytes, 3);
 }
 
+void SendDoneLaunch() {
+    char bytes[] = {
+        129,
+        72,
+        128
+    };
+    SendBytes(bytes, 3);
+}
+
 // You should redefine this function
 __attribute__((weak)) void OnGetMotionOrders() { SendUnimplemented(); }
 
@@ -253,6 +262,9 @@ __attribute__((weak)) void OnGetX() { SendUnimplemented(); }
 
 // You should redefine this function
 __attribute__((weak)) void OnGetY() { SendUnimplemented(); }
+
+// You should redefine this function
+__attribute__((weak)) void OnLaunchBalls(unsigned int amount) { SendUnimplemented(); }
 
 void SendMode(int delta, int alpha) {
     char bytes[] = {
@@ -365,6 +377,20 @@ __attribute__((weak)) void OnSpeedFree(float speed) { SendUnimplemented(); }
 // You should redefine this function
 __attribute__((weak)) void OnSpeedOmega(float speed, float omega, float aDistMax, float dDistMax, float aRotMax, float dRotMax) { SendUnimplemented(); }
 
+void SendStart(long int color) {
+    char bytes[] = {
+        129,
+        51,
+        20,
+        ((char*)&color)[0],
+        ((char*)&color)[1],
+        ((char*)&color)[2],
+        ((char*)&color)[3],
+        128
+    };
+    SendBytes(bytes, 8);
+}
+
 void SendStep(float period, long int ticsG, long int ticsD, long int consignG, long int consignD) {
     char bytes[] = {
         129,
@@ -401,6 +427,9 @@ void SendStep(float period, long int ticsG, long int ticsD, long int consignG, l
 
 // You should redefine this function
 __attribute__((weak)) void OnStop() { SendUnimplemented(); }
+
+// You should redefine this function
+__attribute__((weak)) void OnStopLaunch() { SendUnimplemented(); }
 
 void SendTheta(float theta) {
     char bytes[] = {
@@ -480,6 +509,10 @@ int AtpDecode(int id,
     }
     if (id == 33) {
         OnGetY();
+        return 1;
+    }
+    if (id == 71) {
+        OnLaunchBalls(ushortv[0]);
         return 1;
     }
     if (id == 44) {
@@ -580,6 +613,10 @@ int AtpDecode(int id,
     }
     if (id == 1) {
         OnStop();
+        return 1;
+    }
+    if (id == 73) {
+        OnStopLaunch();
         return 1;
     }
     return 0;
