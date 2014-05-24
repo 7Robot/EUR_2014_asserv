@@ -108,8 +108,8 @@ void catch_arm(int arm) {
     position = (responseAX.params[1]*256 + responseAX.params[0]);
     __delay_ms(10);
 
-    SendCaught((position>180)?'\1':'\0');
-   
+    //SendCaught((position>180)?'\1':'\0');
+   SendCaught(position>150);
 
     stock_arm(arm);
 }
@@ -140,9 +140,9 @@ void stock_arm(int arm) {
 
     PutAX(S1, AX_GOAL_POSITION, 562);
     __delay_ms(100);
-    PutAX(S2, AX_GOAL_POSITION, 200);
+    PutAX(S2, AX_GOAL_POSITION, 310);
     __delay_ms(100);
-    PutAX(S3, AX_GOAL_POSITION, 180);
+    PutAX(S3, AX_GOAL_POSITION, 150);
     __delay_ms(1000);
 
     /*
