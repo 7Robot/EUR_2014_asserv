@@ -121,10 +121,11 @@ void test_ax12(){
     Init_All();
     responseReadyAX = 0;
     while(1){
-        __delay_ms(1000);
+        init_arm(2);
+        __delay_ms(1000);/*
         PutAX(17, AX_GOAL_POSITION, 100);
         __delay_ms(1000);
-        PutAX(17, AX_GOAL_POSITION, 500);
+        PutAX(17, AX_GOAL_POSITION, 500);*/
     }
 }
 

@@ -53,9 +53,9 @@ void init_arm(int arm) {
     PutAX(S3, AX_MOVING_SPEED, 650);
     __delay_ms(40);
 
-    PutAX(S1, AX_GOAL_POSITION, 512);
+    PutAX(S1, AX_GOAL_POSITION, 585);
     __delay_ms(100);
-    PutAX(S2, AX_GOAL_POSITION, 205);
+    PutAX(S2, AX_GOAL_POSITION, 250);
     __delay_ms(100);
     PutAX(S3, AX_GOAL_POSITION, 205);
     __delay_ms(500);
