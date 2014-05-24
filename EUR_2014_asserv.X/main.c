@@ -40,6 +40,7 @@
 #include "user.h"          /* User funct/params, such as InitApp              */
 #include "../asserv/asserv/libasserv.h"
 #include "ax12.h"
+#include "Lance.h"
 
 #include <libpic30.h>
 /******************************************************************************/
@@ -92,6 +93,7 @@ int16_t main(void)
     InitApp();
     Init_PWM();
     Init_QEI();
+    InitLance();
 
     AtpInit();
     motion_init(SendDone);
