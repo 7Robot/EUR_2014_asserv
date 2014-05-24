@@ -66,3 +66,12 @@ void Onlaunch_net()
     IFS2bits.SPI2IF = 1;
 }
 
+
+void OnConvoyer()
+{
+      actionBras |= BOUGIE_convoyer;
+    IFS2bits.SPI2IF = 1;
+
+
+
+}

@@ -115,19 +115,13 @@ void test_Asserv_angle(){
 // test des ax12 integrés à l'asserve
 void test_ax12(){
 
-  //  Position pos0 = {0,-0.36,0};
-    //Position pos1 = {0.36,-0.36,0};
     // initialize
     Init_All();
    // responseReadyAX = 0;
     while(1){
 
-        init_arm(2);
-      //  conveyor();
-        __delay_ms(3000);/*
-        PutAX(17, AX_GOAL_POSITION, 100);
+        convoyer();
         __delay_ms(1000);
-        PutAX(17, AX_GOAL_POSITION, 500);*/
     }
 }
 
