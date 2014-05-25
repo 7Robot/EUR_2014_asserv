@@ -99,7 +99,7 @@ void catch_arm(int arm) {
     __delay_ms(300);
     PutAX(S3, AX_TORQUE_LIMIT, 420);
     __delay_ms(40);
-    PutAX(S3, AX_GOAL_POSITION, 180);
+    PutAX(S3, AX_GOAL_POSITION, 150);
     __delay_ms(400);
 
     GetAX(S3, AX_PRESENT_POSITION);
@@ -108,10 +108,12 @@ void catch_arm(int arm) {
     position = (responseAX.params[1]*256 + responseAX.params[0]);
     __delay_ms(10);
 
+     stock_arm(arm);
     //SendCaught((position>180)?'\1':'\0');
-   SendCaught(position>150);
+    SendCaught(position);
+   SendCaught(position>170);
 
-    stock_arm(arm);
+   
 }
 /******************************************************************************/
 /********************************* Stock a Fire *******************************/
@@ -140,7 +142,7 @@ void stock_arm(int arm) {
 
     PutAX(S1, AX_GOAL_POSITION, 562);
     __delay_ms(100);
-    PutAX(S2, AX_GOAL_POSITION, 310);
+    PutAX(S2, AX_GOAL_POSITION, 300);
     __delay_ms(100);
     PutAX(S3, AX_GOAL_POSITION, 150);
     __delay_ms(1000);
@@ -154,6 +156,7 @@ void stock_arm(int arm) {
     __delay_ms(1000);
     /////////////////////////////////
      */
+    SendDone();
 }
 
 /******************************************************************************/
@@ -196,6 +199,7 @@ void pull_arm(int arm) {
 
 
     init_arm(arm);
+    SendDone();
 }
 
 void push_arm(int arm) {
@@ -228,6 +232,7 @@ void push_arm(int arm) {
     __delay_ms(200);
 
     init_arm(arm);
+    SendDone();
 }
 
 void launch_net() {
@@ -243,6 +248,7 @@ void launch_net() {
     __delay_ms(500);
     PutAX(LAU, AX_GOAL_POSITION, 512);
     __delay_ms(50);
+    SendDone();
 
 }
 
@@ -258,6 +264,7 @@ void convoyer() // fonction qui enclenche le tapis roulant
 
     PutAX(CONV, AX_CCW_ANGLE_LIMIT, 255); // arret de la roue libre
 __delay_ms(5000); // temps de déroulage du tapis
+SendDone();
 }
 
 
