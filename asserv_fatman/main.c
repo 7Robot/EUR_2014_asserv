@@ -51,6 +51,6 @@ _FICD(ICS_PGD1 & JTAGEN_OFF);
 /******************************************************************************/
 
 int16_t main(void) {
-    test_Asserv_vitesse();
+    test_atp();
     return 1;
 }

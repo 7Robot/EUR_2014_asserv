@@ -61,9 +61,9 @@ void pid_maj_err_der(Pid *pid, float err_old){
 
 // calcule la commande du PID
 float pid_process(Pid *pid){
-    return    pid->coefs.kp * (0.4 * pid->state.err + 0.6 * pid->state.err_moy)
+    return    pid->coefs.kp * (0.2 * pid->state.err + 0.8 * pid->state.err_moy) // 0.3 et 0.7
             + pid->coefs.ki * pid->state.err_int
-            + pid->coefs.kd * (0.2 * pid->state.err_der + 0.8 * pid->state.err_der_moy);
+            + pid->coefs.kd * (0.2 * pid->state.err_der + 0.8 * pid->state.err_der_moy); // 0.2 et 0.8
 }
 
 // indique si le pid est stable
