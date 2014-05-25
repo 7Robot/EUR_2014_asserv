@@ -43,6 +43,8 @@ void SendDone();
 
 void SendDoneLaunch();
 
+void SendFreepath(unsigned char id);
+
 void OnGetMotionOrders();
 
 void OnGetOrders();
@@ -57,7 +59,7 @@ void OnGetX();
 
 void OnGetY();
 
-void OnLaunchBalls(unsigned int amount);
+void OnLaunchBalls(unsigned int amount_left);
 
 void SendMode(int delta, int alpha);
 
@@ -85,6 +87,8 @@ void OnRot(float rot, float vMax, float aMax);
 
 void OnRotFree(float rot);
 
+void OnSetBalls(unsigned int amount);
+
 void OnSetEpsilons(float dist, float speed, float theta, float omega);
 
 void OnSetSpacing(float spacing);
@@ -104,6 +108,10 @@ void OnSetXYTheta(float x, float y, float theta);
 void OnSetY(float y);
 
 void OnSetYTheta(float y, float theta);
+
+void SendSick(unsigned char id);
+
+void OnSickThreshold(unsigned char id, unsigned int threshold);
 
 void OnSpeed(float speed, float aMax, float dMax);
 

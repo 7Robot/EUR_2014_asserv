@@ -242,6 +242,17 @@ void SendDoneLaunch() {
     SendBytes(bytes, 3);
 }
 
+void SendFreepath(unsigned char id) {
+    char bytes[] = {
+        129,
+        62,
+        1,
+        id,
+        128
+    };
+    SendBytes(bytes, 5);
+}
+
 // You should redefine this function
 __attribute__((weak)) void OnGetMotionOrders() { SendUnimplemented(); }
 
@@ -264,7 +275,7 @@ __attribute__((weak)) void OnGetX() { SendUnimplemented(); }
 __attribute__((weak)) void OnGetY() { SendUnimplemented(); }
 
 // You should redefine this function
-__attribute__((weak)) void OnLaunchBalls(unsigned int amount) { SendUnimplemented(); }
+__attribute__((weak)) void OnLaunchBalls(unsigned int amount_left) { SendUnimplemented(); }
 
 void SendMode(int delta, int alpha) {
     char bytes[] = {
@@ -339,6 +350,9 @@ __attribute__((weak)) void OnRot(float rot, float vMax, float aMax) { SendUnimpl
 __attribute__((weak)) void OnRotFree(float rot) { SendUnimplemented(); }
 
 // You should redefine this function
+__attribute__((weak)) void OnSetBalls(unsigned int amount) { SendUnimplemented(); }
+
+// You should redefine this function
 __attribute__((weak)) void OnSetEpsilons(float dist, float speed, float theta, float omega) { SendUnimplemented(); }
 
 // You should redefine this function
@@ -367,6 +381,20 @@ __attribute__((weak)) void OnSetY(float y) { SendUnimplemented(); }
 
 // You should redefine this function
 __attribute__((weak)) void OnSetYTheta(float y, float theta) { SendUnimplemented(); }
+
+void SendSick(unsigned char id) {
+    char bytes[] = {
+        129,
+        61,
+        1,
+        id,
+        128
+    };
+    SendBytes(bytes, 5);
+}
+
+// You should redefine this function
+__attribute__((weak)) void OnSickThreshold(unsigned char id, unsigned int threshold) { SendUnimplemented(); }
 
 // You should redefine this function
 __attribute__((weak)) void OnSpeed(float speed, float aMax, float dMax) { SendUnimplemented(); }
@@ -559,6 +587,10 @@ int AtpDecode(int id,
         OnRotFree(floatv[0]);
         return 1;
     }
+    if (id == 74) {
+        OnSetBalls(ushortv[0]);
+        return 1;
+    }
     if (id == 11) {
         OnSetEpsilons(floatv[0], floatv[1], floatv[2], floatv[3]);
         return 1;
@@ -597,6 +629,10 @@ int AtpDecode(int id,
     }
     if (id == 48) {
         OnSetYTheta(floatv[0], floatv[1]);
+        return 1;
+    }
+    if (id == 63) {
+        OnSickThreshold(ucharv[0], ushortv[0]);
         return 1;
     }
     if (id == 20) {

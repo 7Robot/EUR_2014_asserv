@@ -16,13 +16,26 @@
 /* Files to Include                                                           */
 /******************************************************************************/
 
-#include <p33Fxxxx.h>      /* Includes device header file                     */
+#if defined(__XC16__)
+    #include <xc.h>
+#elif defined(__C30__)
+    #if defined(__dsPIC33E__)
+    	#include <p33Exxxx.h>
+    #elif defined(__dsPIC33F__)
+    	#include <p33Fxxxx.h>
+    #endif
+#endif
+
 #include <stdint.h>        /* Includes uint16_t definition                    */
 #include <stdbool.h>       /* Includes true/false definition                  */
-#include "timer.h"         /* Include timer fonctions                         */
-#include "outcompare.h"
-#include "Lance.h"
+
 #include "atp-asserv.h"
+#include "user.h"
+#include "Lance.h"
+
+#include <timer.h>         /* Include timer fonctions                         */
+#include <outcompare.h>
+
 #include <libpic30.h>
 
 /******************************************************************************/
@@ -110,11 +123,16 @@ void OnStopLaunch()
     IFS2bits.SPI2IF = 1;
 }
 
-void OnLaunchBalls(unsigned int amount)
+void OnLaunchBalls(unsigned int amount_left)
 {
     actionLance |= LANCE_LAUNCH;
-    actionBalls = amount;
+    actionBalls = amount_left;
     IFS2bits.SPI2IF = 1;
+}
+
+void OnSetBalls(unsigned int amount)
+{
+    RemainingBalls = amount;
 }
 
 /*************************************************

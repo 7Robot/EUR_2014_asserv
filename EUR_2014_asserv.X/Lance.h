@@ -21,8 +21,8 @@
 
 #define MOTOR_LANCE _LATC4
 
-#define LOAD 260
-#define FIRE 158
+#define FIRE 260
+#define LOAD 158
 
 #define LANCE_LAUNCH (1 << 1)
 #define LANCE_ABORT  (1 << 2)
@@ -38,7 +38,8 @@ void AbortLaunch(void);
 
 // ATP func
 void OnStopLaunch();
-void OnLaunchBalls(unsigned int amount);
+void OnLaunchBalls(unsigned int amount_left);
+void OnSetBalls(unsigned int amount);
 
 #endif	/* LANCE_H */
 
