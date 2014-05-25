@@ -265,9 +265,7 @@ void convoyer() // fonction qui enclenche le tapis roulant
 
         PutAX(CONV, AX_CCW_ANGLE_LIMIT, 255); // arret de la roue libre
         __delay_ms(5000); // temps de déroulage du tapis
-
-
-SendDone();
+        SendDone();
 }
 
 

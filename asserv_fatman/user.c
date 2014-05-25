@@ -11,6 +11,7 @@
 #include "lib_asserv/lib_asserv.h"
 #include "atp-asserv.h"
 #include "atp.h"
+#include "sick.h"
 
 /******************************************************************************/
 /* User Functions                                                             */
@@ -40,6 +41,7 @@ void Init_All(){
     __delay_ms(500);
     Init_PWM();
     Init_QEI();
+    InitSick();
     motion_init(SendDone);
     AtpInit();
     __delay_ms(1000);

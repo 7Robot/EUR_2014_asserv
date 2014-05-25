@@ -23,6 +23,7 @@
       <itemPath>lib_asserv/private/extern_globals_asserv.h</itemPath>
       <itemPath>extern_globals.h</itemPath>
       <itemPath>globals.h</itemPath>
+      <itemPath>sick.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -47,6 +48,7 @@
       <itemPath>atp-asserv-wrapper.c</itemPath>
       <itemPath>atp-asserv.c</itemPath>
       <itemPath>atp.c</itemPath>
+      <itemPath>sick.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

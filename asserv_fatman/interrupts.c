@@ -224,11 +224,4 @@ void __attribute__((interrupt, no_auto_psv)) _SPI2Interrupt(void){
 
         actionBras &= ~BOUGIE_convoyer;
     }
-
-
-
-
-
-
-
 }
