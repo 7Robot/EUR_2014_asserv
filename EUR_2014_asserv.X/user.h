@@ -23,6 +23,8 @@ void ConfigureOscillator(void); /* Handles clock switching/osc initialization */
 /******************************************************************************/
 
 #define led _LATA2
+#define LAISSE _LATA9
+#define BOUTON_COULEUR _LATC3
 
 extern int odoBroadcast;
 extern unsigned long int odoBroadcastDelay;
@@ -34,5 +36,6 @@ void Init_QEI(void);
 int motor_corrector(int order);
 void Set_Vitesse_MoteurD(int consigne, int inverse);
 void Set_Vitesse_MoteurG(int consigne, int inverse);
+void Init_CN(void);
 
 extern void InterruptAX(void);

@@ -68,6 +68,17 @@ void InitApp(void)
     
 }
 
+void Init_CN(void)
+{
+    _TRISA9 = 1;
+    _TRISC3 = 1; //2 boutons in input
+    
+    _CN28IE = 1; // Enable CN28 pin for interrupt detection
+    IPC4bits.CNIP = 3; //Interrupt level 3
+    IEC1bits.CNIE = 1; // Enable CN interrupts
+    IFS1bits.CNIF = 0; // Reset CN interrupt
+}
+
 void Init_PWM(void)
 {
     // P1TCON
@@ -354,4 +365,17 @@ void __attribute__((interrupt, no_auto_psv)) _U2RXInterrupt(void)
 void __attribute__((__interrupt__, no_auto_psv)) _U2TXInterrupt(void)
 {
    _U2TXIF = 0; // clear TX interrupt flag
+}
+
+
+/**********************************************/
+/* CN interrupt for boutons */
+
+void __attribute__ ((__interrupt__, no_auto_psv)) _CNInterrupt(void)
+{
+    if (LAISSE)
+    {
+     SendStart(BOUTON_COULEUR);
+    }
+    IFS1bits.CNIF = 0; // Clear CN interrupt
 }
