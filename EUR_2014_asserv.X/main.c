@@ -41,6 +41,7 @@
 #include "../asserv/asserv/libasserv.h"
 #include "ax12.h"
 #include "Lance.h"
+#include "Sick.h"
 
 #include <libpic30.h>
 /******************************************************************************/
@@ -110,7 +111,6 @@ int16_t main(void)
     //pour les AX12
     responseReadyAX = 0;
 
-    //Set_Vitesse_MoteurG(400, 0);
 
     while (1){
         if (odoBroadcast) {

@@ -25,7 +25,7 @@
 #define Dist_2  7
 
 #define DEFAULT_THRESHOLD 80
-#define MARGIN_SICK 50
+#define MARGIN_SICK 30
 
 /******************************************************************************/
 /* Function Prototypes                                                        */

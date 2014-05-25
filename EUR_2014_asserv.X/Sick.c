@@ -98,12 +98,12 @@ void InitSick()
 
 void OnSickThreshold(unsigned char id, unsigned int threshold)
 {
-    if(id == 0)
+    if(id == 255)
     {
+        Threshold[0] = threshold;
         Threshold[1] = threshold;
-        Threshold[2] = threshold;
     }
-    else if(id == 1 || id == 2)
+    else if(id == 1 || id == 0)
     {
         Threshold[id] = threshold;
     }
