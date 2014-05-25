@@ -29,7 +29,7 @@ void motion_init(void(*_done)(void)) {
 }
 
 // assigner des valeurs à la position (x, y et theta)
-void set_position(MotionState *state, Position pos){state->pos = pos;}
+void set_position(Position pos){motionState.pos = pos;}
 void set_position_x(MotionState *state, float x){state->pos.x = x;}
 void set_position_y(MotionState *state, float y){state->pos.y = y;}
 void set_position_t(MotionState *state, float t){state->pos.t = t;}

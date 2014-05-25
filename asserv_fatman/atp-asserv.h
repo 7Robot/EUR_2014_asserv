@@ -51,6 +51,8 @@ void OnPull_arm(unsigned int choix);
 
 void OnPush_arm(unsigned int choix);
 
+void OnSetPos(float x, float y, float theta);
+
 void SendSpeed(float v, float vTheta);
 
 void OnStock_arm(unsigned int choix);

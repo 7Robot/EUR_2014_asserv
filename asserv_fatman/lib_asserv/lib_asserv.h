@@ -23,6 +23,9 @@ void motion_step(int tics_g, int tics_d, float *commande_g, float *commande_d);
 
 /*############################   MOTION STATE   ##############################*/
 
+// assigner des valeurs à la position (x, y et theta)
+void set_position(Position pos);
+
 // connaître l'état du robot
 Position get_position();
 Speed get_speed();

@@ -9,7 +9,10 @@
 void OnStop(){motion_free();}
 void OnAusecours(){OnStop();}
 
-
+void OnSetPos(float x, float y, float theta){
+    Position pos = {x,y,theta};
+    set_position(pos);
+}
 void OnGetPos(){SendPos(get_position().x , get_position().y , get_position().t);}
 void OnGetSpeed(){SendSpeed(get_speed().v , get_speed().vt);}
 

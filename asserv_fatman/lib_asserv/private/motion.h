@@ -44,7 +44,7 @@ typedef struct {
 void motion_init(void(*_done)(void));
 
 // assigner des valeurs à la position (x, y et theta)
-void set_position(MotionState *state, Position pos);
+void set_position(Position pos);
 void set_position_x(MotionState *state, float x);
 void set_position_y(MotionState *state, float y);
 void set_position_t(MotionState *state, float t);

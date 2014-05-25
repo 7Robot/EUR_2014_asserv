@@ -128,7 +128,7 @@ __attribute__((weak)) void OnMotion_speed(float v, float vTheta) { SendUnimpleme
 void SendPos(float x, float y, float theta) {
     char bytes[] = {
         129,
-        31,
+        32,
         36,
         ((char*)&x)[0],
         ((char*)&x)[1],
@@ -154,6 +154,9 @@ __attribute__((weak)) void OnPull_arm(unsigned int choix) { SendUnimplemented();
 
 // You should redefine this function
 __attribute__((weak)) void OnPush_arm(unsigned int choix) { SendUnimplemented(); }
+
+// You should redefine this function
+__attribute__((weak)) void OnSetPos(float x, float y, float theta) { SendUnimplemented(); }
 
 void SendSpeed(float v, float vTheta) {
     char bytes[] = {
@@ -214,7 +217,7 @@ int AtpDecode(int id,
         OnConvoyer();
         return 1;
     }
-    if (id == 30) {
+    if (id == 31) {
         OnGetPos();
         return 1;
     }
@@ -248,6 +251,10 @@ int AtpDecode(int id,
     }
     if (id == 55) {
         OnPush_arm(ushortv[0]);
+        return 1;
+    }
+    if (id == 30) {
+        OnSetPos(floatv[0], floatv[1], floatv[2]);
         return 1;
     }
     if (id == 53) {
