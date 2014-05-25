@@ -63,7 +63,8 @@ void InitApp(void)
 				 
     _ODCB5 = 1; //OPEN DRAIN pour AX12
 
-    AD1PCFGL = 0xFFFF; //Pins analogiques en num�rique pour que ATP marche !!
+    // Fait dans InitSick
+    //AD1PCFGL = 0xFFFF; //Pins analogiques en num�rique pour que ATP marche !!
     
 }
 

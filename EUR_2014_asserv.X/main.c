@@ -94,6 +94,7 @@ int16_t main(void)
     Init_PWM();
     Init_QEI();
     InitLance();
+    InitSick();
 
     AtpInit();
     motion_init(SendDone);

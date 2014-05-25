@@ -1,5 +1,5 @@
 /*
-* Lance
+* Sick
 * Compiler : Microchip xC16
 * µC : 33FJ64MC804
 * Mai 2014
@@ -12,29 +12,26 @@
 *			      7robot.fr
 */
 
-#ifndef LANCE_H
-#define	LANCE_H
+#ifndef SICK_H
+#define	SICK_H
 
 /******************************************************************************/
 /* User Level #define Macros                                                  */
 /******************************************************************************/
 
-#define MOTOR_LANCE _LATC4
+#define NUMBER_OF_SICK 2
 
-#define FIRE 260
-#define LOAD 158
+#define Dist_1  6
+#define Dist_2  7
 
-#define LANCE_LAUNCH (1 << 1)
-#define LANCE_ABORT  (1 << 2)
+#define DEFAULT_THRESHOLD 80
+#define MARGIN_SICK 50
 
 /******************************************************************************/
 /* Function Prototypes                                                        */
 /******************************************************************************/
 
-void InitLance(void);
-void LaunchBalls(int RemainingBalls);
-void FireBall(void);
-void AbortLaunch(void);
+void InitSick();
 
-#endif	/* LANCE_H */
+#endif	/* SICK_H */
 
