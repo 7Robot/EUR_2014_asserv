@@ -32,13 +32,15 @@ void test_Asserv_vitesse()
     Speed speed5rn = {0,-5};
     Speed speedv_vt_1 = {0.5,2};
     Speed speedv_vt_1n = {0.5,-2};
-    Speed speed_test = {0.3,0};
+    Speed speed_test = {0.2,0};
 
     // initialize
     Init_All();
+    set_debug_mode(1);
+    __delay_ms(100);
     motion_speed(speed_test);
-    __delay_ms(1000);
-
+    __delay_ms(1500);
+    motion_speed(speed0);
     /*
     // test de réponse à une commande
     set_debug_mode(1);
