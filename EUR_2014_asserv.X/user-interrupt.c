@@ -87,10 +87,10 @@ void Init_PWM(void)
     P1TCONbits.PTMOD = 0; // free-runnig mode
 
     /*
-* la période des PWM (temps entre 2 fronts montants)
-* est fixée à 1500 cycles de 40MHz
-* ça donne une periode de sortie de 37.5 µs soit 26.66 kHz
-* RMQ : les registres de rapport cycliques ayant une précision double
+* la periode des PWM (temps entre 2 fronts montants)
+* est fixee à 1500 cycles de 40MHz
+* ca donne une periode de sortie de 37.5 µs soit 26.66 kHz
+* RMQ : les registres de rapport cycliques ayant une precision double
 * leur valeur max sera >>>> 3000 <<<<
 */
     P1TPER = 1500;
@@ -111,7 +111,7 @@ void Init_PWM(void)
     PWM1CON1bits.PEN2L = 0;
     PWM1CON1bits.PEN3L = 0;
 
-    // réglage des rapports cycliques, pour l'instant on mets 0 lors de l'initialisation
+    // reglage des rapports cycliques, pour l'instant on mets 0 lors de l'initialisation
     P1DC2 = 0;
     P1DC3 = 0;
 
@@ -321,7 +321,7 @@ void __attribute__((interrupt, auto_psv)) _T2Interrupt(void)
     old_ticd = ticd;
     compteur_ticd += diffd;
 	  
-    // On lit l'encodeur gauche (qui est en fait le droit)
+    // On lit l'encodeur gauche
     ticg = (int) POS2CNT; // ReadQEI1();
     diffg = ticg-old_ticg;
     old_ticg = ticg;
@@ -331,7 +331,7 @@ void __attribute__((interrupt, auto_psv)) _T2Interrupt(void)
 	  
     motion_step(0.01, diffg, diffd, &consigneG, &consigneD);
 
-    // r�cup�ration des signes
+    // recuperation des signes
     int inverseG = 0, inverseD = 0;
     if (consigneG < 0) { inverseG = 1; consigneG = -consigneG; }
     if (consigneD < 0) { inverseD = 1; consigneD = -consigneD; }
