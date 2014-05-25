@@ -16,6 +16,9 @@ void test_ax12();
 // teste les commande atp
 void test_atp();
 
+// test de décélération
+void test_deceleration();
+
 /******************************************************************************/
 /*                      Tests avec les interruptions                          */
 /******************************************************************************/

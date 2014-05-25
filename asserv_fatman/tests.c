@@ -131,6 +131,24 @@ void test_atp(){
     while(1);
 }
 
+// test de décélération
+void test_deceleration(){
+    Position pos; // la position du robot
+    Speed rapide = {1,0,0};
+    Speed speed = {0,0,0}; // vitesse nulle pour s'arreter
+    float x = 0;
+    Init_All();
+    __delay_ms(14000);
+    motion_speed(rapide);
+    // on le fait freiner dès qu'il passe les 50 cm
+    while (x<0.7){
+        pos = get_position();
+        x = pos.x;
+    }
+    motion_speed(speed);
+    while(1);
+}
+
 
 /******************************************************************************/
 /*                      Tests avec les interruptions                          */
