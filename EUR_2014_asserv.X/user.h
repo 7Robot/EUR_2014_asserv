@@ -23,8 +23,8 @@ void ConfigureOscillator(void); /* Handles clock switching/osc initialization */
 /******************************************************************************/
 
 #define led _LATA2
-#define LAISSE _LATA9
-#define BOUTON_COULEUR _LATC3
+#define LAISSE _RC3
+#define BOUTON_COULEUR _RA9
 
 extern int odoBroadcast;
 extern unsigned long int odoBroadcastDelay;

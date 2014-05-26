@@ -26,6 +26,8 @@
 #include "libasserv_robot.h"
 #include "../asserv/asserv/libasserv.h"
 
+#include <libpic30.h>
+
 /******************************************************************************/
 /* User Functions                                                             */
 /******************************************************************************/
@@ -373,9 +375,13 @@ void __attribute__((__interrupt__, no_auto_psv)) _U2TXInterrupt(void)
 
 void __attribute__ ((__interrupt__, no_auto_psv)) _CNInterrupt(void)
 {
-    if (LAISSE)
+    if (!LAISSE)
     {
-     SendStart(BOUTON_COULEUR);
+        SendStart(BOUTON_COULEUR);
+    }
+    else
+    {
+        __delay_ms(500);
     }
     IFS1bits.CNIF = 0; // Clear CN interrupt
 }
