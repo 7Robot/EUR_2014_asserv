@@ -41,6 +41,8 @@ void OnDistRot(float dist, float rot, float vDistMax, float aDistMax, float vRot
 
 void SendDone();
 
+void SendDoneBall();
+
 void SendDoneLaunch();
 
 void SendFreepath(unsigned char id);

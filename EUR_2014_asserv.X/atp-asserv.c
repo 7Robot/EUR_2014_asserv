@@ -233,6 +233,15 @@ void SendDone() {
     SendBytes(bytes, 3);
 }
 
+void SendDoneBall() {
+    char bytes[] = {
+        129,
+        75,
+        128
+    };
+    SendBytes(bytes, 3);
+}
+
 void SendDoneLaunch() {
     char bytes[] = {
         129,
