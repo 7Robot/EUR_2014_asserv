@@ -52,8 +52,8 @@ _FICD(ICS_PGD1 & JTAGEN_OFF);
 
 int16_t main(void) {
 
+init_arm(1);
+init_arm(2);
 
-
-    test_ax12();
     return 1;
 }

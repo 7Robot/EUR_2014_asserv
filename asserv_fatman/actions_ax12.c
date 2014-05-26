@@ -91,11 +91,11 @@ void catch_arm(int arm) {
 
     PutAX(S2, AX_GOAL_POSITION, 380);
     __delay_ms(100);
-    PutAX(S1, AX_GOAL_POSITION, 666);
+    PutAX(S1, AX_GOAL_POSITION, 710);
     __delay_ms(100);
 
 
-    PutAX(S3, AX_GOAL_POSITION, 210);
+    PutAX(S3, AX_GOAL_POSITION, 300);
     __delay_ms(300);
     PutAX(S3, AX_TORQUE_LIMIT, 420);
     __delay_ms(40);
