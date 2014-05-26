@@ -107,7 +107,7 @@ void SendDone() {
 void SendFreepath(unsigned char id) {
     char bytes[] = {
         129,
-        62,
+        92,
         1,
         id,
         128
@@ -123,6 +123,15 @@ __attribute__((weak)) void OnGetSpeed() { SendUnimplemented(); }
 
 // You should redefine this function
 __attribute__((weak)) void OnInit_arm(unsigned int choix) { SendUnimplemented(); }
+
+void SendLaid() {
+    char bytes[] = {
+        129,
+        56,
+        128
+    };
+    SendBytes(bytes, 3);
+}
 
 // You should redefine this function
 __attribute__((weak)) void OnLaunch_net() { SendUnimplemented(); }
@@ -172,7 +181,7 @@ __attribute__((weak)) void OnSetPos(float x, float y, float theta) { SendUnimple
 void SendSick(unsigned char id) {
     char bytes[] = {
         129,
-        61,
+        91,
         1,
         id,
         128
@@ -238,7 +247,7 @@ int AtpDecode(int id,
         OnCatch_arm(ushortv[0]);
         return 1;
     }
-    if (id == 57) {
+    if (id == 61) {
         OnConvoyer();
         return 1;
     }
@@ -254,7 +263,7 @@ int AtpDecode(int id,
         OnInit_arm(ushortv[0]);
         return 1;
     }
-    if (id == 56) {
+    if (id == 60) {
         OnLaunch_net();
         return 1;
     }
@@ -282,7 +291,7 @@ int AtpDecode(int id,
         OnSetPos(floatv[0], floatv[1], floatv[2]);
         return 1;
     }
-    if (id == 63) {
+    if (id == 93) {
         OnSickThreshold(ucharv[0], ushortv[0]);
         return 1;
     }

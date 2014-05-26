@@ -68,7 +68,6 @@ void init_arm(int arm) {
 /******************************************************************************/
 
 void catch_arm(int arm) {
-     SendBoardId();
     int position =0;
     choose_arm(arm);
 
@@ -110,11 +109,10 @@ void catch_arm(int arm) {
     position = (responseAX.params[1]*256 + responseAX.params[0]);
     __delay_ms(10);
 
-     stock_arm(arm);
+    stock_arm(arm);
     //SendCaught((position>180)?'\1':'\0');
-    SendCaught(position);
-   SendCaught(position>170);
-
+    //SendCaught(position);
+    SendCaught(position>170);
    
 }
 /******************************************************************************/
@@ -201,7 +199,7 @@ void pull_arm(int arm) {
 
 
     init_arm(arm);
-    SendDone();
+    SendLaid();
 }
 
 void push_arm(int arm) {
@@ -234,7 +232,7 @@ void push_arm(int arm) {
     __delay_ms(200);
 
     init_arm(arm);
-    SendDone();
+    SendLaid();
 }
 
 void launch_net() {

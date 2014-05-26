@@ -39,6 +39,8 @@ void OnGetSpeed();
 
 void OnInit_arm(unsigned int choix);
 
+void SendLaid();
+
 void OnLaunch_net();
 
 void OnMotion_angle(float theta);
