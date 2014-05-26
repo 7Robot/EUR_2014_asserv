@@ -55,5 +55,7 @@ int16_t main(void) {
 init_arm(1);
 init_arm(2);
 
+    test_atp();
+
     return 1;
 }

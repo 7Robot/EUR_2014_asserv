@@ -16,8 +16,10 @@ typedef struct {
 // Etat des valeurs du PID (erreur, intégrale de l'erreur, dérivée de l'erreur) et borne de l'intégrale
 typedef struct {
     float err;
+    float err_moy; // erreur moyennee
     float err_int;
     float err_der;
+    float err_der_moy; // derivee moyennee
     float max_int;
 } PidState;
 

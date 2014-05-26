@@ -21,24 +21,26 @@
 /*############################################################################*/
 
 // Asserve en vitesse + vitesse angulaire
-
-void test_Asserv_vitesse() {
+void test_Asserv_vitesse()
+{
     Speed speed0 = {0, 0};
     Speed speed6 = {0.6, 0};
     Speed speed6n = {-0.6, 0};
     Speed speed3 = {0.3, 0};
     Speed speed3n = {-0.3, 0};
-    Speed speed5r = {0, 5};
-    Speed speed5rn = {0, -5};
-    Speed speedv_vt_1 = {0.5, 2};
-    Speed speedv_vt_1n = {0.5, -2};
-    Speed speed_test = {0.3, 0};
+    Speed speed5r = {0,5};
+    Speed speed5rn = {0,-5};
+    Speed speedv_vt_1 = {0.5,2};
+    Speed speedv_vt_1n = {0.5,-2};
+    Speed speed_test = {0.2,0};
 
     // initialize
     Init_All();
+    set_debug_mode(1);
+    __delay_ms(100);
     motion_speed(speed_test);
-    __delay_ms(1000);
-
+    __delay_ms(1500);
+    motion_speed(speed0);
     /*
     // test de réponse à une commande
     set_debug_mode(1);
@@ -56,18 +58,17 @@ void test_Asserv_vitesse() {
     __delay_ms(1500);
     motion_free();
      */
-    while (1);
+    while(1);
 }
 
 // asserve en position
-
-void test_Asserv_pos() {
+void test_Asserv_pos(){
     Position pos0 = {0, 0, 0};
-    Position pos1 = {0.2, 0, 0};
-    Position pos2 = {0.1, 0.1, 0};
-    Position pos3 = {0.2, 0.2, 0};
-    Position pos4 = {0, 0.2, 0};
-    Position pos_test = {-3.0, 0, 0};
+    Position pos1 = {0.2,0,0};
+    Position pos2 = {0.1,0.1,0};
+    Position pos3 = {0.2,0.2,0};
+    Position pos4 = {0,0.2,0};
+    Position pos_test = {-3.0,0,0};
 
     // initialize
     Init_All();
@@ -77,7 +78,7 @@ void test_Asserv_pos() {
     //motion_pos(pos_test);
     //while (!motion_done());
     //while(1){};
-
+    
     motion_pos(pos1);
     while (!motion_done());
     motion_pos(pos2);
@@ -92,11 +93,10 @@ void test_Asserv_pos() {
 }
 
 // asserve en angle
-
-void test_Asserv_angle() {
+void test_Asserv_angle(){
     float a0 = 0;
-    float a1 = PI / 2;
-    float a2 = -PI / 2;
+    float a1 = PI/2;
+    float a2 = -PI/2;
     float a3 = PI;
     float alpha = a2;
     int i = 0;
@@ -106,7 +106,7 @@ void test_Asserv_angle() {
 
     // test de réponse à une commande
     set_debug_mode(1);
-    for (i = 0; i < 1; i++) {
+    for (i=0;i<1;i++){
         motion_angle(alpha);
         while (!motion_done());
         alpha = alpha + a2;
@@ -115,44 +115,40 @@ void test_Asserv_angle() {
 }
 
 // test des ax12 integrés à l'asserve
-
-void test_ax12() {
+void test_ax12(){
 
     // initialize
     Init_All();
-    // responseReadyAX = 0;
-   // PutAX(CONV, AX_GOAL_POSITION, 650);
+   // responseReadyAX = 0;
+    while(1){
 
-    while (1) {
-
-   
+        convoyer();
+        __delay_ms(1000);
     }
 }
 
 // test des ax12 integrés à l'asserve
-
-void test_atp() {
+void test_atp(){
     Init_All();
-    while (1);
+    while(1);
 }
 
 // test de décélération
-
-void test_deceleration() {
+void test_deceleration(){
     Position pos; // la position du robot
-    Speed rapide = {1, 0, 0};
-    Speed speed = {0, 0, 0}; // vitesse nulle pour s'arreter
+    Speed rapide = {1,0,0};
+    Speed speed = {0,0,0}; // vitesse nulle pour s'arreter
     float x = 0;
     Init_All();
     __delay_ms(14000);
     motion_speed(rapide);
     // on le fait freiner dès qu'il passe les 50 cm
-    while (x < 0.7) {
+    while (x<0.7){
         pos = get_position();
         x = pos.x;
     }
     motion_speed(speed);
-    while (1);
+    while(1);
 }
 
 
@@ -161,16 +157,15 @@ void test_deceleration() {
 /******************************************************************************/
 
 // allumer la led à une fréquence de 1Hz
-
-void test_interrupt_led(int periode) {
+void test_interrupt_led(int periode){
     static int compteur = 0;
     compteur++;
-    if (compteur == periode) {
+    if (compteur==periode) {
         basculer_led();
         compteur = 0;
     }
 }
 
-void basculer_led() {
+void basculer_led(){
     led = !led;
 }

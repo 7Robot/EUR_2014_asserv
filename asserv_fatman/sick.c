@@ -40,10 +40,10 @@
 /******************************************************************************/
 
 volatile int channel = 0;
-volatile uint16_t Sector[NUMBER_OF_SICK] = {0,0};
-volatile uint16_t Old_Sector[NUMBER_OF_SICK] = {0,0};
+volatile uint16_t Sector[NUMBER_OF_SICK] = {0,0,0,0};
+volatile uint16_t Old_Sector[NUMBER_OF_SICK] = {0,0,0,0};
 
-volatile uint16_t Threshold[NUMBER_OF_SICK] = {DEFAULT_THRESHOLD, DEFAULT_THRESHOLD};
+volatile uint16_t Threshold[NUMBER_OF_SICK] = {DEFAULT_THRESHOLD, DEFAULT_THRESHOLD, DEFAULT_THRESHOLD, DEFAULT_THRESHOLD};
 
 /******************************************************************************/
 /* User Functions                                                             */
@@ -57,9 +57,9 @@ void InitSick()
    //AD1CON1 Confugration
    AD1CON1bits.ADON = 0;    //Eteindre A/D converter pour la configuration
    AD1CON1bits.FORM = 0;    //Configure le format de la sortie de l'ADC ( 3=signed float, 2=unsigned float, 1=signed integer, 0=unsigned integer
-   AD1CON1bits.SSRC = 4;    //Config de l'�chantillonnage : Timer5
+   AD1CON1bits.SSRC = 4;    //Config de l'échantillonnage : Timer5
    AD1CON1bits.SIMSAM = 0;  //Simultaneously Sample CH0
-   AD1CON1bits.ASAM = 1;    //D�but d'�chantillonnage (1=tout de suite  0=d�s que AD1CON1bits.SAMP est activ�)
+   AD1CON1bits.ASAM = 1;    //Début d'échantillonnage (1=tout de suite  0=dès que AD1CON1bits.SAMP est activé)
    AD1CON1bits.AD12B = 0;   //Choix du type de converter (10 ou 12 bits) 0 = 10 bits , 1 = 12bits
 
    //AD1CON2 Configuration
@@ -69,41 +69,44 @@ void InitSick()
    //AD1CON3 Configuration
    AD1CON3bits.ADRC = 1;        //Choix du type de clock interne (=1) ou externe (=0)
 
-   //Choix des r�f�rences de tensions
-   AD1CHS0bits.CH0SA = 4;	// Choix du (+) de la mesure pour le channel CH0 (0 = AN0) par d�fault
+   //Choix des références de tensions
+   AD1CHS0bits.CH0SA = 4;	// Choix du (+) de la mesure pour le channel CH0 (0 = AN0) par défault
    AD1CHS0bits.CH0NA = 0;	// Choix du (-) de la mesure pour le channel CH0 (0 = Masse interne pic)
 
    //Configuration des pins analogiques
-   AD1PCFGL = 0xFFFF;   //Met tous les ports AN en Digital Input
+   //AD1PCFGL = 0xFFFF;   //Met tous les ports AN en Digital Input
    //AD1PCFGLbits.PCFG0 = 0;
-   //AD1PCFGLbits.PCFG1 = 0;
    //AD1PCFGLbits.PCFG2 = 0;
    //AD1PCFGLbits.PCFG3 = 0;
    //AD1PCFGLbits.PCFG4 = 0;
    //AD1PCFGLbits.PCFG5 = 0;
    /* COM A ENLEVER SUR DSPIC AVEC 8 PINS ANALOGIQUES */
+   AD1PCFGLbits.PCFG1 = 0;
    AD1PCFGLbits.PCFG6 = 0;
    AD1PCFGLbits.PCFG7 = 0;
+   AD1PCFGLbits.PCFG8 = 0;
 
    //Configuration du Timer 5, pour l'ADC
     OpenTimer5(T5_ON & T5_GATE_OFF & T5_PS_1_256 & T5_SOURCE_INT, 15625);
 
    //Configuration des interuption
-   IFS0bits.AD1IF = 0;      //Mise � 0 du flag d'interrupt de ADC1
+   IFS0bits.AD1IF = 0;      //Mise à 0 du flag d'interrupt de ADC1
    IEC0bits.AD1IE = 1;      //Enable les interruptions d'ADC1
-   IPC3bits.AD1IP = 2;      //Et les priorit�es (ici prio = 2)
+   IPC3bits.AD1IP = 2;      //Et les priorités (ici prio = 2)
    AD1CON1bits.SAMP = 0;
    AD1CON1bits.ADON = 1;    // Turn on the A/D converter
 }
 
 void OnSickThreshold(unsigned char id, unsigned int threshold)
 {
+    int i=0;
     if(id == 255)
     {
-        Threshold[0] = threshold;
-        Threshold[1] = threshold;
+        for (i=0;i<NUMBER_OF_SICK;i++){
+            Threshold[i] = threshold;
+        }
     }
-    else if(id == 1 || id == 0)
+    else if(id >= 0 && id < NUMBER_OF_SICK)
     {
         Threshold[id] = threshold;
     }
@@ -131,13 +134,18 @@ void __attribute__ ((interrupt, auto_psv)) _ADC1Interrupt(void)
     switch(channel)     // Select next sensor
     {
         case 0:
-            _CH0SA = Dist_2;
+            _CH0SA = SICK_AVANT_DROIT;
             break;
         case 1:
-            _CH0SA = Dist_1;
+            _CH0SA = SICK_AVANT_GAUCHE;
+            break;
+        case 2:
+            _CH0SA = SICK_ARRIERE_GAUCHE;
+            break;
+        case 3:
+            _CH0SA = SICK_ARRIERE_DROIT;
             break;
     }
-
 
     channel = (channel+1)%NUMBER_OF_SICK;
 
