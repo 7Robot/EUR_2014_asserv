@@ -21,8 +21,10 @@
 
 #define NUMBER_OF_SICK 4
 
-#define Dist_1  6
-#define Dist_2  7
+#define SICK_AVANT_GAUCHE   7 //AN7
+#define SICK_AVANT_DROIT    6 //AN6
+#define SICK_ARRIERE_GAUCHE 8 //AN8
+#define SICK_ARRIERE_DROIT  1 //AN1
 
 #define DEFAULT_THRESHOLD 80
 #define MARGIN_SICK 30

@@ -31,6 +31,8 @@ void OnConvoyer();
 
 void SendDone();
 
+void SendFreepath(unsigned char id);
+
 void OnGetPos();
 
 void OnGetSpeed();
@@ -52,6 +54,10 @@ void OnPull_arm(unsigned int choix);
 void OnPush_arm(unsigned int choix);
 
 void OnSetPos(float x, float y, float theta);
+
+void SendSick(unsigned char id);
+
+void OnSickThreshold(unsigned char id, unsigned int threshold);
 
 void SendSpeed(float v, float vTheta);
 

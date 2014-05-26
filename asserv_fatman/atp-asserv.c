@@ -104,6 +104,17 @@ void SendDone() {
     SendBytes(bytes, 3);
 }
 
+void SendFreepath(unsigned char id) {
+    char bytes[] = {
+        129,
+        62,
+        1,
+        id,
+        128
+    };
+    SendBytes(bytes, 5);
+}
+
 // You should redefine this function
 __attribute__((weak)) void OnGetPos() { SendUnimplemented(); }
 
@@ -157,6 +168,20 @@ __attribute__((weak)) void OnPush_arm(unsigned int choix) { SendUnimplemented();
 
 // You should redefine this function
 __attribute__((weak)) void OnSetPos(float x, float y, float theta) { SendUnimplemented(); }
+
+void SendSick(unsigned char id) {
+    char bytes[] = {
+        129,
+        61,
+        1,
+        id,
+        128
+    };
+    SendBytes(bytes, 5);
+}
+
+// You should redefine this function
+__attribute__((weak)) void OnSickThreshold(unsigned char id, unsigned int threshold) { SendUnimplemented(); }
 
 void SendSpeed(float v, float vTheta) {
     char bytes[] = {
@@ -255,6 +280,10 @@ int AtpDecode(int id,
     }
     if (id == 30) {
         OnSetPos(floatv[0], floatv[1], floatv[2]);
+        return 1;
+    }
+    if (id == 63) {
+        OnSickThreshold(ucharv[0], ushortv[0]);
         return 1;
     }
     if (id == 53) {
