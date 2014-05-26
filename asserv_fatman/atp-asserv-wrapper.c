@@ -8,6 +8,10 @@
 
 void OnStop(){motion_free();}
 void OnAusecours(){OnStop();}
+void OnBlock(){
+    Speed speed = {0,0};
+    motion_speed(speed);
+}
 
 void OnSetPos(float x, float y, float theta){
     Position pos = {x,y,theta};

@@ -7,6 +7,7 @@
 
 #include "extern_globals.h"
 #include "user.h"
+#include <libpic30.h>
 #include "tests.h"
 #include "lib_asserv/lib_asserv.h"
 #include "motor.h"
@@ -50,11 +51,10 @@ void InitTimers()
 
 }
 
-void Init_CN(void)
+void Init_CN()
 {
-    _TRISA9 = 1;  // input for laisse
-    _TRISC3 = 1;  //2 bouton in input
-    
+    _TRISA9 = 1;  // input for button
+    _TRISC3 = 1;  // input for laisse
     _CN28IE = 1; // Enable CN28 pin for interrupt detection
     IPC4bits.CNIP = 3; //Interrupt level 3
     IEC1bits.CNIE = 1; // Enable CN interrupts
@@ -245,6 +245,7 @@ void __attribute__((interrupt, no_auto_psv)) _SPI2Interrupt(void){
 
 void __attribute__ ((__interrupt__, no_auto_psv)) _CNInterrupt(void)
 {
+    SendDone();
     if (!PIN_LAISSE)
     {
         _SendStart(BOUTON_COULEUR);

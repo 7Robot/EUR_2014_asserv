@@ -39,6 +39,8 @@ void OnGetSpeed();
 
 void OnInit_arm(unsigned int choix);
 
+void SendLaid();
+
 void OnLaunch_net();
 
 void OnMotion_angle(float theta);
@@ -59,7 +61,11 @@ void SendSick(unsigned char id);
 
 void OnSickThreshold(unsigned char id, unsigned int threshold);
 
+void OnSlight_convoyer();
+
 void SendSpeed(float v, float vTheta);
+
+void SendStart(long int color);
 
 void OnStock_arm(unsigned int choix);
 

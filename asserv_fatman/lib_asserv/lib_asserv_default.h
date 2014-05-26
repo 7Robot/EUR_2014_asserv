@@ -11,7 +11,7 @@
 /*############################################################################*/
 
 #ifndef DEFAULT_CONSTRAINT_V_MAX
-#define DEFAULT_CONSTRAINT_V_MAX {0.5, 1.6}
+#define DEFAULT_CONSTRAINT_V_MAX {0.3, 1.2}
 #endif
 
 #ifndef DEFAULT_CONSTRAINT_A_MAX
@@ -47,7 +47,7 @@
 #define DEFAULT_PID_COEFS_DELTA {130,90,2000,0.5,0.9} //{200,70,900,0.3,0.8}
 #endif
 #ifndef DEFAULT_PID_COEFS_ALPHA
-#define DEFAULT_PID_COEFS_ALPHA {10,5,30,0.5,0.9} //{10,5,30,0,0.7}
+#define DEFAULT_PID_COEFS_ALPHA {10,5.5,30,0.5,0.9} //{10,5,30,0,0.7}
 #endif
 /*
 #ifndef DEFAULT_PID_COEFS_VG
@@ -63,7 +63,7 @@
 #define DEFAULT_PID_MAX_INT_DELTA 0.5 // 0.7
 #endif
 #ifndef DEFAULT_PID_MAX_INT_ALPHA
-#define DEFAULT_PID_MAX_INT_ALPHA 4
+#define DEFAULT_PID_MAX_INT_ALPHA 5
 #endif
 
 // ainsi que les conditions d'arrêt des PID en position et vitesse
