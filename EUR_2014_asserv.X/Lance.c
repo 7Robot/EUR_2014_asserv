@@ -126,8 +126,7 @@ void AbortLaunch(void)
 
 void OnStopLaunch()
 {
-    actionLance |= LANCE_ABORT;
-    IFS2bits.SPI2IF = 1;
+    AbortLaunch();
 }
 
 void OnLaunchBalls(unsigned int amount_left)
@@ -153,8 +152,5 @@ void __attribute__((interrupt, no_auto_psv)) _SPI2Interrupt(void)
     if ((actionLance & LANCE_LAUNCH) == LANCE_LAUNCH) {
         LaunchBalls(actionBalls);  // TODO Mettre variable Global pour le param
         actionLance &= ~LANCE_LAUNCH;
-    } else if ((actionLance & LANCE_ABORT) == LANCE_ABORT) {
-        AbortLaunch();
-        actionLance &= ~LANCE_ABORT;
     }
 }
