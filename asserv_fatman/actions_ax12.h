@@ -16,6 +16,7 @@
 #define BOUGIE_pull_arm (1<<4)
 #define BOUGIE_push_arm (1<<5)
 #define BOUGIE_convoyer (1<<6)
+#define BOUGIE_slight_convoyer (1<<7)
 
 
 
@@ -40,8 +41,9 @@ void catch_arm(int);
 void stock_arm(int);
 void pull_arm(int);
 void push_arm(int);
-void launch_net(void);
-void convoyer(void);
+void launch_net();
+void convoyer();
+void slight_convoyer();
 
 
 
