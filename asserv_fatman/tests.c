@@ -34,8 +34,6 @@ void test_Asserv_vitesse()
     Speed speedv_vt_1n = {0.5,-2};
     Speed speed_test = {0.2,0};
 
-    // initialize
-    Init_All();
     set_debug_mode(1);
     __delay_ms(100);
     motion_speed(speed_test);
@@ -70,9 +68,6 @@ void test_Asserv_pos(){
     Position pos4 = {0,0.2,0};
     Position pos_test = {-3.0,0,0};
 
-    // initialize
-    Init_All();
-
     // test de réponse à une commande
     //set_debug_mode(1);
     //motion_pos(pos_test);
@@ -101,9 +96,6 @@ void test_Asserv_angle(){
     float alpha = a2;
     int i = 0;
 
-    // initialize
-    Init_All();
-
     // test de réponse à une commande
     set_debug_mode(1);
     for (i=0;i<1;i++){
@@ -116,9 +108,6 @@ void test_Asserv_angle(){
 
 // test des ax12 integrés à l'asserve
 void test_ax12(){
-
-    // initialize
-    Init_All();
    // responseReadyAX = 0;
     while(1){
 
@@ -129,7 +118,6 @@ void test_ax12(){
 
 // test des ax12 integrés à l'asserve
 void test_atp(){
-    Init_All();
     while(1);
 }
 

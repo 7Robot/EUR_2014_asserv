@@ -1,5 +1,8 @@
 #include <xc.h>
 
+
+#include "actions_ax12.h"
+
 #include <stdint.h>          /* For uint16_t definition                       */
 #include <stdbool.h>         /* For true/false definition                     */
 #include <timer.h>
@@ -44,6 +47,8 @@ void Init_All(){
     InitSick();
     motion_init(SendDone);
     AtpInit();
-    __delay_ms(1000);
+    __delay_ms(500);
     SendBoardId();
+    init_arm(1);
+    init_arm(2);
 }

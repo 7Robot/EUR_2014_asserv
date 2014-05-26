@@ -86,12 +86,14 @@ void catch_arm(int arm) {
     PutAX(S3, AX_MOVING_SPEED, 650);
     __delay_ms(50);
 
+    PutAX(S2, AX_GOAL_POSITION, 300);
+    __delay_ms(300);
     PutAX(S3, AX_GOAL_POSITION, 512);
     __delay_ms(500);
 
-    PutAX(S2, AX_GOAL_POSITION, 380);
+    PutAX(S2, AX_GOAL_POSITION, 390);
     __delay_ms(100);
-    PutAX(S1, AX_GOAL_POSITION, 710);
+    PutAX(S1, AX_GOAL_POSITION, 695);
     __delay_ms(100);
 
 
