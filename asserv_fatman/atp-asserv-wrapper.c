@@ -74,3 +74,9 @@ void OnConvoyer()
     actionBras |= BOUGIE_convoyer;
     IFS2bits.SPI2IF = 1;
 }
+
+void OnSlight_convoyer()
+{
+    actionBras |= BOUGIE_slight_convoyer;
+    IFS2bits.SPI2IF = 1;
+}
