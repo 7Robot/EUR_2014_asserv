@@ -248,7 +248,7 @@ void __attribute__ ((__interrupt__, no_auto_psv)) _CNInterrupt(void)
     SendDone();
     if (!PIN_LAISSE)
     {
-        _SendStart(BOUTON_COULEUR);
+        SendStart(BOUTON_COULEUR);
     }
     else
     {
