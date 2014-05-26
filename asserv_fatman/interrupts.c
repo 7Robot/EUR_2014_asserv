@@ -50,6 +50,17 @@ void InitTimers()
 
 }
 
+void Init_CN(void)
+{
+    _TRISA9 = 1;  // input for laisse
+    _TRISC3 = 1;  //2 bouton in input
+    
+    _CN28IE = 1; // Enable CN28 pin for interrupt detection
+    IPC4bits.CNIP = 3; //Interrupt level 3
+    IEC1bits.CNIE = 1; // Enable CN interrupts
+    IFS1bits.CNIF = 0; // Reset CN interrupt
+}
+
 /******************************************************************************/
 /* Interrupt Vector Options                                                   */
 /******************************************************************************/
@@ -224,4 +235,20 @@ void __attribute__((interrupt, no_auto_psv)) _SPI2Interrupt(void){
 
         actionBras &= ~BOUGIE_convoyer;
     }
+}
+
+/**********************************************/
+/* CN interrupt for boutons */
+
+void __attribute__ ((__interrupt__, no_auto_psv)) _CNInterrupt(void)
+{
+    if (!PIN_LAISSE)
+    {
+        SendStart(BOUTON_COULEUR);
+    }
+    else
+    {
+        __delay_ms(500);
+    }
+    IFS1bits.CNIF = 0; // Clear CN interrupt
 }
