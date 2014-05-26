@@ -96,6 +96,7 @@ void LaunchBalls(int BallsAfterShoot)
             if(FirePermission == 1)
             {
                 FireBall();         // Fire one ball
+                SendDoneBall();
                 RemainingBalls--;
                 __delay_ms(500);   // Wait for the robot to move
             }
