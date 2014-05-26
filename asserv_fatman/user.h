@@ -33,7 +33,7 @@ go here. */
 
 void ConfigureOscillator(void); /* Handles clock switching/osc initialization */
 void InitTimers();
-vois Init_CN(void);
+void Init_CN(void);
 // initialize all things
 void Init_All();
 

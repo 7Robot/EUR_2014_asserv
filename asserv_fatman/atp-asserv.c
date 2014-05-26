@@ -192,6 +192,9 @@ void SendSick(unsigned char id) {
 // You should redefine this function
 __attribute__((weak)) void OnSickThreshold(unsigned char id, unsigned int threshold) { SendUnimplemented(); }
 
+// You should redefine this function
+__attribute__((weak)) void OnSlight_convoyer() { SendUnimplemented(); }
+
 void SendSpeed(float v, float vTheta) {
     char bytes[] = {
         129,
@@ -209,6 +212,20 @@ void SendSpeed(float v, float vTheta) {
         128
     };
     SendBytes(bytes, 13);
+}
+
+void SendStart(long int color) {
+    char bytes[] = {
+        129,
+        49,
+        20,
+        ((char*)&color)[0],
+        ((char*)&color)[1],
+        ((char*)&color)[2],
+        ((char*)&color)[3],
+        128
+    };
+    SendBytes(bytes, 8);
 }
 
 // You should redefine this function
@@ -293,6 +310,10 @@ int AtpDecode(int id,
     }
     if (id == 93) {
         OnSickThreshold(ucharv[0], ushortv[0]);
+        return 1;
+    }
+    if (id == 62) {
+        OnSlight_convoyer();
         return 1;
     }
     if (id == 53) {

@@ -7,6 +7,7 @@
 
 #include "extern_globals.h"
 #include "user.h"
+#include <libpic30.h>
 #include "tests.h"
 #include "lib_asserv/lib_asserv.h"
 #include "motor.h"
@@ -50,7 +51,7 @@ void InitTimers()
 
 }
 
-void Init_CN(void)
+void Init_CN()
 {
     _TRISA9 = 1;  // input for laisse
     _TRISC3 = 1;  //2 bouton in input
@@ -245,6 +246,7 @@ void __attribute__((interrupt, no_auto_psv)) _SPI2Interrupt(void){
 
 void __attribute__ ((__interrupt__, no_auto_psv)) _CNInterrupt(void)
 {
+    SendDone();
     if (!PIN_LAISSE)
     {
         SendStart(BOUTON_COULEUR);

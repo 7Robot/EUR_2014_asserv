@@ -45,10 +45,10 @@ void Init_All(){
     Init_PWM();
     Init_QEI();
     InitSick();
-    Init_CN();
     motion_init(SendDone);
     AtpInit();
     __delay_ms(500);
+    Init_CN();
     SendBoardId();
     init_arm(1);
     init_arm(2);
