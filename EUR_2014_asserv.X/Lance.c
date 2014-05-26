@@ -82,33 +82,40 @@ void LaunchBalls(int BallsAfterShoot)
     FirePermission = 1;
     BallsToShoot = RemainingBalls - BallsAfterShoot;
 
-    MOTOR_LANCE = 1;         // Turn On the motor
-    __delay_ms(2000);   // Wait for the moteur to be full speed
-
-    for(i = 0; i< BallsToShoot; i++)
+    if(BallsToShoot <= 0)
     {
-        if(FirePermission == 1)
-        {
-            FireBall();         // Fire one ball
-            RemainingBalls--;
-            __delay_ms(1000);   // Wait for the robot to move
-        }
-        else
-        {
-            FirePermission = 0;
-            MOTOR_LANCE = 0; // Turn off the motor
-            return;
-        }
+        SendDoneLaunch();
     }
-    FirePermission = 0;
-    MOTOR_LANCE = 0; // Turn off the motor
+    else
+    {
+        MOTOR_LANCE = 1;         // Turn On the motor
+        __delay_ms(1000);   // Wait for the moteur to be full speed
+
+        for(i = 0; i< BallsToShoot; i++)
+        {
+            if(FirePermission == 1)
+            {
+                FireBall();         // Fire one ball
+                RemainingBalls--;
+                __delay_ms(500);   // Wait for the robot to move
+            }
+            else
+            {
+                FirePermission = 0;
+                MOTOR_LANCE = 0; // Turn off the motor
+                return;
+            }
+        }
+        FirePermission = 0;
+        MOTOR_LANCE = 0; // Turn off the motor
+    }
     SendDoneLaunch();
 }
 
 void FireBall(void)
 {
     OC1RS = FIRE;        // Launch the Ball
-    __delay_ms(1000);   // Wait for the ball to go
+    __delay_ms(500);   // Wait for the ball to go
     OC1RS = LOAD;        // Recharges
 }
 
