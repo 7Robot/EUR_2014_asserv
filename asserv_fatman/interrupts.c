@@ -53,9 +53,8 @@ void InitTimers()
 
 void Init_CN()
 {
-    _TRISA9 = 1;  // input for laisse
-    _TRISC3 = 1;  //2 bouton in input
-    
+    _TRISA9 = 1;  // input for button
+    _TRISC3 = 1;  // input for laisse
     _CN28IE = 1; // Enable CN28 pin for interrupt detection
     IPC4bits.CNIP = 3; //Interrupt level 3
     IEC1bits.CNIE = 1; // Enable CN interrupts
