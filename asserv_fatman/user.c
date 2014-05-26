@@ -45,6 +45,7 @@ void Init_All(){
     Init_PWM();
     Init_QEI();
     InitSick();
+    Init_CN();
     motion_init(SendDone);
     AtpInit();
     __delay_ms(500);
