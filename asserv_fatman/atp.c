@@ -1,6 +1,7 @@
 #include <string.h>
 #include "user.h"
 #include "atp-user.h"
+#include "atp.h"
 #include <uart.h>
 
 #if SEND_PRIO <= RECV_PRIO
