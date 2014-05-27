@@ -110,8 +110,7 @@ void catch_arm(int arm) {
     __delay_ms(10);
 
     stock_arm(arm);
-    //SendCaught((position>180)?'\1':'\0');
-    //SendCaught(position);
+
     SendCaught(position>170);
    
 }
@@ -265,9 +264,8 @@ void convoyer() // fonction qui enclenche le tapis roulant
 
 
         PutAX(CONV, AX_CW_ANGLE_LIMIT, 255); // arret de la roue libre
-        __delay_ms(50);
-        PutAX(CONV, AX_CCW_ANGLE_LIMIT, 255);
-        __delay_ms(50);
+        __delay_ms(100);
+
         SendDone();
 }
 
@@ -279,12 +277,11 @@ void slight_convoyer() // fonction qui enclenche le tapis roulant
         PutAX(CONV, AX_CCW_ANGLE_LIMIT, 0);
         __delay_ms(50);
 
-        PutAX(CONV, AX_MOVING_SPEED, 0b11111111111); // le bit de poids fort gère le sens, les autres la vitesse
-        __delay_ms(500); // temps de déroulage du tapis
+        PutAX(CONV, AX_MOVING_SPEED, 0b10111111111); // le bit de poids fort gère le sens, les autres la vitesse
+        __delay_ms(800); // temps de déroulage du tapis
+PutAX(CONV, AX_MOVING_SPEED, 0);
+  
+        __delay_ms(100);
 
-        PutAX(CONV, AX_CW_ANGLE_LIMIT, 255); // arret de la roue libre
-        __delay_ms(50);
-        PutAX(CONV, AX_CCW_ANGLE_LIMIT, 255); 
-        __delay_ms(50);
         SendDone();
 }
