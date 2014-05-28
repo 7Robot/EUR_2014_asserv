@@ -23,6 +23,8 @@ void OnAusecours();
 
 void OnBlock();
 
+void SendBlocked();
+
 void OnCatch_arm(unsigned int choix);
 
 void SendCaught(unsigned char success);
@@ -50,6 +52,8 @@ void OnMotion_pos(float x, float y);
 void OnMotion_speed(float v, float vTheta);
 
 void SendPos(float x, float y, float theta);
+
+void OnPoulet();
 
 void OnPull_arm(unsigned int choix);
 

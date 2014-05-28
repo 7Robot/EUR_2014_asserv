@@ -78,6 +78,15 @@ __attribute__((weak)) void OnAusecours() { SendUnimplemented(); }
 // You should redefine this function
 __attribute__((weak)) void OnBlock() { SendUnimplemented(); }
 
+void SendBlocked() {
+    char bytes[] = {
+        129,
+        20,
+        128
+    };
+    SendBytes(bytes, 3);
+}
+
 // You should redefine this function
 __attribute__((weak)) void OnCatch_arm(unsigned int choix) { SendUnimplemented(); }
 
@@ -168,6 +177,9 @@ void SendPos(float x, float y, float theta) {
     };
     SendBytes(bytes, 18);
 }
+
+// You should redefine this function
+__attribute__((weak)) void OnPoulet() { SendUnimplemented(); }
 
 // You should redefine this function
 __attribute__((weak)) void OnPull_arm(unsigned int choix) { SendUnimplemented(); }
@@ -292,6 +304,10 @@ int AtpDecode(int id,
     }
     if (id == 11) {
         OnMotion_speed(floatv[0], floatv[1]);
+        return 1;
+    }
+    if (id == 63) {
+        OnPoulet();
         return 1;
     }
     if (id == 54) {

@@ -94,6 +94,7 @@ void check_blocked(Speed speed,Speed order){
         if (blocked >= BLOCK_LIMIT){
             speed_asserv.speed_order.v = 0;
             speed_asserv.speed_order.vt = 0;
+            if (blocked == BLOCK_LIMIT){SendBlocked();}
         }
         blocked++;
     } else {
