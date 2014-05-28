@@ -79,7 +79,6 @@ void LaunchBalls(int BallsAfterShoot)
 {
     int BallsToShoot, i;
 
-    FirePermission = 1;
     BallsToShoot = RemainingBalls - BallsAfterShoot;
 
     if(BallsToShoot <= 0)
@@ -88,8 +87,9 @@ void LaunchBalls(int BallsAfterShoot)
     }
     else
     {
+        FirePermission = 1;
         MOTOR_LANCE = 1;         // Turn On the motor
-        __delay_ms(1000);   // Wait for the moteur to be full speed
+        __delay_ms(1000);        // Wait for the moteur to be full speed
 
         for(i = 0; i< BallsToShoot; i++)
         {
@@ -109,8 +109,8 @@ void LaunchBalls(int BallsAfterShoot)
         }
         FirePermission = 0;
         MOTOR_LANCE = 0; // Turn off the motor
+        SendDoneLaunch();
     }
-    SendDoneLaunch();
 }
 
 void FireBall(void)
