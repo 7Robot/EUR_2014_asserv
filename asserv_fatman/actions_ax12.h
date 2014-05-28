@@ -17,7 +17,7 @@
 #define BOUGIE_push_arm (1<<5)
 #define BOUGIE_convoyer (1<<6)
 #define BOUGIE_slight_convoyer (1<<7)
-
+#define BOUGIE_poulet (1<<8)
 
 
 
@@ -44,7 +44,7 @@ void push_arm(int);
 void launch_net();
 void convoyer();
 void slight_convoyer();
-
+void poulet();
 
 
 

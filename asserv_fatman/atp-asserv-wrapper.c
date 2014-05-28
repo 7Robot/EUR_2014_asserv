@@ -84,3 +84,9 @@ void OnSlight_convoyer()
     actionBras |= BOUGIE_slight_convoyer;
     IFS2bits.SPI2IF = 1;
 }
+
+void OnPoulet()
+{
+    actionBras |= BOUGIE_poulet;
+    IFS2bits.SPI2IF = 1;
+}
