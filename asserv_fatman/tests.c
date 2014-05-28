@@ -124,8 +124,8 @@ void test_atp(){
 // test de décélération
 void test_deceleration(){
     Position pos; // la position du robot
-    Speed rapide = {1,0,0};
-    Speed speed = {0,0,0}; // vitesse nulle pour s'arreter
+    Speed rapide = {1,0};
+    Speed speed = {0,0}; // vitesse nulle pour s'arreter
     float x = 0;
     Init_All();
     __delay_ms(14000);

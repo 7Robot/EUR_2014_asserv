@@ -14,6 +14,7 @@ extern volatile AngleAsserv angle_asserv;
 extern volatile float motion_initialized;
 extern volatile MotionState motionState;
 extern volatile MotionConstraint motionConstraint;
+extern volatile int blocked;
 
 // odo
 extern volatile Odo odo;

@@ -160,7 +160,9 @@ void asserv_step(Odo *odo, float *commande_g, float *commande_d){
 void speed_asserv_step(Odo *odo, float *commande_g, float *commande_d){
     // commandes des PID en delta et en alpha
     float commande_delta, commande_alpha;
-    
+
+    // vérifier qu'on est pas bloqué par un obstacle
+    check_blocked(motionState.speed,speed_asserv.speed_order_constrained);
     // on commence par vérifier les contraintes de vitesses et accélération
     constrain_speed_order();
     // calcul des PID

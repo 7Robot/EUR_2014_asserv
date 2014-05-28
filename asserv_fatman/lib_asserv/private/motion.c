@@ -4,11 +4,13 @@
 #include "odo.h"
 #include "debug.h"
 #include "../lib_asserv_default.h"
+#include <math.h>
 
 /******************************    Variables    *******************************/
 volatile float motion_initialized = 0;
 volatile MotionState motionState;
 volatile MotionConstraint motionConstraint;
+volatile int blocked; // compteur qui incremente quand on est bloqué par quelquechose
 static void(*done)(void); // callback
 
 
@@ -18,6 +20,7 @@ static void(*done)(void); // callback
 void motion_init(void(*_done)(void)) {
     Speed v_max = DEFAULT_CONSTRAINT_V_MAX;
     Acceleration a_max = DEFAULT_CONSTRAINT_A_MAX;
+    blocked = 0;
     // initialiser les contraintes avant le reste (utile par exemple dans l'initialisation de l'asserve)
     motionConstraint.v_max = v_max;
     motionConstraint.a_max = a_max;
@@ -82,6 +85,19 @@ void motion_angle(float abs_angle){
 // checker si le déplacement est terminé
 int motion_done(){
     return asserv_done();
+}
+
+// vérifier qu'on est pas bloqué par un obstacle
+// si bloqué, annule la consigne de vitesse
+void check_blocked(Speed speed,Speed order){
+    if (fabs(speed.v - order.v)>0.1 || fabs(speed.vt - order.vt)>0.4 ){
+        if (blocked >= BLOCK_LIMIT){
+            speed_asserv.speed_order.v = 0;
+            speed_asserv.speed_order.vt = 0;
+        }
+    } else {
+        blocked = 0;
+    }
 }
 
 

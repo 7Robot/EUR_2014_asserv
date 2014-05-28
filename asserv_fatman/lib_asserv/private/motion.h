@@ -78,6 +78,9 @@ void motion_angle(float abs_angle); // tourner pour être à un angle (absolu) a
 // checker si le déplacement est terminé
 int motion_done();
 
+// vérifier qu'on est pas bloqué par un obstacle
+void check_blocked(Speed speed,Speed order);
+
 // renvoie les commandes des roues gauche et droite (appelé par l'interruption toutes les 5 ms)
 void motion_step(int tics_g, int tics_d, float *commande_g, float *commande_d);
 

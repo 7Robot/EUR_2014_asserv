@@ -65,7 +65,7 @@ void OnSlight_convoyer();
 
 void SendSpeed(float v, float vTheta);
 
-void SendStart(long int color);
+void SendStart(unsigned int color);
 
 void OnStock_arm(unsigned int choix);
 

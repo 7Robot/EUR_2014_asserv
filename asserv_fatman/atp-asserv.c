@@ -214,18 +214,16 @@ void SendSpeed(float v, float vTheta) {
     SendBytes(bytes, 13);
 }
 
-void SendStart(long int color) {
+void SendStart(unsigned int color) {
     char bytes[] = {
         129,
         49,
-        20,
+        2,
         ((char*)&color)[0],
         ((char*)&color)[1],
-        ((char*)&color)[2],
-        ((char*)&color)[3],
         128
     };
-    SendBytes(bytes, 8);
+    SendBytes(bytes, 6);
 }
 
 // You should redefine this function

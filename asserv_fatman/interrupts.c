@@ -245,7 +245,6 @@ void __attribute__((interrupt, no_auto_psv)) _SPI2Interrupt(void){
 
 void __attribute__ ((__interrupt__, no_auto_psv)) _CNInterrupt(void)
 {
-    SendDone();
     if (!PIN_LAISSE)
     {
         SendStart(BOUTON_COULEUR);
