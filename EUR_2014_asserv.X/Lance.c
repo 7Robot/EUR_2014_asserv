@@ -98,7 +98,8 @@ void LaunchBalls(int BallsAfterShoot)
                 FireBall();         // Fire one ball
                 //SendDoneBall();
                 RemainingBalls--;
-                __delay_ms(500);   // Wait for the robot to move
+                if(i != BallsToShoot-1) // If last ball to shoot, don't wait
+                    __delay_ms(500);    // Wait for the robot to move
             }
             else
             {
