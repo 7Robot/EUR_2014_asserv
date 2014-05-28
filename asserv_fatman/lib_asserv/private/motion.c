@@ -95,6 +95,7 @@ void check_blocked(Speed speed,Speed order){
             speed_asserv.speed_order.v = 0;
             speed_asserv.speed_order.vt = 0;
         }
+        blocked++;
     } else {
         blocked = 0;
     }
