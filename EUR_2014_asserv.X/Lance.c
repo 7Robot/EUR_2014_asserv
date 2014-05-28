@@ -1,7 +1,7 @@
 /*
 * Lance
 * Compiler : Microchip xC16
-* µC : 33FJ64MC804
+* ï¿½C : 33FJ64MC804
 * Mai 2014
 *    ____________      _           _
 *   |___  /| ___ \    | |         | |
@@ -57,7 +57,7 @@ void InitLance(void)
     _TRISC4 = 0;    // Motor Pin as Output
     MOTOR_LANCE = 0;
 
-    //Configuration du Timer 2, période 20ms pour l'OC1
+    //Configuration du Timer 2, pï¿½riode 20ms pour l'OC1
     OpenTimer3(T3_ON & T3_GATE_OFF & T3_PS_1_256 & T3_SOURCE_INT, 3000);
     //ConfigIntTimer3(T3_INT_ON & T2_INT_PRIOR_4);
 
@@ -96,7 +96,7 @@ void LaunchBalls(int BallsAfterShoot)
             if(FirePermission == 1)
             {
                 FireBall();         // Fire one ball
-                SendDoneBall();
+                //SendDoneBall();
                 RemainingBalls--;
                 __delay_ms(500);   // Wait for the robot to move
             }
