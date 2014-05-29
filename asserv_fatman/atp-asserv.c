@@ -155,6 +155,9 @@ __attribute__((weak)) void OnMotion_angle(float theta) { SendUnimplemented(); }
 __attribute__((weak)) void OnMotion_pos(float x, float y) { SendUnimplemented(); }
 
 // You should redefine this function
+__attribute__((weak)) void OnMotion_sequence(float x1, float y1, float x2, float y2) { SendUnimplemented(); }
+
+// You should redefine this function
 __attribute__((weak)) void OnMotion_speed(float v, float vTheta) { SendUnimplemented(); }
 
 void SendPos(float x, float y, float theta) {
@@ -189,6 +192,9 @@ __attribute__((weak)) void OnPull_arm(unsigned int choix) { SendUnimplemented();
 
 // You should redefine this function
 __attribute__((weak)) void OnPush_arm(unsigned int choix) { SendUnimplemented(); }
+
+// You should redefine this function
+__attribute__((weak)) void OnRaise_arm(unsigned int choix) { SendUnimplemented(); }
 
 // You should redefine this function
 __attribute__((weak)) void OnSetPos(float x, float y, float theta) { SendUnimplemented(); }
@@ -323,6 +329,10 @@ int AtpDecode(int id,
         OnMotion_pos(floatv[0], floatv[1]);
         return 1;
     }
+    if (id == 13) {
+        OnMotion_sequence(floatv[0], floatv[1], floatv[2], floatv[3]);
+        return 1;
+    }
     if (id == 11) {
         OnMotion_speed(floatv[0], floatv[1]);
         return 1;
@@ -337,6 +347,10 @@ int AtpDecode(int id,
     }
     if (id == 55) {
         OnPush_arm(ushortv[0]);
+        return 1;
+    }
+    if (id == 57) {
+        OnRaise_arm(ushortv[0]);
         return 1;
     }
     if (id == 30) {
