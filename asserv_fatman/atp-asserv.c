@@ -191,6 +191,9 @@ __attribute__((weak)) void OnPull_arm(unsigned int choix) { SendUnimplemented();
 __attribute__((weak)) void OnPush_arm(unsigned int choix) { SendUnimplemented(); }
 
 // You should redefine this function
+__attribute__((weak)) void OnRaise_arm(unsigned int choix) { SendUnimplemented(); }
+
+// You should redefine this function
 __attribute__((weak)) void OnSetPos(float x, float y, float theta) { SendUnimplemented(); }
 
 void SendSick(unsigned char id) {
@@ -339,6 +342,10 @@ int AtpDecode(int id,
         OnPush_arm(ushortv[0]);
         return 1;
     }
+    if (id == 57) {
+        OnRaise_arm(ushortv[0]);
+        return 1;
+    }
     if (id == 30) {
         OnSetPos(floatv[0], floatv[1], floatv[2]);
         return 1;
@@ -357,10 +364,6 @@ int AtpDecode(int id,
     }
     if (id == 1) {
         OnStop();
-        return 1;
-    }
-    if (id == 57) {
-        OnRaise_arm(ushortv[0]);
         return 1;
     }
     return 0;
