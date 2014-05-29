@@ -12,18 +12,25 @@ volatile MotionState motionState;
 volatile MotionConstraint motionConstraint;
 volatile int blocked; // compteur qui incremente quand on est bloqué par quelquechose
 static void(*done)(void); // callback
+volatile MotionSequence motionSequence;
 
 
 /******************************    Fonctions    *******************************/
 
 // initialiser la lib d'asservissement
 void motion_init(void(*_done)(void)) {
+    Position posZero = {0,0,0};
     Speed v_max = DEFAULT_CONSTRAINT_V_MAX;
     Acceleration a_max = DEFAULT_CONSTRAINT_A_MAX;
     blocked = 0;
     // initialiser les contraintes avant le reste (utile par exemple dans l'initialisation de l'asserve)
     motionConstraint.v_max = v_max;
     motionConstraint.a_max = a_max;
+    // initialiser la séquence de déplacement
+    motionSequence.in_progress = 0;
+    motionSequence.waiting = 0;
+    motionSequence.pos_seq[0] = posZero;
+    motionSequence.pos_seq[1] = posZero;
     done = _done;
     odo_init();
     asserv_init();
@@ -69,6 +76,28 @@ void motion_pos(Position pos){
     pos_asserv.done = 0;
     pos_asserv.pos_order = pos;
     set_asserv_pos_mode();
+}
+void motion_sequence(Position pos1, Position pos2){
+    pos_asserv.done = 0;
+    motionSequence.in_progress = 0;
+    motionSequence.waiting = 2; // 2 positions en attente
+    motionSequence.pos_seq[0] = pos1;
+    motionSequence.pos_seq[1] = pos2;
+    set_asserv_seq_mode();
+}
+void motion_push(Position pos){
+    // si on a pas d'ordre en attente on ajoute cet ordre dans l'ordre en cours
+    if (!motionSequence.waiting){
+        pos_asserv.done = 0;
+        motionSequence.pos_seq[motionSequence.in_progress] = pos;
+        motionSequence.waiting = 1;
+    // sinon on remplace l'ordre suivant par celui là
+    } else {
+        motionSequence.pos_seq[!motionSequence.in_progress] = pos;
+        motionSequence.waiting++;
+        if (motionSequence.waiting > 2){motionSequence.waiting = 2;}
+    }
+    set_asserv_seq_mode();
 }
 void motion_speed(Speed speed){
     speed_asserv.done = 0;

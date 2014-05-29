@@ -12,6 +12,7 @@ void motion_init(void(*_done)(void));
 // consignes de déplacements du robot
 void motion_free(); // passer en roue libre
 void motion_pos(Position pos); // aller à cette position
+void motion_sequence(Position pos1, Position pos2); // sequence de 2 positions
 void motion_speed(Speed speed); // avancer à cette vitesse
 void motion_angle(float abs_angle); // tourner pour être à un angle (absolu) alpha
 

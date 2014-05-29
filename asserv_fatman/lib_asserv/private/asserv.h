@@ -10,6 +10,7 @@
 #define ASSERV_MODE_POS 1
 #define ASSERV_MODE_SPEED 2
 #define ASSERV_MODE_ANGLE 3
+#define ASSERV_MODE_SEQUENCE 4
 
 /*****************************    Structures    *******************************/
 
@@ -63,6 +64,7 @@ void set_asserv_off();
 void set_asserv_pos_mode();
 void set_asserv_speed_mode();
 void set_asserv_angle_mode();
+void set_asserv_seq_mode();
 
 // obtenir les consignes en vitesse et vitesse angulaire
 float get_cons_v();
@@ -77,6 +79,7 @@ void asserv_step(Odo *odo, float *commande_g, float *commande_d);
 void speed_asserv_step(Odo *odo, float *commande_g, float *commande_d);
 void pos_asserv_step(Odo *odo, float *commande_g, float *commande_d);
 void angle_asserv_step(Odo *odo, float *commande_g, float *commande_d);
+void seq_asserv_step(Odo *odo, float *commande_g, float *commande_d);
 
 // indique si l'asservissement en cours a terminé
 int asserv_done();

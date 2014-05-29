@@ -15,6 +15,7 @@ extern volatile float motion_initialized;
 extern volatile MotionState motionState;
 extern volatile MotionConstraint motionConstraint;
 extern volatile int blocked;
+extern volatile MotionSequence motionSequence;
 
 // odo
 extern volatile Odo odo;
@@ -23,4 +24,4 @@ extern volatile Odo odo;
 extern volatile int debug_mode;
 extern volatile int debug_count;
 //extern volatile SpeedDebug speedDebug;
-extern volatile PosDebug posDebug;
+//extern volatile PosDebug posDebug;

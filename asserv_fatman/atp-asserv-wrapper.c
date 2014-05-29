@@ -29,6 +29,15 @@ void OnMotion_speed(float v, float vTheta){
     Speed speed = {v,vTheta};
     motion_speed(speed);
 }
+void OnMotion_sequence(float x1, float y1, float x2, float y2){
+    Position pos1 = {x1,y1,0};
+    Position pos2 = {x2,y2,0};
+    motion_sequence(pos1,pos2);
+}
+void OnMotion_push(float x, float y){
+    Position pos = {x,y,0};
+    motion_push(pos);
+}
 
 void OnInit_arm(unsigned int choix)
 {

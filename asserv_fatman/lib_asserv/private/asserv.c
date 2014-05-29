@@ -78,6 +78,7 @@ void set_asserv_off(){asserv_mode = ASSERV_MODE_OFF;}
 void set_asserv_pos_mode(){asserv_mode = ASSERV_MODE_POS;}
 void set_asserv_speed_mode(){asserv_mode = ASSERV_MODE_SPEED;}
 void set_asserv_angle_mode(){asserv_mode = ASSERV_MODE_ANGLE;}
+void set_asserv_seq_mode(){asserv_mode = ASSERV_MODE_SEQUENCE;}
 
 // obtenir les consignes en vitesse et vitesse angulaire
 float get_cons_v(){return speed_asserv.speed_order_constrained.v;}
@@ -153,6 +154,9 @@ void asserv_step(Odo *odo, float *commande_g, float *commande_d){
         case ASSERV_MODE_ANGLE :
             //if (debug_mode){debug_speed_asserv();}
             angle_asserv_step(odo, commande_g, commande_d);
+            break;
+        case ASSERV_MODE_SEQUENCE :
+            seq_asserv_step(odo, commande_g, commande_d);
             break;
     }
 }
@@ -265,17 +269,32 @@ void angle_asserv_step(Odo *odo, float *commande_g, float *commande_d){
         angle_asserv.done = 1;
         *commande_g = 0;
         *commande_d = 0;
+    } else {
+        // calcul de la vitesse angulaire nécessaire
+        vt_o = 2 * dt;
+        // appel de l'asserve en vitesse avec les bonnes consignes
+        speed_asserv.speed_order.v = 0;
+        speed_asserv.speed_order.vt = vt_o;
+        speed_asserv_step(odo,commande_g,commande_d);
     }
+}
 
-    // calcul de la vitesse angulaire nécessaire
-    vt_o = 2 * dt;
-    // appel de l'asserve en vitesse avec les bonnes consignes
-    speed_asserv.speed_order.v = 0;
-    speed_asserv.speed_order.vt = vt_o;
-    speed_asserv_step(odo,commande_g,commande_d);
-
-    // mode debug
-    if (debug_mode){
+// asservissement en sequence
+void seq_asserv_step(Odo *odo, float *commande_g, float *commande_d){
+    // si on est arrivé on ne bouge plus
+    if (!(motionSequence.waiting)) {
+        *commande_g = 0;
+        *commande_d = 0;
+    } else {
+        // choix de la position en cours
+        pos_asserv.pos_order = motionSequence.pos_seq[motionSequence.in_progress];
+        pos_asserv_step(odo,commande_g,commande_d);
+        // si cette étape est finie, passer à la suivante
+        if (pos_asserv.done){
+            pos_asserv.done = 0;
+            motionSequence.waiting--;
+            motionSequence.in_progress = !(motionSequence.in_progress);
+        }
     }
 }
 
@@ -285,5 +304,6 @@ int asserv_done(){
     else if (asserv_mode == ASSERV_MODE_POS) {return pos_asserv.done;}
     else if (asserv_mode == ASSERV_MODE_SPEED) {return speed_asserv.done;}
     else if (asserv_mode == ASSERV_MODE_ANGLE) {return angle_asserv.done;}
+    else if (asserv_mode == ASSERV_MODE_SEQUENCE) {return !(motionSequence.waiting);}
     else {return 0;}
 }
