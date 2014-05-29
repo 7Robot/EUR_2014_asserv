@@ -107,13 +107,69 @@ void catch_arm(int arm) {
     while(!responseReadyAX);
 
     position = (responseAX.params[1]*256 + responseAX.params[0]);
-    __delay_ms(10);
+    __delay_ms(30);
 
     stock_arm(arm);
 
     SendCaught(position>170);
    
 }
+
+
+/******************************************************************************/
+/************************* Catch a Fire on a WALL *****************************/
+/******************************************************************************/
+
+void catch_arm_wall(int arm) {
+    int position =0;
+    choose_arm(arm);
+
+
+    PutAX(S1, AX_TORQUE_LIMIT, 650);
+    __delay_ms(50);
+    PutAX(S2, AX_TORQUE_LIMIT, 650);
+    __delay_ms(50);
+    PutAX(S3, AX_TORQUE_LIMIT, 650);
+    __delay_ms(50);
+    PutAX(S1, AX_MOVING_SPEED, 650);
+    __delay_ms(50);
+    PutAX(S2, AX_MOVING_SPEED, 650);
+    __delay_ms(50);
+    PutAX(S3, AX_MOVING_SPEED, 650);
+    __delay_ms(50);
+
+
+    PutAX(S2, AX_GOAL_POSITION, 300);
+    __delay_ms(300);
+    PutAX(S3, AX_GOAL_POSITION, 512);
+    __delay_ms(500);
+
+    PutAX(S2, AX_GOAL_POSITION, 390);
+    __delay_ms(100);
+    PutAX(S1, AX_GOAL_POSITION, 695);
+    __delay_ms(100);
+
+
+    PutAX(S3, AX_GOAL_POSITION, 300);
+    __delay_ms(300);
+    PutAX(S3, AX_TORQUE_LIMIT, 420);
+    __delay_ms(40);
+    PutAX(S3, AX_GOAL_POSITION, 150);
+    __delay_ms(400);
+
+    GetAX(S3, AX_PRESENT_POSITION);
+    while(!responseReadyAX);
+
+    position = (responseAX.params[1]*256 + responseAX.params[0]);
+    __delay_ms(10);
+
+    stock_arm(arm);
+
+    SendCaught(position>170);
+
+}
+
+
 /******************************************************************************/
 /********************************* Stock a Fire *******************************/
 
@@ -156,6 +212,25 @@ void stock_arm(int arm) {
     /////////////////////////////////
      */
     SendDone();
+}
+
+
+
+/******************************************************************************/
+/************************* place le bras dans une position ********************/
+/***********       qui permet de  s'aprocher des foyer sans soucis ************/
+/******************************************************************************/
+void raise_arm(int arm){
+
+    choose_arm(arm);
+
+    PutAX(S2, AX_TORQUE_LIMIT, 650);
+    __delay_ms(50);
+    PutAX(S2, AX_MOVING_SPEED, 650);
+    __delay_ms(50);
+
+    PutAX(S2, AX_GOAL_POSITION, 340);
+    __delay_ms(50);
 }
 
 /******************************************************************************/
@@ -201,6 +276,10 @@ void pull_arm(int arm) {
     SendLaid();
 }
 
+/******************************************************************************/
+/************************* Put Fire on the 2nd Face ***************************/
+
+/******************************************************************************/
 void push_arm(int arm) {
 
     choose_arm(arm);

@@ -52,6 +52,13 @@ void OnStock_arm(unsigned int choix)
     IFS2bits.SPI2IF = 1;
 }
 
+void OnRaise_arm(unsigned int choix)
+{
+    actionBras |= BOUGIE_raise_arm;
+    numBras = choix;
+    IFS2bits.SPI2IF = 1;
+}
+
 void OnPull_arm(unsigned int choix)
 {
     actionBras |= BOUGIE_pull_arm;

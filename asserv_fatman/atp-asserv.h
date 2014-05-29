@@ -61,6 +61,8 @@ void OnPull_arm(unsigned int choix);
 
 void OnPush_arm(unsigned int choix);
 
+void OnRaise_arm(unsigned int choix);
+
 void OnSetPos(float x, float y, float theta);
 
 void SendSick(unsigned char id);

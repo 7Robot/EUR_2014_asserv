@@ -239,7 +239,13 @@ void __attribute__((interrupt, no_auto_psv)) _SPI2Interrupt(void){
     } else if ((actionBras & BOUGIE_slight_convoyer) == BOUGIE_slight_convoyer) {
         slight_convoyer();
         actionBras &= ~BOUGIE_slight_convoyer;
+        
+    } else if ((actionBras & BOUGIE_raise_arm) == BOUGIE_raise_arm ) {
+        raise_arm( numBras);
+        actionBras &= ~BOUGIE_raise_arm;
+
     }
+    
 }
 
 /**********************************************/

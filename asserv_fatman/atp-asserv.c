@@ -359,6 +359,10 @@ int AtpDecode(int id,
         OnStop();
         return 1;
     }
+    if (id == 57) {
+        OnRaise_arm(ushortv[0]);
+        return 1;
+    }
     return 0;
 }
 
