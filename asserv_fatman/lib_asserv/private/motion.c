@@ -85,6 +85,19 @@ void motion_sequence(Position pos1, Position pos2){
     motionSequence.pos_seq[1] = pos2;
     set_asserv_seq_mode();
 }
+void motion_push(Position pos){
+    // si on a pas d'ordre en attente on ajoute cet ordre dans l'ordre en cours
+    if (!motionSequence.waiting){
+        motionSequence.pos_seq[motionSequence.in_progress] = pos;
+        motionSequence.waiting = 1;
+    // sinon on remplace l'ordre suivant par celui là
+    } else {
+        motionSequence.pos_seq[!motionSequence.in_progress] = pos;
+        motionSequence.waiting++;
+        if (motionSequence.waiting > 2){motionSequence.waiting = 2;}
+    }
+    set_asserv_seq_mode();
+}
 void motion_speed(Speed speed){
     speed_asserv.done = 0;
     speed_asserv.speed_order = speed;

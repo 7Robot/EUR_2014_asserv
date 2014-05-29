@@ -140,9 +140,14 @@ void test_deceleration(){
 
 // test de sequence de positions
 void test_sequence(){
-    Position pos1 = {0.1,0,0};
+    Position pos1 = {0.2,0,0};
     Position pos2 = {0,0,0};
-    motion_sequence(pos1,pos2);
+    Position pos3 = {0.1,0,0};
+    motion_push(pos1);
+    __delay_ms(50);
+    motion_push(pos2);
+    __delay_ms(2000);
+    motion_push(pos3);
     while(1);
 }
 

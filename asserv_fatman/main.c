@@ -53,6 +53,7 @@ _FICD(ICS_PGD1 & JTAGEN_OFF);
 int16_t main(void) {
 
     Init_All();
+    test_sequence();
     while(1);
     return 1;
 }
