@@ -40,6 +40,7 @@ typedef struct {
 // sequence de 2 consignes en position
 typedef struct {
     Position pos_seq[2];
+    float stop_distance[2];
     int in_progress; // 0 ou 1 suivant la position en cours
     int waiting; // 0, 1, ou 2 si un ordre en attente
 } MotionSequence;
@@ -80,7 +81,7 @@ float get_vd();
 void motion_free(); // passer en roue libre
 void motion_pos(Position pos); // aller à cette position
 void motion_sequence(Position pos1, Position pos2); // sequence de 2 positions
-void motion_push(Position pos); // ajoute ou remplace le prochain ordre de la sequence
+void motion_push(Position pos, float stop_distance); // ajoute ou remplace le prochain ordre de la sequence
 void motion_speed(Speed speed); // avancer à cette vitesse
 void motion_angle(float abs_angle); // tourner pour être à un angle (absolu) alpha
 

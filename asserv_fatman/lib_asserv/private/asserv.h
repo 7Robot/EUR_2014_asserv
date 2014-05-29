@@ -22,6 +22,7 @@ typedef struct {
 // Un asservissement en position connait les asserv en vitesse des roues gauche et droite
 typedef struct {
     Position pos_order;
+    float stop_distance;
     float kp; // coef proportionnel qui doit être plus petit que l'accélération max
     MotionState *state;
     MotionConstraint *constraint;

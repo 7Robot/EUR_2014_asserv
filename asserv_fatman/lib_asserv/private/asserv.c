@@ -44,6 +44,7 @@ void asserv_init(){
 
     // initialisation de l'asservissement en position
     pos_asserv.pos_order = (Position){0,0,0};
+    pos_asserv.stop_distance = DEFAULT_STOP_DISTANCE;
     // respect des contraintes d'accélération max avec ce coef
     pos_asserv.kp = 1.6;
     pos_asserv.state = &motionState;
@@ -211,7 +212,7 @@ void pos_asserv_step(Odo *odo, float *commande_g, float *commande_d){
     float epsi = PI * 0.1;
 
     // si on est arrivé on ne bouge plus
-    if (d < 0.01) {
+    if (d < pos_asserv.stop_distance) {
         pos_asserv.done = 1;
         *commande_g = 0;
         *commande_d = 0;
@@ -288,6 +289,7 @@ void seq_asserv_step(Odo *odo, float *commande_g, float *commande_d){
     } else {
         // choix de la position en cours
         pos_asserv.pos_order = motionSequence.pos_seq[motionSequence.in_progress];
+        pos_asserv.stop_distance = motionSequence.stop_distance[motionSequence.in_progress];
         pos_asserv_step(odo,commande_g,commande_d);
         // si cette étape est finie, passer à la suivante
         if (pos_asserv.done){
