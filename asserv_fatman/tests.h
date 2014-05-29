@@ -19,6 +19,9 @@ void test_atp();
 // test de décélération
 void test_deceleration();
 
+// test de sequence de positions
+void test_sequence();
+
 /******************************************************************************/
 /*                      Tests avec les interruptions                          */
 /******************************************************************************/
