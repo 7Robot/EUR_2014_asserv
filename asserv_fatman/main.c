@@ -53,13 +53,10 @@ _FICD(ICS_PGD1 & JTAGEN_OFF);
 int16_t main(void) {
 
     Init_All();
- /*   __delay_ms(2000);
-    init_arm(2);
+    while(1)
+    /*{
     __delay_ms(2000);
-    catch_arm(2);
-    __delay_ms(2000);
-    prepare_to_pose(2);*/
-
-    while(1);
+     catch_arm(1);
+    }*/
     return 1;
 }

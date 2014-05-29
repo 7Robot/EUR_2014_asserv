@@ -69,6 +69,7 @@ void init_arm(int arm) {
 
 void catch_arm(int arm) {
     int position =0;
+    int toto = 0; // MA MARQUE DE FABRIQUE
     choose_arm(arm);
 
 
@@ -104,7 +105,10 @@ void catch_arm(int arm) {
     __delay_ms(400);
 
     GetAX(S3, AX_PRESENT_POSITION);
-    while(!responseReadyAX);
+    while(!responseReadyAX && toto < 50){
+        toto++;
+        __delay_ms(1);
+    }
 
     position = (responseAX.params[1]*256 + responseAX.params[0]);
     __delay_ms(40);
@@ -122,6 +126,7 @@ void catch_arm(int arm) {
 
 void catch_arm_wall(int arm) {
     int position =0;
+    int toto = 0; // MA MARQUE DE FABRIQUE
     choose_arm(arm);
 
 
@@ -137,7 +142,6 @@ void catch_arm_wall(int arm) {
     __delay_ms(50);
     PutAX(S3, AX_MOVING_SPEED, 650);
     __delay_ms(50);
-
 
     PutAX(S2, AX_GOAL_POSITION, 300);
     __delay_ms(300);
@@ -158,10 +162,12 @@ void catch_arm_wall(int arm) {
     __delay_ms(400);
 
     GetAX(S3, AX_PRESENT_POSITION);
-    while(!responseReadyAX);
-
+    while(!responseReadyAX && toto < 50){
+        toto++;
+        __delay_ms(1);
+    }
     position = (responseAX.params[1]*256 + responseAX.params[0]);
-    __delay_ms(10);
+    __delay_ms(40);
 
     stock_arm(arm);
 
