@@ -93,7 +93,7 @@ void catch_arm(int arm) {
 
     PutAX(S2, AX_GOAL_POSITION, 390);
     __delay_ms(100);
-    PutAX(S1, AX_GOAL_POSITION, 695);
+    PutAX(S1, AX_GOAL_POSITION, 678);
     __delay_ms(100);
 
 
@@ -123,7 +123,7 @@ void catch_arm(int arm) {
 /******************************************************************************/
 /************************* Catch a Fire on a WALL *****************************/
 /******************************************************************************/
-
+/*
 void catch_arm_wall(int arm) {
     int position =0;
     int toto = 0; // MA MARQUE DE FABRIQUE
@@ -174,7 +174,7 @@ void catch_arm_wall(int arm) {
     SendCaught(position>170);
 
 }
-
+*/
 
 /******************************************************************************/
 /********************************* Stock a Fire *******************************/
@@ -262,10 +262,14 @@ void pull_arm(int arm) {
     PutAX(S3, AX_MOVING_SPEED, 650);
     __delay_ms(50);
 
-    PutAX(S2, AX_GOAL_POSITION, 700);
-    __delay_ms(280);
-    PutAX(S1, AX_GOAL_POSITION, 760);
-    __delay_ms(700);
+    PutAX(S2, AX_GOAL_POSITION, 480);
+    __delay_ms(300);
+    PutAX(S1, AX_GOAL_POSITION, 635);
+    __delay_ms(400);
+    PutAX(S2, AX_GOAL_POSITION, 760);
+    __delay_ms(300);
+    PutAX(S1, AX_GOAL_POSITION, 825);
+    __delay_ms(400);
 
     PutAX(S3, AX_GOAL_POSITION, 512);
     __delay_ms(10);
