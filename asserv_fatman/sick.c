@@ -112,6 +112,10 @@ void OnSickThreshold(unsigned char id, unsigned int threshold)
     }
 }
 
+void OnAskSick(unsigned char id){
+    SendSickState(id,Old_Sector[id]);
+}
+
 /******************************************************************************/
 /* Interrupt                                                                  */
 /******************************************************************************/

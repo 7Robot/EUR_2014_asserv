@@ -73,6 +73,9 @@ void SendUnimplemented() {
 }
 
 // You should redefine this function
+__attribute__((weak)) void OnAskSick(unsigned char id) { SendUnimplemented(); }
+
+// You should redefine this function
 __attribute__((weak)) void OnAusecours() { SendUnimplemented(); }
 
 // You should redefine this function
@@ -201,6 +204,20 @@ void SendSick(unsigned char id) {
     SendBytes(bytes, 5);
 }
 
+void SendSickState(unsigned char id, unsigned int state) {
+    char bytes[] = {
+        129,
+        95,
+        1,
+        id,
+        2,
+        ((char*)&state)[0],
+        ((char*)&state)[1],
+        128
+    };
+    SendBytes(bytes, 8);
+}
+
 // You should redefine this function
 __attribute__((weak)) void OnSickThreshold(unsigned char id, unsigned int threshold) { SendUnimplemented(); }
 
@@ -260,6 +277,10 @@ int AtpDecode(int id,
     }
     if (id == 252) {
         OnTest(ucharv[0], ushortv[0], uintv[0], charv[0], shortv[0], intv[0], floatv[0]);
+        return 1;
+    }
+    if (id == 94) {
+        OnAskSick(ucharv[0]);
         return 1;
     }
     if (id == 1) {

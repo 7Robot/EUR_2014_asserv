@@ -19,6 +19,8 @@ void SendTest(unsigned char B, unsigned int H, unsigned long int I, char b, int 
 
 void SendUnimplemented();
 
+void OnAskSick(unsigned char id);
+
 void OnAusecours();
 
 void OnBlock();
@@ -62,6 +64,8 @@ void OnPush_arm(unsigned int choix);
 void OnSetPos(float x, float y, float theta);
 
 void SendSick(unsigned char id);
+
+void SendSickState(unsigned char id, unsigned int state);
 
 void OnSickThreshold(unsigned char id, unsigned int threshold);
 
