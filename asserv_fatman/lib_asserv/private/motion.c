@@ -88,6 +88,7 @@ void motion_sequence(Position pos1, Position pos2){
 void motion_push(Position pos){
     // si on a pas d'ordre en attente on ajoute cet ordre dans l'ordre en cours
     if (!motionSequence.waiting){
+        pos_asserv.done = 0;
         motionSequence.pos_seq[motionSequence.in_progress] = pos;
         motionSequence.waiting = 1;
     // sinon on remplace l'ordre suivant par celui là
