@@ -107,7 +107,7 @@ void catch_arm(int arm) {
     while(!responseReadyAX);
 
     position = (responseAX.params[1]*256 + responseAX.params[0]);
-    __delay_ms(30);
+    __delay_ms(40);
 
     stock_arm(arm);
 
