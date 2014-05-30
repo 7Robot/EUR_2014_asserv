@@ -8,12 +8,14 @@
 #include <delay.h>
 #include "actions_ax12.h"
 #include "atp-asserv.h"
+#include <math.h>
 
 int S1;
 int S2;
 int S3;
 
-/******************************************************************************/
+/*********************************************************************
+ *********/
 /*************************** Arm Specification ********************************/
 
 /******************************************************************************/
@@ -69,6 +71,7 @@ void init_arm(int arm) {
 
 void catch_arm(int arm) {
     int position =0;
+    int toto = 0; // MA MARQUE DE FABRIQUE
     choose_arm(arm);
 
 
@@ -92,7 +95,7 @@ void catch_arm(int arm) {
 
     PutAX(S2, AX_GOAL_POSITION, 390);
     __delay_ms(100);
-    PutAX(S1, AX_GOAL_POSITION, 695);
+    PutAX(S1, AX_GOAL_POSITION, 678);
     __delay_ms(100);
 
 
@@ -104,16 +107,20 @@ void catch_arm(int arm) {
     __delay_ms(400);
 
     GetAX(S3, AX_PRESENT_POSITION);
-    while(!responseReadyAX);
+    while(!responseReadyAX && toto < 50){
+        toto++;
+        __delay_ms(1);
+    }
 
     position = (responseAX.params[1]*256 + responseAX.params[0]);
-    __delay_ms(10);
+    __delay_ms(40);
 
     stock_arm(arm);
 
     SendCaught(position>170);
    
 }
+
 /******************************************************************************/
 /********************************* Stock a Fire *******************************/
 
@@ -146,16 +153,50 @@ void stock_arm(int arm) {
     PutAX(S3, AX_GOAL_POSITION, 150);
     __delay_ms(1000);
 
-    /*
-    /////////l�cher le bordel////////
-    __delay_ms(3000);
-    PutAX(S3, AX_TORQUE_LIMIT, 600);
-    __delay_ms(50);
-    PutAX(S3, AX_GOAL_POSITION, 512);
-    __delay_ms(1000);
-    /////////////////////////////////
-     */
     SendDone();
+}
+
+
+
+/******************************************************************************/
+/************************* place le bras dans une position ********************/
+/***********       qui permet de  s'aprocher des foyer sans soucis ************/
+/******************************************************************************/
+void raise_arm(int arm){
+
+    choose_arm(arm);
+
+    PutAX(S2, AX_TORQUE_LIMIT, 650);
+    __delay_ms(50);
+    PutAX(S2, AX_MOVING_SPEED, 650);
+    __delay_ms(50);
+
+    PutAX(S2, AX_GOAL_POSITION, 340);
+    __delay_ms(50);
+
+
+    PutAX(S3, AX_TORQUE_LIMIT, 420);
+    __delay_ms(50);
+    PutAX(S1, AX_TORQUE_LIMIT, 650);
+    __delay_ms(50);
+    PutAX(S2, AX_TORQUE_LIMIT, 650);
+    __delay_ms(50);
+
+
+    PutAX(S1, AX_MOVING_SPEED, 650);
+    __delay_ms(50);
+    PutAX(S2, AX_MOVING_SPEED, 650);
+    __delay_ms(50);
+    PutAX(S3, AX_MOVING_SPEED, 650);
+    __delay_ms(50);
+
+
+    PutAX(S1, AX_GOAL_POSITION, 562);
+    __delay_ms(100);
+    PutAX(S2, AX_GOAL_POSITION, 340);
+    __delay_ms(100);
+    PutAX(S3, AX_GOAL_POSITION, 150);
+    __delay_ms(200);
 }
 
 /******************************************************************************/
@@ -181,10 +222,14 @@ void pull_arm(int arm) {
     PutAX(S3, AX_MOVING_SPEED, 650);
     __delay_ms(50);
 
-    PutAX(S2, AX_GOAL_POSITION, 700);
-    __delay_ms(280);
-    PutAX(S1, AX_GOAL_POSITION, 760);
-    __delay_ms(700);
+    PutAX(S2, AX_GOAL_POSITION, 480);
+    __delay_ms(300);
+    PutAX(S1, AX_GOAL_POSITION, 635);
+    __delay_ms(400);
+    PutAX(S2, AX_GOAL_POSITION, 760);
+    __delay_ms(300);
+    PutAX(S1, AX_GOAL_POSITION, 825);
+    __delay_ms(400);
 
     PutAX(S3, AX_GOAL_POSITION, 512);
     __delay_ms(10);
@@ -201,6 +246,10 @@ void pull_arm(int arm) {
     SendLaid();
 }
 
+/******************************************************************************/
+/************************* Put Fire on the 2nd Face ***************************/
+
+/******************************************************************************/
 void push_arm(int arm) {
 
     choose_arm(arm);
@@ -288,6 +337,62 @@ void slight_convoyer() // fonction qui enclenche le tapis roulant
 
 void poulet() {
 
+    int j;
+
+    for (j=1;j<3;j++)
+    {
+    choose_arm (j);
+    PutAX(S1, AX_TORQUE_LIMIT, 580);
+    __delay_ms(50);
+    PutAX(S2, AX_TORQUE_LIMIT, 580);
+    __delay_ms(50);
+    PutAX(S3, AX_TORQUE_LIMIT, 580);
+    __delay_ms(50);
+
+    PutAX(S1, AX_MOVING_SPEED, 650);
+    __delay_ms(50);
+    PutAX(S2, AX_MOVING_SPEED, 650);
+    __delay_ms(50);
+    PutAX(S3, AX_MOVING_SPEED, 650);
+    __delay_ms(50);
+
+    PutAX(S2, AX_GOAL_POSITION, 800);
+    __delay_ms(300);
+    PutAX(S1, AX_GOAL_POSITION, 740);
+    __delay_ms(100);
+    PutAX(S3, AX_GOAL_POSITION, 320);
+    __delay_ms(100);
+    }
+
+    int i;
+
+    for (i=0;i<20;i++)
+    {
+        for (j=1;j<3;j++)
+        {
+            choose_arm(j);
+    PutAX(S1, AX_GOAL_POSITION, 730+sin(i)*70);
+    __delay_ms(40);
+    PutAX(S2, AX_GOAL_POSITION, 666+sin(i*0.8)*100);
+    __delay_ms(40);
+    PutAX(S3, AX_GOAL_POSITION, 320+sin(i*0.8)*100);
+    __delay_ms(40);
+        }
+    }
+
+    init_arm(1);
+    init_arm(2);
+
+    SendDone();
+}
+
+
+void salut(int arm)
+{
+
+
+    choose_arm(arm);
+
     PutAX(S1, AX_TORQUE_LIMIT, 650);
     __delay_ms(50);
     PutAX(S2, AX_TORQUE_LIMIT, 650);
@@ -295,46 +400,20 @@ void poulet() {
     PutAX(S3, AX_TORQUE_LIMIT, 650);
     __delay_ms(50);
 
-    PutAX(S1, AX_MOVING_SPEED, 800);
+    PutAX(S1, AX_MOVING_SPEED, 650);
     __delay_ms(50);
-    PutAX(S2, AX_MOVING_SPEED, 800);
+    PutAX(S2, AX_MOVING_SPEED, 650);
     __delay_ms(50);
-    PutAX(S3, AX_MOVING_SPEED, 800);
+    PutAX(S3, AX_MOVING_SPEED, 650);
     __delay_ms(50);
 
-    init_arm(1);
-    init_arm(2);
+    PutAX(S2, AX_GOAL_POSITION, 480);
+    __delay_ms(300);
+    PutAX(S1, AX_GOAL_POSITION, 635);
+    __delay_ms(400);
+    PutAX(S2, AX_GOAL_POSITION, 820);
+    __delay_ms(300);
+    PutAX(S1, AX_GOAL_POSITION, 830);
+    __delay_ms(400);
 
-    //BRAS 1//
-    PutAX(13, AX_GOAL_POSITION, 1024);
-    __delay_ms(100);
-    PutAX(4, AX_GOAL_POSITION, 820);
-    __delay_ms(600);
-
-    PutAX(13, AX_GOAL_POSITION, 420);
-    __delay_ms(100);
-    PutAX(17, AX_GOAL_POSITION, 820);
-    __delay_ms(100);
-    PutAX(4, AX_GOAL_POSITION, 666);
-    __delay_ms(600);
-    /////////
-
-    //BRAS 2//
-    PutAX(42, AX_GOAL_POSITION, 1024);
-    __delay_ms(100);
-    PutAX(12, AX_GOAL_POSITION, 820);
-    __delay_ms(600);
-
-    PutAX(42, AX_GOAL_POSITION, 420);
-    __delay_ms(100);
-    PutAX(2, AX_GOAL_POSITION, 820);
-    __delay_ms(100);
-    PutAX(12, AX_GOAL_POSITION, 666);
-    __delay_ms(600);
-    /////////
-
-    init_arm(1);
-    init_arm(2);
-
-    SendDone();
 }

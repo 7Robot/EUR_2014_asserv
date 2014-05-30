@@ -18,6 +18,12 @@
 #define BOUGIE_convoyer (1<<6)
 #define BOUGIE_slight_convoyer (1<<7)
 #define BOUGIE_poulet (1<<8)
+#define BOUGIE_raise_arm (1<<9)
+#define BOUGIE_salut (1<<10)
+
+
+
+
 
 
 
@@ -39,12 +45,14 @@ void choose_arm(int);
 void init_arm(int);
 void catch_arm(int);
 void stock_arm(int);
+void raise_arm(int);
 void pull_arm(int);
 void push_arm(int);
 void launch_net();
 void convoyer();
 void slight_convoyer();
 void poulet();
+void  salut(int);
 
 
 

@@ -55,5 +55,9 @@ int16_t main(void) {
 
     Init_All();
     while(1);
+    /*{
+    __delay_ms(2000);
+     catch_arm(1);
+    }*/
     return 1;
 }
