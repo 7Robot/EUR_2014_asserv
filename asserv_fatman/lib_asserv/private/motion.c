@@ -90,6 +90,7 @@ void motion_sequence(Position pos1, Position pos2){
 }
 void motion_push(Position pos, float stop_distance){
     // si on a pas d'ordre en attente on ajoute cet ordre dans l'ordre en cours
+    if (stop_distance < DEFAULT_STOP_DISTANCE){stop_distance = DEFAULT_STOP_DISTANCE;}
     if (!motionSequence.waiting){
         pos_asserv.done = 0;
         motionSequence.stop_distance[motionSequence.in_progress] = stop_distance;
