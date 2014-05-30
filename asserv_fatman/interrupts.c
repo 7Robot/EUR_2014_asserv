@@ -245,8 +245,11 @@ void __attribute__((interrupt, no_auto_psv)) _SPI2Interrupt(void){
         actionBras &= ~BOUGIE_raise_arm;
 
     } else if ((actionBras & BOUGIE_salut) == BOUGIE_salut ) {
-        raise_arm( numBras);
+        salut( numBras);
         actionBras &= ~BOUGIE_salut;
+    }  else if ((actionBras & BOUGIE_poulet) == BOUGIE_poulet ) {
+        poulet();
+        actionBras &= ~BOUGIE_poulet;
     }
     
 }
