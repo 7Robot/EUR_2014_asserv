@@ -28,6 +28,7 @@
 #include "actions_ax12.h"
 #include "lib_asserv/lib_asserv_default.h"
 #include "lib_asserv/lib_asserv.h"
+#include "motor.h"
 
 /******************************************************************************/
 /* Global Variable Declaration                                                */
@@ -53,7 +54,6 @@ _FICD(ICS_PGD1 & JTAGEN_OFF);
 int16_t main(void) {
 
     Init_All();
-    test_sequence();
     while(1);
     return 1;
 }

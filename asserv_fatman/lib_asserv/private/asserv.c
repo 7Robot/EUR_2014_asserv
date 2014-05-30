@@ -140,6 +140,7 @@ void asserv_step(Odo *odo, float *commande_g, float *commande_d){
         case ASSERV_MODE_OFF :
             *commande_g = 0;
             *commande_d = 0;
+            speed_asserv.speed_order_constrained = motionState.speed;
             break;
         // si on est en asservissement en position
         case ASSERV_MODE_POS :
