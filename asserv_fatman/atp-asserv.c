@@ -155,6 +155,12 @@ __attribute__((weak)) void OnMotion_angle(float theta) { SendUnimplemented(); }
 __attribute__((weak)) void OnMotion_pos(float x, float y) { SendUnimplemented(); }
 
 // You should redefine this function
+__attribute__((weak)) void OnMotion_push(float x, float y, float d) { SendUnimplemented(); }
+
+// You should redefine this function
+__attribute__((weak)) void OnMotion_sequence(float x1, float y1, float x2, float y2) { SendUnimplemented(); }
+
+// You should redefine this function
 __attribute__((weak)) void OnMotion_speed(float v, float vTheta) { SendUnimplemented(); }
 
 void SendPos(float x, float y, float theta) {
@@ -327,6 +333,14 @@ int AtpDecode(int id,
     }
     if (id == 10) {
         OnMotion_pos(floatv[0], floatv[1]);
+        return 1;
+    }
+    if (id == 14) {
+        OnMotion_push(floatv[0], floatv[1], floatv[2]);
+        return 1;
+    }
+    if (id == 13) {
+        OnMotion_sequence(floatv[0], floatv[1], floatv[2], floatv[3]);
         return 1;
     }
     if (id == 11) {

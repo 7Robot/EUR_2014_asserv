@@ -11,7 +11,7 @@
 /*############################################################################*/
 
 #ifndef DEFAULT_CONSTRAINT_V_MAX
-#define DEFAULT_CONSTRAINT_V_MAX {0.4, 1.5}
+#define DEFAULT_CONSTRAINT_V_MAX {0.4, 2}
 #endif
 
 #ifndef DEFAULT_CONSTRAINT_A_MAX

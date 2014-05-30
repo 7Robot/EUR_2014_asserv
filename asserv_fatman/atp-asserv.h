@@ -51,6 +51,10 @@ void OnMotion_angle(float theta);
 
 void OnMotion_pos(float x, float y);
 
+void OnMotion_push(float x, float y, float d);
+
+void OnMotion_sequence(float x1, float y1, float x2, float y2);
+
 void OnMotion_speed(float v, float vTheta);
 
 void SendPos(float x, float y, float theta);
