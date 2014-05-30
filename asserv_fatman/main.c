@@ -52,12 +52,15 @@ _FICD(ICS_PGD1 & JTAGEN_OFF);
 /******************************************************************************/
 
 int16_t main(void) {
-
+    /* Configure the oscillator for the device */
+    ConfigureOscillator();
+    Init_PWM();
+    __delay_ms(1000);
+    PWM_Moteurs(30,30);
+    __delay_ms(2000);
+    PWM_Moteurs(0,0);
+    __delay_ms(2000);
     Init_All();
     while(1);
-    /*{
-    __delay_ms(2000);
-     catch_arm(1);
-    }*/
     return 1;
 }
