@@ -28,6 +28,7 @@
 #include "actions_ax12.h"
 #include "lib_asserv/lib_asserv_default.h"
 #include "lib_asserv/lib_asserv.h"
+#include "motor.h"
 
 /******************************************************************************/
 /* Global Variable Declaration                                                */

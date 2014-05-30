@@ -11,7 +11,7 @@
 /*############################################################################*/
 
 #ifndef DEFAULT_CONSTRAINT_V_MAX
-#define DEFAULT_CONSTRAINT_V_MAX {0.3, 1.2}
+#define DEFAULT_CONSTRAINT_V_MAX {0.4, 1.5}
 #endif
 
 #ifndef DEFAULT_CONSTRAINT_A_MAX
@@ -40,6 +40,9 @@
 
 #ifndef DEFAULT_ASSERV_MODE
 #define DEFAULT_ASSERV_MODE ASSERV_MODE_OFF
+#endif
+#ifndef DEFAULT_STOP_DISTANCE
+#define DEFAULT_STOP_DISTANCE 0.01
 #endif
 
 /*############################################################################*/

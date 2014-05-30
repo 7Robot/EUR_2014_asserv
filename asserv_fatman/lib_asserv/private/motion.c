@@ -31,6 +31,8 @@ void motion_init(void(*_done)(void)) {
     motionSequence.waiting = 0;
     motionSequence.pos_seq[0] = posZero;
     motionSequence.pos_seq[1] = posZero;
+    motionSequence.stop_distance[0] = DEFAULT_STOP_DISTANCE;
+    motionSequence.stop_distance[1] = DEFAULT_STOP_DISTANCE;
     done = _done;
     odo_init();
     asserv_init();
@@ -73,6 +75,7 @@ float get_vd(){
 // consignes de déplacements du robot
 void motion_free(){set_asserv_off();}
 void motion_pos(Position pos){
+    pos_asserv.stop_distance = DEFAULT_STOP_DISTANCE;
     pos_asserv.done = 0;
     pos_asserv.pos_order = pos;
     set_asserv_pos_mode();
@@ -85,14 +88,16 @@ void motion_sequence(Position pos1, Position pos2){
     motionSequence.pos_seq[1] = pos2;
     set_asserv_seq_mode();
 }
-void motion_push(Position pos){
+void motion_push(Position pos, float stop_distance){
     // si on a pas d'ordre en attente on ajoute cet ordre dans l'ordre en cours
     if (!motionSequence.waiting){
         pos_asserv.done = 0;
+        motionSequence.stop_distance[motionSequence.in_progress] = stop_distance;
         motionSequence.pos_seq[motionSequence.in_progress] = pos;
         motionSequence.waiting = 1;
     // sinon on remplace l'ordre suivant par celui là
     } else {
+        motionSequence.stop_distance[!motionSequence.in_progress] = stop_distance;
         motionSequence.pos_seq[!motionSequence.in_progress] = pos;
         motionSequence.waiting++;
         if (motionSequence.waiting > 2){motionSequence.waiting = 2;}
