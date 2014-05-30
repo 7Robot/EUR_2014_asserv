@@ -26,7 +26,7 @@
 #define SICK_ARRIERE_GAUCHE 8 //AN8
 #define SICK_ARRIERE_DROIT  1 //AN1
 
-#define DEFAULT_THRESHOLD 300 // 300 ~> 16 cm
+#define DEFAULT_THRESHOLD 150 // 300 ~> 16 cm
 #define MARGIN_SICK 30
 
 /******************************************************************************/

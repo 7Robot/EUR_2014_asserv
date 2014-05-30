@@ -174,29 +174,6 @@ void raise_arm(int arm){
     PutAX(S2, AX_GOAL_POSITION, 340);
     __delay_ms(50);
 
-
-    PutAX(S3, AX_TORQUE_LIMIT, 420);
-    __delay_ms(50);
-    PutAX(S1, AX_TORQUE_LIMIT, 650);
-    __delay_ms(50);
-    PutAX(S2, AX_TORQUE_LIMIT, 650);
-    __delay_ms(50);
-
-
-    PutAX(S1, AX_MOVING_SPEED, 650);
-    __delay_ms(50);
-    PutAX(S2, AX_MOVING_SPEED, 650);
-    __delay_ms(50);
-    PutAX(S3, AX_MOVING_SPEED, 650);
-    __delay_ms(50);
-
-
-    PutAX(S1, AX_GOAL_POSITION, 562);
-    __delay_ms(100);
-    PutAX(S2, AX_GOAL_POSITION, 340);
-    __delay_ms(100);
-    PutAX(S3, AX_GOAL_POSITION, 150);
-    __delay_ms(200);
 }
 
 /******************************************************************************/
@@ -358,7 +335,7 @@ void poulet() {
 
     PutAX(S2, AX_GOAL_POSITION, 800);
     __delay_ms(300);
-    PutAX(S1, AX_GOAL_POSITION, 740);
+    PutAX(S1, AX_GOAL_POSITION, 720);
     __delay_ms(100);
     PutAX(S3, AX_GOAL_POSITION, 320);
     __delay_ms(100);
@@ -371,12 +348,12 @@ void poulet() {
         for (j=1;j<3;j++)
         {
             choose_arm(j);
-    PutAX(S1, AX_GOAL_POSITION, 730+sin(i)*70);
-    __delay_ms(40);
+    PutAX(S1, AX_GOAL_POSITION, 730+sin(i)*60);
+    __delay_ms(35);
     PutAX(S2, AX_GOAL_POSITION, 666+sin(i*0.8)*100);
-    __delay_ms(40);
+    __delay_ms(35);
     PutAX(S3, AX_GOAL_POSITION, 320+sin(i*0.8)*100);
-    __delay_ms(40);
+    __delay_ms(35);
         }
     }
 
