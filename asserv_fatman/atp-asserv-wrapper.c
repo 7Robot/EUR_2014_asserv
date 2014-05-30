@@ -106,3 +106,13 @@ void OnPoulet()
     actionBras |= BOUGIE_poulet;
     IFS2bits.SPI2IF = 1;
 }
+
+
+void OnSalut(unsigned int choix)
+{
+     actionBras |= BOUGIE_salut;
+     numBras=choix;
+     IFS2bits.SPI2IF = 1;
+
+
+}
