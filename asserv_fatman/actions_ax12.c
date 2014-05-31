@@ -89,9 +89,9 @@ void catch_arm(int arm) {
     __delay_ms(50);
 
     PutAX(S2, AX_GOAL_POSITION, 300);
-    __delay_ms(300);
+    __delay_ms(200);    //300
     PutAX(S3, AX_GOAL_POSITION, 512);
-    __delay_ms(500);
+    __delay_ms(300);    //500
 
     PutAX(S2, AX_GOAL_POSITION, 390);
     __delay_ms(100);
@@ -100,11 +100,11 @@ void catch_arm(int arm) {
 
 
     PutAX(S3, AX_GOAL_POSITION, 300);
-    __delay_ms(300);
+    __delay_ms(200);    //300
     PutAX(S3, AX_TORQUE_LIMIT, 420);
     __delay_ms(40);
     PutAX(S3, AX_GOAL_POSITION, 150);
-    __delay_ms(400);
+    __delay_ms(200);    //400
 
     GetAX(S3, AX_PRESENT_POSITION);
     while(!responseReadyAX && toto < 50){
@@ -246,14 +246,14 @@ void push_arm(int arm) {
     __delay_ms(50);
 
     PutAX(S2, AX_GOAL_POSITION, 400);
-    __delay_ms(300);
+    __delay_ms(200);
     PutAX(S1, AX_GOAL_POSITION, 640);
     __delay_ms(500);
     PutAX(S3, AX_GOAL_POSITION, 512);
-    __delay_ms(600);
-    PutAX(S2, AX_GOAL_POSITION, 760);
+    __delay_ms(400);
+    PutAX(S2, AX_GOAL_POSITION, 700);
     __delay_ms(140);
-    PutAX(S1, AX_GOAL_POSITION, 820);
+    PutAX(S1, AX_GOAL_POSITION, 750);
     __delay_ms(200);
 
     init_arm(arm);

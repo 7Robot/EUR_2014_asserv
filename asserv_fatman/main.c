@@ -57,6 +57,7 @@ int16_t main(void) {
 
     Init_All();
 
-    while(1);
+    while(1){
+    };
     return 1;
 }
