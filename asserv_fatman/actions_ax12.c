@@ -200,13 +200,13 @@ void pull_arm(int arm) {
     __delay_ms(50);
 
     PutAX(S2, AX_GOAL_POSITION, 480);
-    __delay_ms(300);
+    __delay_ms(100);    //300
     PutAX(S1, AX_GOAL_POSITION, 635);
-    __delay_ms(400);
+    __delay_ms(200);    //400
     PutAX(S2, AX_GOAL_POSITION, 760);
-    __delay_ms(300);
+    __delay_ms(100);    //300
     PutAX(S1, AX_GOAL_POSITION, 825);
-    __delay_ms(400);
+    __delay_ms(400);    //400
 
     PutAX(S3, AX_GOAL_POSITION, 512);
     __delay_ms(10);
@@ -216,7 +216,7 @@ void pull_arm(int arm) {
     PutAX(S2, AX_GOAL_POSITION, 380);
     __delay_ms(10);
     PutAX(S1, AX_GOAL_POSITION, 666);
-    __delay_ms(400);
+    __delay_ms(100);    //400
 
 
     init_arm(arm);
