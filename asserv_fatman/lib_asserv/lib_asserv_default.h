@@ -11,11 +11,11 @@
 /*############################################################################*/
 
 #ifndef DEFAULT_CONSTRAINT_V_MAX
-#define DEFAULT_CONSTRAINT_V_MAX {0.5, 3}
+#define DEFAULT_CONSTRAINT_V_MAX {0.5, 1.5}
 #endif
 
 #ifndef DEFAULT_CONSTRAINT_A_MAX
-#define DEFAULT_CONSTRAINT_A_MAX {0.6, 2, 0.15}
+#define DEFAULT_CONSTRAINT_A_MAX {0.6, 1.4, 0.10}
 #endif
 
 #ifndef BLOCK_LIMIT
