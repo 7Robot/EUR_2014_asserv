@@ -186,8 +186,7 @@ void __attribute__((interrupt,auto_psv)) _T2Interrupt(void) {
     // effectuer un pas de déplacement
     motion_step(tics_g,tics_d, &commande_g, &commande_d);
     // mettre ici les pwm gauche et droit
-    PWM_Moteurs_gauche(commande_g);
-    PWM_Moteurs_droit(commande_d);
+    PWM_Moteurs(commande_g, commande_d);
 }
 
 /*************************************************

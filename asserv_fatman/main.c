@@ -53,40 +53,10 @@ _FICD(ICS_PGD1 & JTAGEN_OFF);
 
 int16_t main(void) {
     /* Configure the oscillator for the device */
-    //int toto = 0;
     ConfigureOscillator();
-/*    Init_PWM();
-    while (1)
-    {
-        while (toto < 3000)
-        {
-            PWM_Moteurs(20,20);
-            __delay_ms(1);
-            toto ++;
-        }
-        while (toto < 4500)
-        {
-            PWM_Moteurs(-10,-10);
-            __delay_ms(1);
-            toto ++;
-        }
-        toto = 0;
-    }
-    __delay_ms(1000);
 
-    PWM_Moteurs(50, 50);
-    __delay_ms(1000);
-    __delay_ms(10000);
-    PWM_Moteurs(0,0);
-    __delay_ms(2000);
- */
     Init_All();
-    /*while (toto < 3000)
-    {
-        PWM_Moteurs(30,30);
-        __delay_ms(1);
-        toto ++;
-    }*/
+
     while(1);
     return 1;
 }

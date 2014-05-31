@@ -91,12 +91,12 @@ void PWM_Moteurs(float DC_gauche, float DC_droit)
     int DC_positif;
 
     // pins de sens du moteur gauche
-    DC_positif = (DC_gauche >= 0);
+    DC_positif = (DC_droit >= 0);
     MOTOR_1A_O = DC_positif;
     MOTOR_1B_O = !DC_positif;
 
     // pins de sens du moteur droit
-    DC_positif = (DC_droit >= 0);
+    DC_positif = (DC_gauche >= 0);
     MOTOR_2A_O = !DC_positif;
     MOTOR_2B_O = DC_positif;
 
@@ -119,12 +119,12 @@ void PWM_Moteurs_Detail(float frequence, float DC_gauche, float DC_droit)
     int DC_positif;
 
     // pins de sens du moteur gauche
-    DC_positif = DC_gauche >= 0;
+    DC_positif = DC_droit >= 0;
     MOTOR_1A_O = DC_positif;
     MOTOR_1B_O = !DC_positif;
 
     // pins de sens du moteur droit
-    DC_positif = DC_droit >= 0;
+    DC_positif = DC_gauche >= 0;
     MOTOR_2A_O = !DC_positif;
     MOTOR_2B_O = DC_positif;
 
@@ -151,8 +151,8 @@ void PWM_Moteurs_gauche(float DC)
 
     // pins de sens du moteur gauche
     DC_positif = (DC >= 0);
-    MOTOR_2A_O = DC_positif;
-    MOTOR_2B_O = !DC_positif;
+    MOTOR_2A_O = !DC_positif;
+    MOTOR_2B_O = DC_positif;
 
     P1TPER = 1500;
 
@@ -171,8 +171,8 @@ void PWM_Moteurs_droit(float DC)
 
     // pins de sens du moteur droit
     DC_positif = (DC >= 0);
-    MOTOR_1A_O = !DC_positif;
-    MOTOR_1B_O = DC_positif;
+    MOTOR_1A_O = DC_positif;
+    MOTOR_1B_O = !DC_positif;
 
     P1TPER = 1500;
 

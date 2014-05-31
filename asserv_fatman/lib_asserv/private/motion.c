@@ -126,12 +126,11 @@ int motion_done(){
 // si bloqué, annule la consigne de vitesse
 void check_blocked(Speed speed,Speed order){
     if (fabs(speed.v - order.v)>0.1 || fabs(speed.vt - order.vt)>0.4 ){
-        if (blocked >= BLOCK_LIMIT){
-            speed_asserv.speed_order.v = 0;
-            speed_asserv.speed_order.vt = 0;
-            if (blocked == BLOCK_LIMIT){SendBlocked();}
+        if (blocked == BLOCK_LIMIT){
+            SendBlocked();
+            motion_free();
         }
-        blocked++;
+        if (blocked < BLOCK_LIMIT+1){blocked++;}
     } else {
         blocked = 0;
     }
