@@ -211,7 +211,7 @@ void pull_arm(int arm) {
     PutAX(S3, AX_GOAL_POSITION, 512);
     __delay_ms(10);
     PutAX(S3, AX_TORQUE_LIMIT, 650);
-    __delay_ms(20);
+    __delay_ms(30);
 
     PutAX(S2, AX_GOAL_POSITION, 380);
     __delay_ms(10);
@@ -250,7 +250,7 @@ void push_arm(int arm) {
     PutAX(S1, AX_GOAL_POSITION, 640);
     __delay_ms(500);
     PutAX(S3, AX_GOAL_POSITION, 512);
-    __delay_ms(400);
+    __delay_ms(500);
     PutAX(S2, AX_GOAL_POSITION, 700);
     __delay_ms(140);
     PutAX(S1, AX_GOAL_POSITION, 750);
