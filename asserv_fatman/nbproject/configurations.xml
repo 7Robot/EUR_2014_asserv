@@ -72,7 +72,7 @@
         <platformTool>PICkit3PlatformTool</platformTool>
         <languageToolchain>XC16</languageToolchain>
         <languageToolchainVersion>1.21</languageToolchainVersion>
-        <platform>2</platform>
+        <platform>3</platform>
       </toolsSet>
       <compileType>
         <linkerTool>
@@ -81,7 +81,6 @@
         </linkerTool>
         <loading>
           <useAlternateLoadableFile>false</useAlternateLoadableFile>
-          <parseOnProdLoad>false</parseOnProdLoad>
           <alternateLoadableFile></alternateLoadableFile>
         </loading>
       </compileType>
@@ -133,9 +132,6 @@
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
       </C30>
-      <C30-AR>
-        <property key="additional-options-chop-files" value="false"/>
-      </C30-AR>
       <C30-AS>
       </C30-AS>
       <C30-LD>
@@ -150,19 +146,11 @@
         <property key="enable-handles" value="true"/>
         <property key="enable-pack-data" value="true"/>
         <property key="extra-lib-directories" value=""/>
-        <property key="fill-flash-options-addr" value=""/>
-        <property key="fill-flash-options-const" value=""/>
-        <property key="fill-flash-options-how" value="0"/>
-        <property key="fill-flash-options-inc-const" value="1"/>
-        <property key="fill-flash-options-increment" value=""/>
-        <property key="fill-flash-options-seq" value=""/>
-        <property key="fill-flash-options-what" value="0"/>
         <property key="general-code-protect" value="no_code_protect"/>
         <property key="general-write-protect" value="no_write_protect"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="heap-size" value=""/>
         <property key="input-libraries" value=""/>
-        <property key="linker-stack" value="true"/>
         <property key="linker-symbols" value=""/>
         <property key="map-file" value="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"/>
         <property key="oXC16ld-extra-opts" value=""/>
@@ -189,7 +177,6 @@
         <property key="legacy-libc" value="false"/>
         <property key="oXC16glb-macros" value=""/>
         <property key="output-file-format" value="elf"/>
-        <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
       </C30Global>
       <PICkit3PlatformTool>
@@ -238,7 +225,6 @@
         <property key="memories.programmemory.start" value="0x0"/>
         <property key="poweroptions.powerenable" value="false"/>
         <property key="programmertogo.imagename" value=""/>
-        <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.pgmspeed" value="2"/>
         <property key="programoptions.preserveeeprom" value="false"/>

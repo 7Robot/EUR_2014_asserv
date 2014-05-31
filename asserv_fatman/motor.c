@@ -29,8 +29,9 @@ void Init_PWM(void)
     // à réactiver une fois le pinout trouvé ;)
 
     // sorties High du pwm
-    PWM1CON1bits.PEN1H = 0;
-    PWM1CON1bits.PEN2H = 1;
+    // remapage au fil, on oublie la pin 2H (seem really dead, even in GPIO)
+    PWM1CON1bits.PEN1H = 1;
+    PWM1CON1bits.PEN2H = 0;
     PWM1CON1bits.PEN3H = 1;
 
     // sorties Low (opposé du High, on ne l'utilise pas)
@@ -39,7 +40,7 @@ void Init_PWM(void)
     PWM1CON1bits.PEN3L = 0;
 
     // réglage des rapports cycliques, pour l'instant on mets 0 lors de l'initialisation
-    P1DC2 = 0;
+    P1DC1 = 0;
     P1DC3 = 0;
 
     // Activation en sortie des pin de sens du PONT en H
@@ -91,8 +92,8 @@ void PWM_Moteurs(float DC_gauche, float DC_droit)
 
     // pins de sens du moteur gauche
     DC_positif = (DC_gauche >= 0);
-    MOTOR_1A_O = !DC_positif;
-    MOTOR_1B_O = DC_positif;
+    MOTOR_1A_O = DC_positif;
+    MOTOR_1B_O = !DC_positif;
 
     // pins de sens du moteur droit
     DC_positif = (DC_droit >= 0);
@@ -107,7 +108,7 @@ void PWM_Moteurs(float DC_gauche, float DC_droit)
 
     // calcul des temps High des moteurs (cf datasheet)
     // RMQ : ici la précision est 2 fois plus grande que pour P1TPER
-    P1DC2 =  (int) (30*fabs(DC_gauche));
+    P1DC1 =  (int) (30*fabs(DC_gauche));
     P1DC3 =  (int) (30*fabs(DC_droit));
 }
 
@@ -119,8 +120,8 @@ void PWM_Moteurs_Detail(float frequence, float DC_gauche, float DC_droit)
 
     // pins de sens du moteur gauche
     DC_positif = DC_gauche >= 0;
-    MOTOR_1A_O = !DC_positif;
-    MOTOR_1B_O = DC_positif;
+    MOTOR_1A_O = DC_positif;
+    MOTOR_1B_O = !DC_positif;
 
     // pins de sens du moteur droit
     DC_positif = DC_droit >= 0;
@@ -139,7 +140,7 @@ void PWM_Moteurs_Detail(float frequence, float DC_gauche, float DC_droit)
 
     // calcul des temps High des moteurs (cf datasheet)
     // RMQ : ici la précision est 2 fois plus grande que pour P1TPER
-    P1DC2 = (int) limit_int((long int)(DC_gauche), 0, (long int)(2*P1TPER_MAX));
+    P1DC1 = (int) limit_int((long int)(DC_gauche), 0, (long int)(2*P1TPER_MAX));
     P1DC3 = (int) limit_int((long int)(DC_droit), 0,  (long int)(2*P1TPER_MAX));
 }
 
@@ -150,8 +151,8 @@ void PWM_Moteurs_gauche(float DC)
 
     // pins de sens du moteur gauche
     DC_positif = (DC >= 0);
-    MOTOR_2A_O = !DC_positif;
-    MOTOR_2B_O = DC_positif;
+    MOTOR_2A_O = DC_positif;
+    MOTOR_2B_O = !DC_positif;
 
     P1TPER = 1500;
 
@@ -160,7 +161,7 @@ void PWM_Moteurs_gauche(float DC)
 
     // calcul des temps High des moteurs (cf datasheet)
     // RMQ : ici la précision est 2 fois plus grande que pour P1TPER
-    P1DC2 =  (int) (30*fabs(DC));
+    P1DC1 =  (int) (30*fabs(DC));
 }
 
 void PWM_Moteurs_droit(float DC)

@@ -5,12 +5,12 @@
 #define MOTOR_1A_TRIS TRISBbits.TRISB9
 #define MOTOR_1B_TRIS TRISBbits.TRISB11
 #define MOTOR_2A_TRIS TRISBbits.TRISB13
-#define MOTOR_2B_TRIS TRISBbits.TRISB14
+#define MOTOR_2B_TRIS TRISAbits.TRISA10   // remapage au fil !
 // Valeur des pin de sens des moteurs (output)
 #define MOTOR_1A_O LATBbits.LATB9
 #define MOTOR_1B_O LATBbits.LATB11
 #define MOTOR_2A_O LATBbits.LATB13
-#define MOTOR_2B_O LATBbits.LATB14
+#define MOTOR_2B_O LATAbits.LATA10
 
 // min et max de P1TPER (periode du PWM en nb de cycles)
 // ici min et max permettent de rester dans des fréquences comprises entre
